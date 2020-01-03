@@ -40,15 +40,15 @@
 }
 
 #time-and-people-container .primary-value {
-  font-size: 28px;
+  font-size: 36px;
   font-weight: bold;
-  margin: 0 14px;
+  margin-left: 14px;
 }
 
 #time-and-people-container svg {
   margin-top: 5px;
   color: white;
-  width: 22px;
+  width: 28px;
 }
 
 #time-and-people-container .number-in-cattery {
@@ -56,7 +56,7 @@
 }
 
 #time-and-people-container .open-spots {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: normal;
 }
 /*# sourceMappingURL=cattery.css.map */
