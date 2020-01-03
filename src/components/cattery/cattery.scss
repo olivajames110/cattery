@@ -1,0 +1,51 @@
+#current-time {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    font-size: 38px;
+    font-weight: bold;
+    background: rgb(240, 240, 240);
+    padding: 40px 55px;
+}
+
+#current-number-of-people {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 0px;
+    top: 150px;
+    font-size: 38px;
+    font-weight: bold;
+    background: rgb(240, 240, 240);
+    padding: 40px 55px;
+
+    .number-in-cattery {
+        font-size: 20px;
+    }
+}
+
+.group-size-availability {
+    margin: 0 50px;
+
+    h2 {
+        font-size: 18px;
+        padding-bottom: 20px;
+    }
+}
+
+.group-size-wrapper {
+
+    margin-top: 20px;
+    padding: 0 10px 20px;
+    display: flex;
+    width: 250px;
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(182, 182, 182);
+
+    .group-size {
+        font-size: 18px;
+        font-weight: bold;
+    }
+}

@@ -1,0 +1,100 @@
+#list-of-people-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.person-wrapper {
+  position: relative;
+  margin-top: 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 300px;
+  /* display: inline-block; */
+  background: yellowgreen;
+  margin: 20px;
+}
+
+.person-wrapper .details-container {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 10px;
+}
+
+.person-wrapper .details-container #name {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.person-wrapper .details-container span {
+  font-size: 14px;
+}
+
+.person-wrapper .details-container #time-remaining {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  right: 10%;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+.person-wrapper .details-container #time-remaining #title {
+  font-size: 12px;
+}
+
+.person-wrapper .details-container #time-remaining #time {
+  font-size: 20px;
+}
+
+.person-wrapper .people-in-party-container {
+  width: 100%;
+  padding: 7px;
+  background: #d6d6d6;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.person-wrapper .people-in-party-container .person {
+  position: relative;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  z-index: 2;
+  background: white;
+  margin: 0 7px;
+}
+
+.fill {
+  background-color: rgba(0, 0, 0, 0.329);
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  z-index: 1;
+}
+/*# sourceMappingURL=listOfPeople.css.map */

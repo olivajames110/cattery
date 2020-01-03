@@ -1,0 +1,84 @@
+#list-of-people-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.person-wrapper {
+    position: relative;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    /* display: inline-block; */
+    background: yellowgreen;
+    margin: 20px;
+
+
+
+    .details-container {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+
+        #name {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        span {
+            font-size: 14px;
+        }
+
+        #time-remaining {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            right: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+
+            #title {
+                font-size: 12px;
+            }
+
+            #time {
+                font-size: 20px;
+            }
+        }
+
+    }
+
+
+
+    .people-in-party-container {
+        width: 100%;
+        padding: 7px;
+        background: rgb(214, 214, 214);
+        position: relative;
+        display: flex;
+
+
+
+        .person {
+            position: relative;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            z-index: 2;
+            background: white;
+            margin: 0 7px;
+        }
+    }
+}
+
+.fill {
+    background-color: rgba(0, 0, 0, 0.329);
+    // width: 149px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    z-index: 1;
+}
