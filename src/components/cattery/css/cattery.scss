@@ -1,0 +1,57 @@
+.cattery-container {
+    display: grid;
+    grid-template-columns: 235px 1fr;
+}
+
+#cattery-panel-col {
+    height: 100vh;
+    background: rgb(240, 240, 240);
+    // padding: 40px 55px;
+}
+
+#time-and-people-container {
+    background-color: rgb(66, 66, 66);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    // padding: 50px 0;
+
+    height: 150px;
+
+    //Makes both wrappers Flex
+    #current-time-wrapper,
+    #current-number-of-people-wrapper {
+        display: flex;
+        align-items: center;
+    }
+
+    .primary-value {
+        font-size: 28px;
+        font-weight: bold;
+        margin: 0 14px;
+    }
+
+    //The icon
+    svg {
+        // font-size: 10px !important;
+
+        margin-top: 5px;
+        color: white;
+        width: 22px;
+    }
+
+    //Open spots remaining in Cattery number
+    .number-in-cattery {
+        margin-right: 10px;
+    }
+
+    //Current time wrapper
+    .open-spots {
+        font-size: 16px;
+        font-weight: normal;
+    }
+
+
+}

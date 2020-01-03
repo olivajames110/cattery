@@ -1,0 +1,82 @@
+#add-people-container {
+  width: 100%;
+  background: #fbfbfb;
+  padding: 25px 15px 60px;
+  -webkit-box-shadow: 1px 1px 3px 0px #00000029;
+          box-shadow: 1px 1px 3px 0px #00000029;
+}
+
+#input-container-wrapper {
+  position: relative;
+}
+
+#input-container-wrapper #input-container {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  margin: 14px 35px 0 0;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+#input-container-wrapper #input-container input,
+#input-container-wrapper #input-container textarea,
+#input-container-wrapper #input-container select {
+  padding: 12.5px 10px;
+  border: 1px solid #e7e7e7;
+  border-radius: 2px;
+  margin-top: 5px;
+}
+
+#input-container-wrapper #input-container input:focus,
+#input-container-wrapper #input-container textarea:focus,
+#input-container-wrapper #input-container select:focus {
+  outline: 0.9px solid #0067734a;
+}
+
+#input-container-wrapper #input-container-button {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: #5CB85C;
+  border-radius: 50%;
+  color: white;
+  font-size: 12px;
+  width: 70px;
+  height: 70px;
+  -webkit-transition: 80ms ease;
+  transition: 80ms ease;
+  cursor: pointer;
+}
+
+#input-container-wrapper #input-container-button svg {
+  margin-top: 3px;
+  color: white;
+  width: 14px;
+}
+
+#input-container-wrapper #input-container-button:hover {
+  background-color: #4da54d;
+}
+
+#input-container-wrapper textarea {
+  display: inherit;
+  resize: none;
+  width: 240px;
+}
+/*# sourceMappingURL=addParty.css.map */

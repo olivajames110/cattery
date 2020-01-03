@@ -1,0 +1,69 @@
+#add-people-container {
+    width: 100%;
+    background: #fbfbfb;
+    padding: 25px 15px 60px;
+    box-shadow: 1px 1px 3px 0px #00000029;
+}
+
+#input-container-wrapper {
+    // display: flex;
+    // justify-content: space-between;
+    // place-items: flex-start;
+    position: relative;
+
+    #input-container {
+        display: inline-flex;
+        margin: 14px 35px 0 0;
+        // display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        input,
+        textarea,
+        select {
+            padding: 12.5px 10px;
+            border: 1px solid rgb(231, 231, 231);
+            border-radius: 2px;
+            margin-top: 5px;
+
+            &:focus {
+                // color: red;
+                outline: 0.9px solid #0067734a;
+            }
+        }
+    }
+
+    //Submit Button
+    #input-container-button {
+        // position: absolute;
+        // right: 0;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background-color: #5CB85C;
+        border-radius: 50%;
+        color: white;
+        font-size: 12px;
+        width: 70px;
+        height: 70px;
+        transition: 80ms ease;
+        cursor: pointer;
+
+        svg {
+            margin-top: 3px;
+            color: white;
+            width: 14px;
+        }
+
+        &:hover {
+            background-color: rgb(77, 165, 77);
+        }
+    }
+
+    textarea {
+        display: inherit;
+        resize: none;
+        width: 240px;
+    }
+}

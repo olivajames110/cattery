@@ -1,0 +1,62 @@
+.cattery-container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 235px 1fr;
+      grid-template-columns: 235px 1fr;
+}
+
+#cattery-panel-col {
+  height: 100vh;
+  background: #f0f0f0;
+}
+
+#time-and-people-container {
+  background-color: #424242;
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 150px;
+}
+
+#time-and-people-container #current-time-wrapper,
+#time-and-people-container #current-number-of-people-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#time-and-people-container .primary-value {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0 14px;
+}
+
+#time-and-people-container svg {
+  margin-top: 5px;
+  color: white;
+  width: 22px;
+}
+
+#time-and-people-container .number-in-cattery {
+  margin-right: 10px;
+}
+
+#time-and-people-container .open-spots {
+  font-size: 16px;
+  font-weight: normal;
+}
+/*# sourceMappingURL=cattery.css.map */

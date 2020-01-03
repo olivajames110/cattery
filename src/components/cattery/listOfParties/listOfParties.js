@@ -1,7 +1,7 @@
 import React from "react";
-import "./listOfPeople.css";
-const ListOfPeople = props => {
-  const peopleList = props.listOfPeople.map(person => {
+import "./listOfParties.css";
+const ListOfParties = props => {
+  const peopleList = props.listOfParties.map(person => {
     return (
       <div className="person-wrapper">
         <div className="details-container">
@@ -26,4 +26,4 @@ const ListOfPeople = props => {
   return <div id="list-of-people-container">{peopleList}</div>;
 };
 
-export default ListOfPeople;
+export default ListOfParties;
