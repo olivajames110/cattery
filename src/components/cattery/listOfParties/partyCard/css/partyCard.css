@@ -6,7 +6,7 @@
   display: grid;
   -ms-grid-columns: 5fr 2.5fr;
       grid-template-columns: 5fr 2.5fr;
-  width: 365px;
+  width: 325px;
   min-height: 150px;
   border-radius: 2px;
   background: #fbfbfb;
@@ -89,11 +89,11 @@
       -ms-flex-align: center;
           align-items: center;
   height: 100%;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
   align-items: center;
-  background-color: #424242;
+  background-color: #616c70;
   color: white;
 }
 
@@ -145,11 +145,11 @@
 }
 
 .fill {
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.35);
   position: absolute;
   left: 0;
   top: 0;
-  height: 100%;
+  width: 100%;
   z-index: 1;
 }
 

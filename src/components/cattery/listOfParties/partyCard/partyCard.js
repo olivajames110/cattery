@@ -54,9 +54,9 @@ const PartyCard = props => {
         </div>
       </div>
       <div className="time-remaining-container">
-        <div style={{ width: props.party.width }} className="fill"></div>
+        <div style={{ height: props.party.width }} className="fill"></div>
         <span id="time-remaining">
-          <span id="title">Minutes Remaining:</span>
+          <span id="title">Time Left:</span>
           <span id="time">{props.party.timeRemaining}</span>
         </span>
         <div className="time-start-end-container">

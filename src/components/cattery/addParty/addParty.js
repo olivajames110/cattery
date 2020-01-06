@@ -12,7 +12,7 @@ let personn = [
     timeRemaining: 60,
     timeStart: "2:10",
     timeEnd: "3:10",
-    isReservation: true
+    isReservation: false
   }
 ];
 
