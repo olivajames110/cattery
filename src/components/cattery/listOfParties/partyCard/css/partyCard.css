@@ -1,0 +1,163 @@
+.party-wrapper {
+  position: relative;
+  margin-top: 25px;
+  margin-right: 35px;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 5fr 2.5fr;
+      grid-template-columns: 5fr 2.5fr;
+  width: 365px;
+  min-height: 150px;
+  border-radius: 2px;
+  background: #fbfbfb;
+  -webkit-box-shadow: 0px 0px 3.5px 2.5px #00000014;
+          box-shadow: 0px 0px 3.5px 2.5px #00000014;
+}
+
+.party-wrapper .details-container {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 12px;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.party-wrapper .details-container .detail-row {
+  font-size: 13px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.party-wrapper .details-container .details-title {
+  font-weight: 600;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.75);
+  margin-bottom: 3px;
+}
+
+.party-wrapper .details-container #name {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #424242;
+  font-weight: bold;
+  font-family: 'Oswald', sans-serif;
+}
+
+.party-wrapper .details-container #description .details-value {
+  display: block;
+  margin-left: 0;
+}
+
+.party-wrapper .details-container .sub-details-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.party-wrapper .details-container .sub-details-container #payment svg {
+  color: #6fa037;
+  width: 14px;
+}
+
+.party-wrapper .time-remaining-container {
+  position: relative;
+  background-color: #cacaca;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  align-items: center;
+  background-color: #424242;
+  color: white;
+}
+
+.party-wrapper .time-remaining-container #title {
+  font-size: 12px;
+  margin-bottom: 5px;
+  max-width: 100px;
+}
+
+.party-wrapper .time-remaining-container #time {
+  font-size: 28px;
+}
+
+.party-wrapper .time-remaining-container #time-remaining {
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.party-wrapper .time-remaining-container .time-start-end-container {
+  font-size: 12px;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
+  width: 100%;
+}
+
+.party-wrapper .time-remaining-container .time-start-end-container span {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.party-wrapper .time-remaining-container .time-start-end-container .detail-row {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.fill {
+  background-color: rgba(255, 255, 255, 0.15);
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  z-index: 1;
+}
+
+.reservation {
+  background-color: #c9dfeb !important;
+}
+
+.over-due {
+  background-color: #f68e8e;
+}
+/*# sourceMappingURL=partyCard.css.map */

@@ -3,11 +3,83 @@
   display: grid;
   -ms-grid-columns: 235px 1fr;
       grid-template-columns: 235px 1fr;
+  position: relative;
+}
+
+.cattery-container h1 {
+  font-size: 24px;
+  color: #616c70;
 }
 
 #cattery-panel-col {
   height: 100vh;
   background: #f0f0f0;
+  overflow-y: scroll;
+}
+
+#cattery-body-col {
+  padding: 30px;
+}
+
+#cattery-body-col h3 {
+  font-size: 22px;
+  color: #616c70;
+}
+
+#cattery-body-col .upcoming-reservations-container {
+  margin-top: 40px;
+  padding-top: 30px;
+  border-top: 2px solid #cdc9c9b8;
+}
+
+.modal-btn {
+  position: fixed;
+  bottom: 5%;
+  right: 4.5%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+}
+
+.modal-btn .text {
+  font-size: 10px;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.modal-btn .btn {
+  background-color: #5CB85C;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-transition: 100ms;
+  transition: 100ms;
+}
+
+.modal-btn .btn:hover {
+  background-color: #4da54d;
+}
+
+.modal-btn .btn svg {
+  color: white;
+  width: 20px;
 }
 
 #time-and-people-container {
@@ -40,19 +112,19 @@
 }
 
 #time-and-people-container .primary-value {
-  font-size: 36px;
+  font-size: 30px;
   font-weight: bold;
-  margin-left: 14px;
+  margin-left: 8px;
 }
 
 #time-and-people-container svg {
   margin-top: 5px;
   color: white;
-  width: 28px;
+  width: 24px;
 }
 
 #time-and-people-container .number-in-cattery {
-  margin-right: 10px;
+  margin-right: 8px;
 }
 
 #time-and-people-container .open-spots {

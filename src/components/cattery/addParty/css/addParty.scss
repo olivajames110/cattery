@@ -1,19 +1,16 @@
 #add-people-container {
     width: 100%;
-    background: #fbfbfb;
-    padding: 25px 15px 60px;
-    box-shadow: 1px 1px 3px 0px #00000029;
+    // background: #fbfbfb;
+    // padding: 25px 15px 60px;
+    // box-shadow: 1px 1px 3px 0px #00000029;
 }
 
 #input-container-wrapper {
-    // display: flex;
-    // justify-content: space-between;
-    // place-items: flex-start;
     position: relative;
 
     #input-container {
-        display: inline-flex;
-        margin: 14px 35px 0 0;
+        display: block;
+        margin-top: 20px;
         // display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -22,9 +19,11 @@
         textarea,
         select {
             padding: 12.5px 10px;
-            border: 1px solid rgb(231, 231, 231);
+            border: 2px solid #cac8c8a6;
             border-radius: 2px;
             margin-top: 5px;
+            // display: block;
+            width: 100%;
 
             &:focus {
                 // color: red;
@@ -33,22 +32,37 @@
         }
     }
 
+    #input-container label,
+    #walkIn-res__container .title {
+        font-family: 'Open Sans', sans-serif;
+        font-weight: bold;
+        font-size: 13px;
+        color: #4d4c4c;
+    }
+
     //Submit Button
     #input-container-button {
         // position: absolute;
         // right: 0;
-        display: inline-flex;
+        display: flex;
         justify-content: center;
         align-items: center;
-        flex-direction: column;
-        background-color: #5CB85C;
-        border-radius: 50%;
+        // flex-direction: column;
+
+        background-color: #5cb85c;
+        border-radius: 2px;
         color: white;
         font-size: 12px;
-        width: 70px;
-        height: 70px;
+        width: 100%;
+        height: 50px;
+        margin-top: 30px;
         transition: 80ms ease;
         cursor: pointer;
+
+        span {
+            font-size: 16px;
+            margin-right: 10px;
+        }
 
         svg {
             margin-top: 3px;
@@ -66,4 +80,43 @@
         resize: none;
         width: 240px;
     }
+}
+
+#walkIn-res__container {
+    position: relative;
+    margin-top: 15px;
+    transition: 100ms;
+    cursor: pointer;
+    margin-top: 20px;
+
+    .walkIn-res__wrapper {
+        display: block;
+        margin-top: 15px;
+
+        .walkIn-res__btn {
+            padding: 8px 14px;
+            border-radius: 2px;
+            // border: 1px solid rgb(156, 156, 156);
+            border: 2px solid #cac8c8a6;
+
+            #reservation {
+                margin-left: -1px;
+            }
+        }
+    }
+
+    .active {
+        background-color: #444444;
+        color: white;
+        border: none !important;
+        padding: 10px 14px !important;
+    }
+}
+
+.react-time-picker {
+    //   position: absolute;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
 }

@@ -3,35 +3,85 @@ import Input from "../../utils/input/input";
 import AddParty from "./addParty/addParty";
 import ListOfParties from "./listOfParties/listOfParties";
 import PartySizeAvailability from "./partySizeAvailability/partySizeAvailability";
+import Modal from "../../utils/modal/modal";
 import "./css/cattery.css";
 class Cattery extends Component {
   state = {
+    modalIsOpen: false,
     currentNumOfPeople: 0,
+    currentNumOfReservations: 0,
     currentTime: "2:10 PM",
     listOfParties: [
       {
         name: "John",
+        description: "2 kids with 2 adults with red shirts",
+        numberInParty: 2,
+        paid: true,
+        status: "In Room",
+        timeRemaining: 0,
         timeStart: "1:20",
         timeEnd: "2:20",
-        numberInParty: 2,
-        width: "90%",
-        timeRemaining: 10
+        width: "100%",
+        isReservation: false
       },
       {
         name: "James",
+        description: "2 kids with 2 adults with red shirts",
+        numberInParty: 2,
+        paid: true,
+        status: "In Room",
+        timeRemaining: 30,
         timeStart: "1:50",
         timeEnd: "2:50",
-        numberInParty: 2,
         width: "50%",
-        timeRemaining: 30
+        isReservation: false
       },
       {
         name: "Pete",
+        description: "2 kids with 2 adults with red shirts",
+        numberInParty: 2,
+        paid: true,
+        status: "In Room",
+        timeRemaining: 30,
         timeStart: "1:50",
         timeEnd: "2:50",
-        numberInParty: 2,
         width: "50%",
-        timeRemaining: 30
+        isReservation: false
+      }
+    ],
+    listOfReservations: [
+      {
+        name: "Carll",
+        description: "1 person with black shirt, red hat",
+        numberInParty: 2,
+        paid: true,
+        status: "In Room",
+        timeRemaining: 60,
+        timeStart: "2:10",
+        timeEnd: "3:10",
+        isReservation: true
+      },
+      {
+        name: "Carll",
+        description: "1 person with black shirt, red hat",
+        numberInParty: 2,
+        paid: true,
+        status: "In Room",
+        timeRemaining: 60,
+        timeStart: "2:10",
+        timeEnd: "3:10",
+        isReservation: true
+      },
+      {
+        name: "Carll",
+        description: "1 person with black shirt, red hat",
+        numberInParty: 2,
+        paid: true,
+        status: "In Room",
+        timeRemaining: 60,
+        timeStart: "2:10",
+        timeEnd: "3:10",
+        isReservation: true
       }
     ]
   };
@@ -50,15 +100,25 @@ class Cattery extends Component {
     }
 
     this.setState({
-      currentTime: currentTime
+      currentTime: currentTime,
+      currentNumOfPeople: this.state.listOfParties.length,
+      currentNumOfReservations: this.state.listOfReservations.length
     });
   }
+
+  handleModalToggle = () => {
+    this.setState({
+      modalIsOpen: !this.state.modalIsOpen
+    });
+  };
 
   updateCurrentNumOfPeople = (num, people) => {
     let newPeopleList = [...this.state.listOfParties, ...people];
     this.setState({
       currentNumOfPeople: Number(this.state.currentNumOfPeople) + Number(num),
-      listOfParties: newPeopleList
+      listOfParties: newPeopleList,
+      modalIsOpen: false,
+      currentNumOfPeople: newPeopleList.length
     });
   };
   render() {
@@ -97,8 +157,41 @@ class Cattery extends Component {
         />
       </svg>
     );
+
+    const plusIcon = (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        focusable="false"
+        data-prefix="fas"
+        data-icon="plus"
+        class="svg-inline--fa fa-plus fa-w-14"
+        role="img"
+        viewBox="0 0 448 512"
+      >
+        <path
+          fill="currentColor"
+          d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+        />
+      </svg>
+    );
+
     return (
       <div className="cattery-container">
+        {this.state.modalIsOpen ? (
+          <Modal click={this.handleModalToggle}>
+            <div id="number-of-people-container">
+              <AddParty
+                updateCurrentNumOfPeople={this.updateCurrentNumOfPeople}
+              />
+            </div>
+          </Modal>
+        ) : (
+          <span onClick={this.handleModalToggle} className="modal-btn">
+            <span className="text"> ADD PARTY</span>
+            <span className="btn"> {plusIcon}</span>
+          </span>
+        )}
         <div id="cattery-panel-col">
           <div id="time-and-people-container">
             <div id="current-time-wrapper" className="container">
@@ -114,15 +207,19 @@ class Cattery extends Component {
               <span className="open-spots">Active People</span>
             </div>
           </div>
+
           <PartySizeAvailability />
         </div>
         <div id="cattery-body-col">
-          <div id="number-of-people-container">
-            <AddParty
-              updateCurrentNumOfPeople={this.updateCurrentNumOfPeople}
-            />
-          </div>
+          <h1>Current Parties In Cattery ({this.state.currentNumOfPeople})</h1>
           <ListOfParties listOfParties={this.state.listOfParties} />
+
+          <div className="upcoming-reservations-container">
+            <h3>
+              Upcoming Reservations ({this.state.currentNumOfReservations})
+            </h3>
+            <ListOfParties listOfParties={this.state.listOfReservations} />
+          </div>
         </div>
       </div>
     );
