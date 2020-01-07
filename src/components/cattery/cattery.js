@@ -20,6 +20,7 @@ class Cattery extends Component {
 		currentTime: '2:10 PM',
 		listOfParties: [
 			// {
+			//    id: 123123,
 			// 	name: 'Carll',
 			// 	description: '1 person with black shirt, red hat',
 			// 	numberInParty: 2,
@@ -46,6 +47,7 @@ class Cattery extends Component {
 		]
 	};
 
+	//sets Current Time  and Num of People in each array
 	componentDidMount() {
 		let currentTime = formatAMPM(new Date()).toUpperCase();
 		function formatAMPM(date) {
@@ -66,18 +68,23 @@ class Cattery extends Component {
 		});
 	}
 
+	//Modal Toggle
 	handleModalToggle = () => {
 		this.setState({
 			modalIsOpen: !this.state.modalIsOpen
 		});
 	};
 
-	handleRemoveParty = (num, Party) => {
-		let newPartyList = [...this.state.listOfParties, ...Party];
+	handleRemoveParty = (id, numInParty) => {
+		let parties = this.state.listOfParties.filter(party => {
+			// console.log('partyId: ' + party.id);
+			// console.log('Id: ' + id);
+			return party.id !== id;
+		});
+
 		this.setState({
-			currentNumOfPeople: Number(this.state.currentNumOfPeople) + Number(num),
-			listOfParties: newPartyList,
-			modalIsOpen: false
+			listOfParties: parties,
+			currentNumOfPeople: this.state.currentNumOfPeople - numInParty
 		});
 	};
 
@@ -89,6 +96,7 @@ class Cattery extends Component {
 			modalIsOpen: false
 		});
 	};
+
 	render() {
 		const clockIcon = (
 			<svg
@@ -175,13 +183,18 @@ class Cattery extends Component {
 					<PartySizeAvailability />
 				</div>
 				<div id="cattery-body-col">
-					<h1>Current Parties In Cattery ({this.state.currentNumOfPeople})</h1>
-					<ListOfParties listOfParties={this.state.listOfParties} />
-
-					<div className="upcoming-reservations-container">
-						<h3>Upcoming Reservations ({this.state.currentNumOfReservations})</h3>
-						<ListOfParties listOfParties={this.state.listOfReservations} />
-					</div>
+					<ListOfParties
+						title="Current Parties In Cattery"
+						currentNumOfPeople={this.state.currentNumOfPeople}
+						listArray={this.state.listOfParties}
+						removeParty={this.handleRemoveParty}
+					/>
+					<ListOfParties
+						title="Upcoming Reservations"
+						currentNumOfPeople={this.state.currentNumOfReservations}
+						listArray={this.state.listOfReservations}
+						removeParty={this.handleRemoveParty}
+					/>
 				</div>
 			</div>
 		);

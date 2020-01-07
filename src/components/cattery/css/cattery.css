@@ -26,7 +26,7 @@
   color: #616c70;
 }
 
-#cattery-body-col .upcoming-reservations-container {
+#cattery-body-col .row-container + .row-container {
   margin-top: 40px;
   padding-top: 30px;
   border-top: 2px solid #cdc9c9b8;

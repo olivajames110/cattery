@@ -19,6 +19,7 @@ let personn = [
 
 class AddParty extends Component {
 	state = {
+		id: null,
 		name: null,
 		description: null,
 		numberInParty: 1,
@@ -48,7 +49,8 @@ class AddParty extends Component {
 
 		this.setState({
 			timeStart: startTime,
-			timeEnd: endTime
+			timeEnd: endTime,
+			id: Math.random() * 10
 		});
 	}
 

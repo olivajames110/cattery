@@ -5,4 +5,11 @@
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
 }
+
+.row-container .title {
+  font-size: 20px;
+  letter-spacing: .5;
+  font-weight: normal;
+  font-family: 'Work Sans', sans-serif;
+}
 /*# sourceMappingURL=listOfParties.css.map */
