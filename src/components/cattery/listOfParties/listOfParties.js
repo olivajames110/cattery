@@ -3,7 +3,7 @@ import './listOfParties.css';
 import PartyCard from './partyCard/partyCard';
 const ListOfParties = props => {
 	const peopleList = props.listArray.map(party => {
-		return <PartyCard removeParty={props.removeParty} party={party} />;
+		return <PartyCard key={party.id} onClick={props.onClick} party={party} />;
 	});
 
 	return (

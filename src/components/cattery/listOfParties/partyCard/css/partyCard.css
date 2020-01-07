@@ -200,6 +200,7 @@
   z-index: 1;
   -webkit-animation: progressAnimiation 2s linear infinite;
           animation: progressAnimiation 2s linear infinite;
+  max-width: 100%;
 }
 
 .fill:after {
