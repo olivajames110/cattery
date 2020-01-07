@@ -4,9 +4,9 @@
   margin-right: 35px;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 5fr 2.5fr;
-      grid-template-columns: 5fr 2.5fr;
-  width: 325px;
+  -ms-grid-columns: 5fr 3fr;
+      grid-template-columns: 5fr 3fr;
+  width: 350px;
   min-height: 150px;
   border-radius: 2px;
   background: #fbfbfb;
@@ -47,11 +47,13 @@
 }
 
 .party-wrapper .details-container #name {
-  margin-bottom: 10px;
-  font-size: 16px;
+  margin-bottom: 7px;
+  font-size: 15px;
   color: #424242;
   font-weight: bold;
   font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .party-wrapper .details-container #description .details-value {
@@ -71,13 +73,35 @@
 }
 
 .party-wrapper .details-container .sub-details-container #payment svg {
-  color: #6fa037;
-  width: 14px;
+  width: 7px;
+  margin-top: 2px;
 }
 
-.party-wrapper .time-remaining-container {
+.party-wrapper .details-container .edit-btn {
+  width: 14px;
+  position: absolute;
+  right: 5px;
+  top: 10px;
+  cursor: pointer;
+}
+
+.party-wrapper .time-remaining-cta-container {
+  background-color: #616c70;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  /* justify-content: center; */
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.party-wrapper .time-remaining-cta-container .time-remaining-container {
   position: relative;
-  background-color: #cacaca;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -89,25 +113,25 @@
       -ms-flex-align: center;
           align-items: center;
   height: 100%;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  width: 85%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   align-items: center;
-  background-color: #616c70;
   color: white;
 }
 
-.party-wrapper .time-remaining-container #title {
+.party-wrapper .time-remaining-cta-container .time-remaining-container #title {
   font-size: 12px;
   margin-bottom: 5px;
   max-width: 100px;
 }
 
-.party-wrapper .time-remaining-container #time {
+.party-wrapper .time-remaining-cta-container .time-remaining-container #time {
   font-size: 28px;
 }
 
-.party-wrapper .time-remaining-container #time-remaining {
+.party-wrapper .time-remaining-cta-container .time-remaining-container #time-remaining {
   text-align: center;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -118,7 +142,7 @@
           flex-direction: column;
 }
 
-.party-wrapper .time-remaining-container .time-start-end-container {
+.party-wrapper .time-remaining-cta-container .time-remaining-container .time-start-end-container {
   font-size: 12px;
   display: -ms-grid;
   display: grid;
@@ -127,7 +151,7 @@
   width: 100%;
 }
 
-.party-wrapper .time-remaining-container .time-start-end-container span {
+.party-wrapper .time-remaining-cta-container .time-remaining-container .time-start-end-container span {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -139,9 +163,32 @@
       justify-content: space-around;
 }
 
-.party-wrapper .time-remaining-container .time-start-end-container .detail-row {
+.party-wrapper .time-remaining-cta-container .time-remaining-container .time-start-end-container .detail-row {
   margin-top: 15px;
   text-align: center;
+}
+
+.party-wrapper .time-remaining-cta-container .cta-container {
+  width: 100%;
+  position: relative;
+}
+
+.party-wrapper .time-remaining-cta-container .cta-container button {
+  position: relative;
+  width: 100%;
+  border: none;
+  padding: 7px 0;
+  background-color: #6fa037;
+  color: white;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: .5px;
+  border: 3px solid #6fa037;
+}
+
+.party-wrapper .time-remaining-cta-container .cta-container button span {
+  z-index: 100;
 }
 
 .fill {
@@ -149,8 +196,16 @@
   position: absolute;
   left: 0;
   top: 0;
-  width: 100%;
+  height: 100%;
   z-index: 1;
+  -webkit-animation: progressAnimiation 2s linear infinite;
+          animation: progressAnimiation 2s linear infinite;
+}
+
+.fill:after {
+  content: '';
+  background-image: linear-gradient(-45deg, rgba(255, 255, 255, 0.125) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.125) 50%, rgba(255, 255, 255, 0.125) 75%, transparent 75%, transparent);
+  background-size: 35px 35px;
 }
 
 .reservation {
@@ -159,5 +214,23 @@
 
 .over-due {
   background-color: #f68e8e;
+}
+
+@-webkit-keyframes progressAnimiation {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 35px 35px;
+  }
+}
+
+@keyframes progressAnimiation {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 35px 35px;
+  }
 }
 /*# sourceMappingURL=partyCard.css.map */

@@ -2,29 +2,34 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&display=swap');
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 }
 
 html,
 body {
-    height: 100%;
-    font-family: 'Work Sans', sans-serif;
+	height: 100%;
+	font-family: 'Work Sans', sans-serif;
 }
 
 body {
-    /* padding: 20px; */
+	/* padding: 20px; */
 }
 
 h2 {
-    font-family: 'Oswald', sans-serif;
+	font-family: 'Oswald', sans-serif;
+	color: #4d4c4c;
 }
 
 h1 {
-    font-family: 'Work Sans', sans-serif;
+	font-family: 'Work Sans', sans-serif;
+	color: #4d4c4c;
 }
 
 /* h1 {
     font-family: 'Open Sans', sans-serif;
 } */
+button {
+	cursor: pointer;
+}
