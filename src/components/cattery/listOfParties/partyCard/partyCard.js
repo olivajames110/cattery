@@ -12,34 +12,43 @@ class PartyCard extends Component {
 	};
 
 	componentDidMount() {
-		this.handleStartCountdown();
+		if (!this.state.isReservation) {
+			this.interval = setInterval(() => {
+				let widthAmt = `${100 - 100 / (60 / this.state.timeRemaining)}%`;
+				console.log('LOOOOP');
+				this.setState({
+					timeRemaining: this.state.timeRemaining - 1,
+					width: widthAmt
+				});
+			}, 60000);
+		}
+	}
+
+	componentDidUpdate() {
+		// if (!this.state.isReservation) {
+		// 	this.handleStartCountdown();
+		// }
 	}
 
 	componentWillUnmount() {
 		// use intervalId from the state to clear the interval
 		console.log('Unmounted');
-		// clearInterval(this.state.intervalId);
+		clearInterval(this.interval);
 	}
 
-	handleStartCountdown = () => {
-		let timeStart = this.props.party.timeStart;
-
-		let currentTime = setInterval(() => {
-			let widthAmt = `${100 - 100 / (60 / this.state.timeRemaining)}%`;
-			console.log(widthAmt);
-			this.setState({
-				timeRemaining: this.state.timeRemaining - 1,
-				width: widthAmt
-			});
-		}, 60000);
-	};
+	handleStartCountdown = () => {};
 
 	handleCheckIn = () => {
 		console.log('CHECKED IN');
 
-		this.setState({
-			isReservation: false
-		});
+		this.setState(
+			{
+				isReservation: false
+			},
+			() => {
+				this.props.onClick(this.props.party.id, this.props.party.numberInParty);
+			}
+		);
 	};
 
 	handleComplete = () => {

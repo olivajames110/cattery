@@ -107,17 +107,39 @@ class Cattery extends Component {
 		});
 	};
 
-	handleCheckReservation = id => {
-		console.log('Checked In');
-		// let newPartyList = [...this.state.listOfParties, ...Party];
-		// this.setState({
-		// 	currentNumOfPeople: Number(this.state.currentNumOfPeople) + Number(num),
-		// 	listOfParties: newPartyList,
-		// 	modalIsOpen: false
-		// });
-		// if (isReservation) {
+	handleMoveParty = (id, currentListArray, listDestinationArray) => {
+		let party = this.state.currentListArray.filter(party => {
+			return party.id === id;
+		});
+	};
 
-		// }
+	handleCheckReservation = (id, numOfNewPeople) => {
+		console.log('Checked In' + id);
+		let newReservationList = this.state.listOfReservations.filter(party => {
+			return party.id !== id;
+		});
+
+		//Returns the party
+		let party = this.state.listOfReservations.filter(party => {
+			return party.id === id;
+		});
+
+		//Sets party reservation to false
+		party[0].isReservation = false;
+		console.log(JSON.stringify(party));
+
+		//Takes existing party list and adds new party
+		let newPartyList = [...this.state.listOfParties, ...party];
+
+		//Sets state for --Num of pople in the room --
+		this.setState({
+			currentNumOfPeople: Number(this.state.currentNumOfPeople) + Number(numOfNewPeople),
+			currentNumOfReservations: Number(this.state.currentNumOfReservations) - Number(numOfNewPeople),
+			listOfParties: newPartyList,
+			listOfReservations: newReservationList
+		});
+
+		// this.updateCurrentPartyLists()
 	};
 
 	updateCurrentPartyLists = (party, numOfNewPeople, isReservation) => {
@@ -131,7 +153,7 @@ class Cattery extends Component {
 		} else {
 			let newPartyList = [...this.state.listOfReservations, ...party];
 			this.setState({
-				currentNumOfPeople: Number(this.state.currentNumOfPeople) + Number(numOfNewPeople),
+				currentNumOfReservations: Number(this.state.currentNumOfReservations) + Number(numOfNewPeople),
 				listOfReservations: newPartyList,
 				modalIsOpen: false
 			});

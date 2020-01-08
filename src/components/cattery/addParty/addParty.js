@@ -60,8 +60,19 @@ class AddParty extends Component {
 	};
 
 	handleUpdateTime = time => {
+		console.log(time);
+		let endMeridiem;
+		if (time.hour <= 12) {
+			endMeridiem = 'pm';
+		} else {
+			endMeridiem = 'am';
+		}
+
+		let endTime = `${time.hour + 1}:${('0' + time.minute).slice(-2)}${endMeridiem}`;
 		this.setState({
-			reservationTime: time
+			reservationTime: `${time.formattedSimple}${time.meridiem}`,
+			// timeStart: time.formatted,
+			timeEnd: endTime
 		});
 	};
 
@@ -84,21 +95,6 @@ class AddParty extends Component {
 			[e.target.id]: e.target.value
 		});
 	};
-
-	// handleGetTime = () => {
-	// 	let currentTime = formatAMPM(new Date()).toUpperCase();
-	// 	function formatAMPM(date) {
-	// 		let hours = date.getHours();
-	// 		let minutes = date.getMinutes();
-	// 		let ampm = hours >= 12 ? 'pm' : 'am';
-	// 		hours = hours % 12;
-	// 		hours = hours ? hours : 12; // the hour '0' should be '12'
-	// 		minutes = minutes < 10 ? '0' + minutes : minutes;
-	// 		let currentTime = hours + ':' + minutes + ' ' + ampm;
-	// 		return currentTime;
-	// 	}
-	// 	this.setState({});
-	// };
 
 	render() {
 		const styles_absBnt = {
@@ -125,7 +121,7 @@ class AddParty extends Component {
 		const timeInputs = (
 			<div style={this.state.timeStart === null ? styles2 : styles} className="time-input-container">
 				{this.state.timeStart === null ? (
-					<TimeKeeper onChange={newTime => this.handleUpdateTime(newTime.formatted12)} />
+					<TimeKeeper onChange={newTime => this.handleUpdateTime(newTime)} />
 				) : (
 					<span className="current-time">{this.state.timeStart}</span>
 				)}
