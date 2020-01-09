@@ -201,12 +201,26 @@
   -webkit-animation: progressAnimiation 2s linear infinite;
           animation: progressAnimiation 2s linear infinite;
   max-width: 100%;
+  overflow: hidden;
+}
+
+.fill:before, .fill:after {
+  content: '';
+  position: absolute;
+  width: 1px;
+  top: -10px;
+  height: 15px;
+  right: 0;
+  background: #fdfdfd9e;
+  -webkit-box-shadow: 0 0 2px 1px #ffffff89;
+          box-shadow: 0 0 2px 1px #ffffff89;
+  -webkit-animation: glow 1000ms linear infinite normal;
+          animation: glow 1000ms linear infinite normal;
 }
 
 .fill:after {
-  content: '';
-  background-image: linear-gradient(-45deg, rgba(255, 255, 255, 0.125) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.125) 50%, rgba(255, 255, 255, 0.125) 75%, transparent 75%, transparent);
-  background-size: 35px 35px;
+  -webkit-animation-delay: 500ms;
+          animation-delay: 500ms;
 }
 
 .reservation {
@@ -232,6 +246,24 @@
   }
   100% {
     background-position: 35px 35px;
+  }
+}
+
+@-webkit-keyframes glow {
+  0% {
+    top: -10px;
+  }
+  100% {
+    top: 110%;
+  }
+}
+
+@keyframes glow {
+  0% {
+    top: -10px;
+  }
+  100% {
+    top: 110%;
   }
 }
 /*# sourceMappingURL=partyCard.css.map */

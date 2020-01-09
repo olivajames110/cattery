@@ -5,30 +5,25 @@ import { edit, checkMark, dollarSign } from '../../../../utils/icons/icons';
 class PartyCard extends Component {
 	state = {
 		timeRemaining: 60,
-		timeStart: this.props.party.timeStart,
-		timeEnd: this.props.party.timeEnd,
-		width: '0%',
-		isReservation: this.props.party.isReservation
+		width: '1%',
+		isReservation: null
 	};
 
 	componentDidMount() {
-		if (!this.state.isReservation) {
-			this.interval = setInterval(() => {
-				let widthAmt = `${100 - 100 / (60 / this.state.timeRemaining)}%`;
-				console.log('LOOOOP');
-				this.setState({
-					timeRemaining: this.state.timeRemaining - 1,
-					width: widthAmt
-				});
-			}, 60000);
+		this.setState({
+			isReservation: this.props.party.isReservation
+		});
+
+		if (!this.props.party.isReservation) {
+			this.handleStartCountdown();
 		}
 	}
 
-	componentDidUpdate() {
-		// if (!this.state.isReservation) {
-		// 	this.handleStartCountdown();
-		// }
-	}
+	// componentDidUpdate(prevProps) {
+	// 	if (this.state.isReservation !== prevProps.isReservation) {
+	// 		this.handleStartCountdown();
+	// 	}
+	// }
 
 	componentWillUnmount() {
 		// use intervalId from the state to clear the interval
@@ -36,19 +31,52 @@ class PartyCard extends Component {
 		clearInterval(this.interval);
 	}
 
-	handleStartCountdown = () => {};
+	handleStartCountdown = () => {
+		let d = 60000;
+		let t = 1000;
+		if (!this.state.isReservation) {
+			this.interval = setInterval(() => {
+				let widthAmt;
+				if (this.state.width === '100%') {
+					widthAmt = '100%';
+				} else {
+					widthAmt = `${100 - 100 / (61 / this.state.timeRemaining)}%`;
+				}
+				console.log('LOOOOP');
+				this.setState({
+					timeRemaining: this.state.timeRemaining - 1,
+					width: widthAmt
+				});
+			}, t);
+		} else {
+			this.setState({
+				width: '0%'
+			});
+		}
+	};
 
 	handleCheckIn = () => {
 		console.log('CHECKED IN');
-
-		this.setState(
-			{
-				isReservation: false
-			},
-			() => {
-				this.props.onClick(this.props.party.id, this.props.party.numberInParty);
-			}
-		);
+		if (this.state.isReservation) {
+			this.handleStartCountdown();
+			this.setState(
+				{
+					isReservation: false
+				},
+				() => {
+					this.props.onClick_checkReservation(this.props.party.id, this.props.party.numberInParty, false);
+				}
+			);
+		} else {
+			this.setState(
+				{
+					isReservation: false
+				},
+				() => {
+					this.props.onClick_checkReservation(this.props.party.id, this.props.party.numberInParty);
+				}
+			);
+		}
 	};
 
 	handleComplete = () => {
@@ -110,11 +138,11 @@ class PartyCard extends Component {
 						<div className="time-start-end-container">
 							<div className="detail-row" id="time-start">
 								<span className="details-title"> Start:</span>
-								<span className="details-value"> {this.state.timeStart}</span>
+								<span className="details-value"> {this.props.party.timeStart}</span>
 							</div>
 							<div className="detail-row" id="time-end">
 								<span className="details-title"> End:</span>
-								<span className="details-value"> {this.state.timeEnd}</span>
+								<span className="details-value"> {this.props.party.timeEnd}</span>
 							</div>
 						</div>
 					</div>
@@ -123,7 +151,11 @@ class PartyCard extends Component {
 							onClick={
 								this.state.isReservation
 									? () => this.handleCheckIn()
-									: () => this.props.onClick(this.props.party.id, this.props.party.numberInParty)
+									: () =>
+											this.props.onClick_remove(
+												this.props.party.id,
+												this.props.party.numberInParty
+											)
 							}
 							className="complete-btn"
 						>

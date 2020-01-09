@@ -157,48 +157,35 @@
 	z-index: 1;
 	animation: progressAnimiation 2s linear infinite;
 	max-width: 100%;
+	overflow: hidden;
+	// border-right: 4px solid red;
+	&:before,
 	&:after {
 		content: '';
-
-		background-image: linear-gradient(
-			-45deg,
-			rgba(255, 255, 255, .125) 25%,
-			transparent 25%,
-			transparent 50%,
-			rgba(255, 255, 255, .125) 50%,
-			rgba(255, 255, 255, .125) 75%,
-			transparent 75%,
-			transparent
-		);
-		background-size: 35px 35px;
+		position: absolute;
+		width: 1px;
+		top: -10px;
+		height: 15px;
+		right: 0;
+		background: #fdfdfd9e;
+		box-shadow: 0 0 2px 1px #ffffff89;
+		animation: glow 1000ms linear infinite normal;
+	}
+	&:before {
+		// background: #fff700;
+	}
+	&:after {
+		animation-delay: 500ms;
+		// background: #1f0b6d;
+		// animation: name duration timing-function delay iteration-count direction fill-mode;
 	}
 }
-
 .reservation {
 	background-color: #c9dfeb !important;
 }
-
 .over-due {
 	background-color: #f68e8e;
 }
-
-// .people-in-party-container {
-//     width: 100%;
-//     padding: 7px;
-//     background: rgb(214, 214, 214);
-//     position: relative;
-//     display: flex;
-
-//     .party {
-//         position: relative;
-//         width: 15px;
-//         height: 15px;
-//         border-radius: 50%;
-//         z-index: 2;
-//         background: white;
-//         margin: 0 7px;
-//     }
-// }
 
 @keyframes progressAnimiation {
 	0% {
@@ -206,5 +193,23 @@
 	}
 	100% {
 		background-position: 35px 35px;
+	}
+}
+@keyframes glow {
+	0% {
+		// width: 0px;
+		top: -10px;
+		// height: 2px;
+		// box-shadow: 0 0 4px 2px rgba(0, 128, 0, 0.101);
+	}
+	// 50% {
+	// 	width: 5px;
+	// 	height: 15px;
+	// }
+	100% {
+		// width: 0px;
+		// height: 2px;
+		top: 110%;
+		// box-shadow: 0 0 8px 4px rgba(5, 73, 5, 0.489);
 	}
 }

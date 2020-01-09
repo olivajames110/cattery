@@ -52,7 +52,7 @@ class Cattery extends Component {
 
 	//sets Current Time  and Num of People in each array
 	componentDidMount() {
-		let currentTime = formatAMPM(new Date()).toUpperCase();
+		let currentTime = formatAMPM(new Date());
 		function formatAMPM(date) {
 			let hours = date.getHours();
 			let minutes = date.getMinutes();
@@ -60,7 +60,7 @@ class Cattery extends Component {
 			hours = hours % 12;
 			hours = hours ? hours : 12; // the hour '0' should be '12'
 			minutes = minutes < 10 ? '0' + minutes : minutes;
-			let currentTime = hours + ':' + minutes + ' ' + ampm;
+			let currentTime = hours + ':' + minutes + '' + ampm;
 			return currentTime;
 		}
 		setInterval(this.getCurrentTime, 1000);
@@ -72,7 +72,7 @@ class Cattery extends Component {
 
 	getCurrentTime = () => {
 		console.log('Current Time');
-		let currentTime = formatAMPM(new Date()).toUpperCase();
+		let currentTime = formatAMPM(new Date());
 		function formatAMPM(date) {
 			let hours = date.getHours();
 			let minutes = date.getMinutes();
@@ -80,9 +80,17 @@ class Cattery extends Component {
 			hours = hours % 12;
 			hours = hours ? hours : 12; // the hour '0' should be '12'
 			minutes = minutes < 10 ? '0' + minutes : minutes;
-			let currentTime = hours + ':' + minutes + ' ' + ampm;
+			let currentTime = hours + ':' + minutes + '' + ampm;
 			return currentTime;
 		}
+
+		for (let i = 0; i < this.state.listOfReservations.length; i++) {
+			let party = this.state.listOfReservations;
+			if (party[i].timeStart === currentTime) {
+				this.handleMoveParty(party[i], this.state.listOfReservations, this.state.listOfParties);
+			}
+		}
+
 		this.setState({
 			currentTime: currentTime
 		});
@@ -96,9 +104,9 @@ class Cattery extends Component {
 	};
 
 	//Removes Party from list
-	handleRemoveParty = (id, numInParty, partyData) => {
+	handleRemoveParty = (partyObject, numInParty, isReservation) => {
 		let updatedParties = this.state.listOfParties.filter(party => {
-			return party.id !== id;
+			return party.id !== partyObject.id;
 		});
 
 		this.setState({
@@ -107,16 +115,32 @@ class Cattery extends Component {
 		});
 	};
 
-	handleMoveParty = (id, currentListArray, listDestinationArray) => {
-		let party = this.state.currentListArray.filter(party => {
-			return party.id === id;
+	handleMoveParty = (partyObject, currentListArray, listDestinationArray) => {
+		let newReservationList = currentListArray.filter(p => {
+			return p.id !== partyObject.id;
+		});
+
+		//Returns the party
+		let filteredParty = currentListArray.filter(p => {
+			return p.id === partyObject.id;
+		});
+
+		//Takes existing party list and adds new party
+		let newPartyList = [...listDestinationArray, ...filteredParty];
+
+		//Sets state for --Num of pople in the room --
+		this.setState({
+			currentNumOfPeople: Number(this.state.currentNumOfPeople) + Number(partyObject.numOfNewPeople),
+			currentNumOfReservations: Number(this.state.currentNumOfReservations) - Number(partyObject.numOfNewPeople),
+			listOfParties: newPartyList,
+			listOfReservations: newReservationList
 		});
 	};
 
-	handleCheckReservation = (id, numOfNewPeople) => {
+	handleCheckReservation = (id, numOfNewPeople, isReservation) => {
 		console.log('Checked In' + id);
 		let newReservationList = this.state.listOfReservations.filter(party => {
-			return party.id !== id;
+			return party.id !== id || [];
 		});
 
 		//Returns the party
@@ -160,6 +184,8 @@ class Cattery extends Component {
 		}
 	};
 
+	updatePartyData = (id, party) => {};
+
 	render() {
 		return (
 			<div className="cattery-container">
@@ -185,7 +211,7 @@ class Cattery extends Component {
 							<span className="icon">{usersIcon}</span>
 
 							<span className="primary-value  number-in-cattery">{this.state.currentNumOfPeople}</span>
-							<span className="open-spots">Active People</span>
+							<span className="open-spots">Spots Left</span>
 						</div>
 					</div>
 
@@ -196,13 +222,15 @@ class Cattery extends Component {
 						title="Current Parties In Cattery"
 						currentNumOfPeople={this.state.currentNumOfPeople}
 						listArray={this.state.listOfParties}
-						onClick={this.handleRemoveParty}
+						onClick_remove={this.handleRemoveParty}
+						onClick_checkReservation={this.handleCheckReservation}
 					/>
 					<ListOfParties
 						title="Upcoming Reservations"
 						currentNumOfPeople={this.state.currentNumOfReservations}
 						listArray={this.state.listOfReservations}
-						onClick={this.handleCheckReservation}
+						// onClick_remove={this.handleRemoveParty}
+						onClick_checkReservation={this.handleCheckReservation}
 					/>
 				</div>
 			</div>
