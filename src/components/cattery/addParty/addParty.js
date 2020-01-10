@@ -11,13 +11,11 @@ class AddParty extends Component {
 		description: null,
 		numberInParty: 1,
 		paid: true,
-		status: null,
-		timeRemaining: 60,
 		timeStart: null,
 		timeEnd: null,
-		width: '100%',
 		isReservation: false,
-		reservationTime: null
+		reservationTime: null,
+		reservationIsReady: null
 	};
 
 	componentDidMount() {
@@ -138,33 +136,55 @@ class AddParty extends Component {
 		return (
 			<div id="add-people-container">
 				<h2>Add Party</h2>
-				<div id="input-container-wrapper">
-					<Input onChange={this.onInputChange} id="name" label="Party Name:" type="text" />
-					<div id="input-container">
+				<div className="input-container-wrapper">
+					<Input
+						className="input-container"
+						onChange={this.onInputChange}
+						id="name"
+						label="Party Name:"
+						type="text"
+					/>
+					<div className="input-container">
 						<label>
 							Description
 							<textarea onChange={this.onInputChange} value={this.state.value} id="description" />
 						</label>
 					</div>
-					<div id="input-container">
+					<div id="num-of-people" className="input-container">
 						<label>Select # of People in Party:</label>
-						<select onChange={this.onInputChange} id="numberInParty" valuename="number-of-people">
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
-							<option value="6">6</option>
-							<option value="7">7</option>
-							<option value="8">8</option>
-							<option value="9">9</option>
-							<option value="10">10</option>
-							<option value="11">11</option>
-							<option value="12">12</option>
-							<option value="13">13</option>
-							<option value="14">14</option>
-							<option value="15">15</option>
-						</select>
+						<div className="select-option-container">
+							<div className="radio-container">
+								<label htmlFor="1">1</label>
+								<input id="1" name="1" type="radio" />
+							</div>
+							<div className="radio-container">
+								<label htmlFor="2">2</label>
+								<input id="2" name="2" type="radio" />
+							</div>
+							<div className="radio-container">
+								<label htmlFor="3">3</label>
+								<input id="3" name="3" type="radio" />
+							</div>
+
+							<div className="radio-container">
+								<label htmlFor="4">4</label>
+								<input id="4" name="4" type="radio" />
+							</div>
+
+							<select onChange={this.onInputChange} id="numberInParty" valuename="number-of-people">
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+								<option value="13">13</option>
+								<option value="14">14</option>
+								<option value="15">15</option>
+							</select>
+						</div>
 					</div>
 					<div id="walkIn-res__container">
 						<span className="title">Party Type</span>
@@ -208,7 +228,7 @@ class AddParty extends Component {
 
 					<div
 						onClick={() => this.addParty([this.state], this.state.numberInParty, this.state.isReservation)}
-						id="input-container-button"
+						className="input-container-button"
 					>
 						<span>Add Party</span>
 						<span>{plusIcon}</span>

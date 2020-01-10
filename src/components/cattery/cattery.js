@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AddParty from './addParty/addParty';
+import EditParty from './editParty/editParty';
 import ListOfParties from './listOfParties/listOfParties';
 import PartySizeAvailability from './partySizeAvailability/partySizeAvailability';
 import Modal from '../../utils/modal/modal';
@@ -47,7 +48,8 @@ class Cattery extends Component {
 			// 	timeEnd: '3:10',
 			// 	isReservation: true
 			// }
-		]
+		],
+		isEditMode: false
 	};
 
 	//sets Current Time  and Num of People in each array
@@ -86,14 +88,53 @@ class Cattery extends Component {
 
 		for (let i = 0; i < this.state.listOfReservations.length; i++) {
 			let party = this.state.listOfReservations;
+			party[i].reservationIsReady = true;
 			if (party[i].timeStart === currentTime) {
-				this.handleMoveParty(party[i], this.state.listOfReservations, this.state.listOfParties);
+				this.handleMoveParty(
+					party[i].id,
+					party[i].numberInParty,
+					this.state.listOfReservations,
+					this.state.listOfParties
+				);
 			}
 		}
 
 		this.setState({
 			currentTime: currentTime
 		});
+	};
+
+	handleGetTimeStartTimeEnd = id => {
+		let startTime = formatAMPM(new Date(), 0);
+		let endTime = formatAMPM(new Date(), 1);
+		function formatAMPM(date, hourOffset, minOffset) {
+			let hours = date.getHours() + hourOffset;
+			let minutes = date.getMinutes();
+			let ampm = hours >= 12 ? 'pm' : 'am';
+			hours = hours % 12;
+			hours = hours ? hours : 12; // the hour '0' should be '12'
+			minutes = minutes < 10 ? '0' + minutes : minutes;
+			let startTime = hours + ':' + minutes + '' + ampm;
+			return startTime;
+		}
+
+		let timeStartTimeEnd = {
+			timeStart: startTime,
+			timeEnd: endTime
+		};
+
+		return timeStartTimeEnd;
+	};
+
+	handleUpdateTimes = id => {
+		let newTimes = this.handleGetTimeStartTimeEnd();
+		let party = this.state.listOfParties.filter(party => {
+			return party.id === id;
+		});
+		party[0].timeStart = newTimes.timeStart;
+		party[0].timeEnd = newTimes.timeEnd;
+
+		console.log(newTimes, party);
 	};
 
 	//Modal Toggle
@@ -104,9 +145,9 @@ class Cattery extends Component {
 	};
 
 	//Removes Party from list
-	handleRemoveParty = (partyObject, numInParty, isReservation) => {
+	handleRemoveParty = (id, numInParty, isReservation) => {
 		let updatedParties = this.state.listOfParties.filter(party => {
-			return party.id !== partyObject.id;
+			return party.id !== id;
 		});
 
 		this.setState({
@@ -115,42 +156,46 @@ class Cattery extends Component {
 		});
 	};
 
-	handleMoveParty = (partyObject, currentListArray, listDestinationArray) => {
-		let newReservationList = currentListArray.filter(p => {
-			return p.id !== partyObject.id;
-		});
-
+	handleMoveParty = (id, numOfNewPeople, currentListArray, listDestinationArray) => {
 		//Returns the party
 		let filteredParty = currentListArray.filter(p => {
-			return p.id === partyObject.id;
+			return p.id === id;
+		});
+
+		let filteredCurrentListArray = currentListArray.filter(p => {
+			return p.id !== id;
 		});
 
 		//Takes existing party list and adds new party
-		let newPartyList = [...listDestinationArray, ...filteredParty];
+		let newlistDestinationArray = [...listDestinationArray, ...filteredParty];
 
 		//Sets state for --Num of pople in the room --
 		this.setState({
-			currentNumOfPeople: Number(this.state.currentNumOfPeople) + Number(partyObject.numOfNewPeople),
-			currentNumOfReservations: Number(this.state.currentNumOfReservations) - Number(partyObject.numOfNewPeople),
-			listOfParties: newPartyList,
-			listOfReservations: newReservationList
+			currentNumOfPeople: Number(this.state.currentNumOfPeople) + Number(numOfNewPeople),
+			currentNumOfReservations: Number(this.state.currentNumOfReservations) - Number(numOfNewPeople),
+			listOfParties: newlistDestinationArray,
+			listOfReservations: filteredCurrentListArray
 		});
 	};
 
 	handleCheckReservation = (id, numOfNewPeople, isReservation) => {
 		console.log('Checked In' + id);
-		let newReservationList = this.state.listOfReservations.filter(party => {
-			return party.id !== id || [];
-		});
-
 		//Returns the party
 		let party = this.state.listOfReservations.filter(party => {
 			return party.id === id;
 		});
 
+		let newReservationList = this.state.listOfReservations.filter(party => {
+			return party.id !== id;
+		});
+
 		//Sets party reservation to false
+		let newTimes = this.handleGetTimeStartTimeEnd();
 		party[0].isReservation = false;
+		party[0].timeStart = newTimes.timeStart;
+		party[0].timeEnd = newTimes.timeEnd;
 		console.log(JSON.stringify(party));
+		console.log(newTimes);
 
 		//Takes existing party list and adds new party
 		let newPartyList = [...this.state.listOfParties, ...party];
@@ -184,16 +229,56 @@ class Cattery extends Component {
 		}
 	};
 
-	updatePartyData = (id, party) => {};
+	updatePartyData = (id, targetKey, value) => {
+		let party = this.getActiveParty(id);
+		party[0][targetKey] = value;
+		return party;
+	};
+
+	getActiveParty = id => {
+		let party;
+
+		let p1 = this.state.listOfParties.filter(party => {
+			return party.id === id;
+		});
+
+		let p2 = this.state.listOfReservations.filter(party => {
+			return party.id === id;
+		});
+
+		if (typeof p1[0] !== typeof undefined) {
+			party = p1;
+		}
+		if (typeof p2[0] !== typeof undefined) {
+			party = p2;
+		}
+
+		return party;
+	};
+
+	handleEditModal = id => {
+		this.handleModalToggle();
+		this.setState({
+			isEditMode: !this.state.isEditMode
+		});
+	};
 
 	render() {
+		const addUser = (
+			<div id="number-of-people-container">
+				<AddParty updateCurrentPartyLists={this.updateCurrentPartyLists} />
+			</div>
+		);
+
 		return (
 			<div className="cattery-container">
 				{this.state.modalIsOpen ? (
 					<Modal click={this.handleModalToggle}>
-						<div id="number-of-people-container">
-							<AddParty updateCurrentPartyLists={this.updateCurrentPartyLists} />
-						</div>
+						{!this.state.isEditMode ? (
+							addUser
+						) : (
+							<EditParty party={'party'} updatePartyData={this.updatePartyData} />
+						)}
 					</Modal>
 				) : (
 					<span onClick={this.handleModalToggle} className="modal-btn">
@@ -224,13 +309,19 @@ class Cattery extends Component {
 						listArray={this.state.listOfParties}
 						onClick_remove={this.handleRemoveParty}
 						onClick_checkReservation={this.handleCheckReservation}
+						handleUpdateTimes={this.handleUpdateTimes}
+						updatePartyData={this.updatePartyData}
+						handleEditModal={this.handleEditModal}
 					/>
 					<ListOfParties
 						title="Upcoming Reservations"
 						currentNumOfPeople={this.state.currentNumOfReservations}
 						listArray={this.state.listOfReservations}
-						// onClick_remove={this.handleRemoveParty}
+						onClick_remove={this.handleRemoveParty}
 						onClick_checkReservation={this.handleCheckReservation}
+						handleUpdateTimes={this.handleUpdateTimes}
+						updatePartyData={this.updatePartyData}
+						handleEditModal={this.handleEditModal}
 					/>
 				</div>
 			</div>

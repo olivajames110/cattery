@@ -2,11 +2,11 @@
   width: 100%;
 }
 
-#input-container-wrapper {
+.input-container-wrapper {
   position: relative;
 }
 
-#input-container-wrapper #input-container {
+.input-container-wrapper .input-container {
   display: block;
   margin-top: 20px;
   -webkit-box-orient: vertical;
@@ -18,9 +18,9 @@
           justify-content: space-between;
 }
 
-#input-container-wrapper #input-container input,
-#input-container-wrapper #input-container textarea,
-#input-container-wrapper #input-container select {
+.input-container-wrapper .input-container input[type='text'],
+.input-container-wrapper .input-container textarea,
+.input-container-wrapper .input-container select {
   padding: 12.5px 10px;
   border: 2px solid #cac8c8a6;
   border-radius: 2px;
@@ -28,22 +28,22 @@
   width: 100%;
 }
 
-#input-container-wrapper #input-container input:focus,
-#input-container-wrapper #input-container textarea:focus,
-#input-container-wrapper #input-container select:focus {
+.input-container-wrapper .input-container input[type='text']:focus,
+.input-container-wrapper .input-container textarea:focus,
+.input-container-wrapper .input-container select:focus {
   outline: 0.9px solid #0067734a;
 }
 
-#input-container-wrapper #input-container label,
-#input-container-wrapper #walkIn-res__container .title,
-#input-container-wrapper #payment-container .title {
+.input-container-wrapper .input-container label,
+.input-container-wrapper #walkIn-res__container .title,
+.input-container-wrapper #payment-container .title {
   font-family: 'Open Sans', sans-serif;
   font-weight: bold;
   font-size: 13px;
   color: #4d4c4c;
 }
 
-#input-container-wrapper #input-container-button {
+.input-container-wrapper .input-container-button {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -65,22 +65,42 @@
   cursor: pointer;
 }
 
-#input-container-wrapper #input-container-button span {
+.input-container-wrapper .input-container-button span {
   font-size: 16px;
   margin-right: 10px;
 }
 
-#input-container-wrapper #input-container-button svg {
+.input-container-wrapper .input-container-button svg {
   margin-top: 3px;
   color: white;
   width: 14px;
 }
 
-#input-container-wrapper #input-container-button:hover {
+.input-container-wrapper .input-container-button:hover {
   background-color: #4da54d;
 }
 
-#input-container-wrapper textarea {
+.input-container-wrapper .select-option-container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[5];
+      grid-template-columns: repeat(5, 1fr);
+}
+
+.input-container-wrapper .select-option-container .radio-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  width: 70%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.input-container-wrapper textarea {
   display: inherit;
   resize: none;
   width: 240px;

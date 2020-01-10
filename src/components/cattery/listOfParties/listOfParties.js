@@ -6,9 +6,11 @@ const ListOfParties = props => {
 		return (
 			<PartyCard
 				key={party.id}
-				onClick_checkReservation={props.onClick_checkReservation}
 				onClick_remove={props.onClick_remove}
+				onClick_checkReservation={props.onClick_checkReservation}
+				handleUpdateTimes={props.handleUpdateTimes}
 				party={party}
+				handleEditModal={props.handleEditModal}
 			/>
 		);
 	});

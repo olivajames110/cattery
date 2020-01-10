@@ -5,17 +5,17 @@
 	// box-shadow: 1px 1px 3px 0px #00000029;
 }
 
-#input-container-wrapper {
+.input-container-wrapper {
 	position: relative;
 
-	#input-container {
+	.input-container {
 		display: block;
 		margin-top: 20px;
 		// display: flex;
 		flex-direction: column;
 		justify-content: space-between;
 
-		input,
+		input[type='text'],
 		textarea,
 		select {
 			padding: 12.5px 10px;
@@ -32,7 +32,7 @@
 		}
 	}
 
-	#input-container label,
+	.input-container label,
 	#walkIn-res__container .title,
 	#payment-container .title {
 		font-family: 'Open Sans', sans-serif;
@@ -42,7 +42,7 @@
 	}
 
 	//Submit Button
-	#input-container-button {
+	.input-container-button {
 		// position: absolute;
 		// right: 0;
 		display: flex;
@@ -76,12 +76,28 @@
 		}
 	}
 
+	.select-option-container {
+		display: grid;
+		grid-template-columns: repeat(5, 1fr);
+		.radio-container {
+			display: flex;
+			justify-content: space-evenly;
+			width: 70%;
+			align-items: center;
+		}
+	}
+
 	textarea {
 		display: inherit;
 		resize: none;
 		width: 240px;
 	}
 }
+
+// #num-of-people {
+// 	display: grid;
+// 	grid-template-columns: repeat(6, 1fr);
+// }
 
 #walkIn-res__container,
 #payment-container {

@@ -6,12 +6,16 @@ class PartyCard extends Component {
 	state = {
 		timeRemaining: 60,
 		width: '1%',
-		isReservation: null
+		isReservation: null,
+		reservationIsReady: null,
+		isPaid: null
 	};
 
 	componentDidMount() {
 		this.setState({
-			isReservation: this.props.party.isReservation
+			isReservation: this.props.party.isReservation,
+			reservationIsReady: this.props.party.reservationIsReady,
+			isPaid: this.props.party.paid
 		});
 
 		if (!this.props.party.isReservation) {
@@ -33,7 +37,7 @@ class PartyCard extends Component {
 
 	handleStartCountdown = () => {
 		let d = 60000;
-		let t = 1000;
+		let t = 1500;
 		if (!this.state.isReservation) {
 			this.interval = setInterval(() => {
 				let widthAmt;
@@ -55,33 +59,40 @@ class PartyCard extends Component {
 		}
 	};
 
-	handleCheckIn = () => {
-		console.log('CHECKED IN');
-		if (this.state.isReservation) {
-			this.handleStartCountdown();
+	handleButtonClick = () => {
+		if (!this.state.isReservation) {
+			this.props.onClick_remove(this.props.party.id, this.props.party.numberInParty);
+		} else if (this.state.isReservation && this.state.reservationIsReady) {
 			this.setState(
 				{
 					isReservation: false
 				},
 				() => {
-					this.props.onClick_checkReservation(this.props.party.id, this.props.party.numberInParty, false);
+					this.props.handleEditModal(this.props.id);
+					this.props.handleUpdateTimes(this.props.party.id);
+					this.handleStartCountdown();
 				}
 			);
-		} else {
+		} else if (this.state.isReservation && !this.state.reservationIsReady) {
 			this.setState(
 				{
-					isReservation: false
+					isReservation: false,
+					reservationIsReady: true
 				},
+
 				() => {
+					this.props.handleEditModal(this.props.id);
 					this.props.onClick_checkReservation(this.props.party.id, this.props.party.numberInParty);
 				}
 			);
 		}
+
+		console.log('CHECKED IN');
 	};
 
-	handleComplete = () => {
-		console.log('Complete');
-		// this.handleStartCountdown();
+	handleIsPaidToggle = () => {
+		this.props.updatePartyData(this.props.party.id, 'paid', !this.state.isPaid);
+		this.setState({ isPaid: !this.state.isPaid });
 	};
 
 	handleFill = () => {
@@ -91,6 +102,18 @@ class PartyCard extends Component {
 	};
 
 	render() {
+		const {
+			id,
+			name,
+			description,
+			numberInParty,
+			paid,
+			isReservation,
+			reservationIsReady,
+			timeStart,
+			timeEnd
+		} = this.props.party;
+
 		return (
 			<div
 				style={{
@@ -101,16 +124,16 @@ class PartyCard extends Component {
 				<div className="details-container">
 					<span className="edit-btn">{edit}</span>
 					<div className="detail-row" id="name">
-						Party Name: {this.props.party.name}
+						Party Name: {name}
 					</div>
 					<div className="detail-row" id="description">
 						<span className="details-title">Description:</span>
-						<span className="details-value">{this.props.party.description}</span>
+						<span className="details-value">{description}</span>
 					</div>
 					<div className="sub-details-container">
 						<div className="detail-row" id="number-in-party">
 							<span className="details-title">Size:</span>
-							<span className="details-value">{this.props.party.numberInParty}</span>
+							<span className="details-value">{numberInParty}</span>
 						</div>
 						<div className="detail-row" id="status">
 							<span className="details-title">Status:</span>
@@ -118,10 +141,16 @@ class PartyCard extends Component {
 								{this.state.isReservation ? 'Reservation' : 'In Room'}
 							</span>
 						</div>
-						<div className="detail-row" id="payment">
+						<div
+							onClick={() => {
+								this.handleIsPaidToggle();
+							}}
+							className="detail-row"
+							id="payment"
+						>
 							<span className="details-title">Paid:</span>
 							<span
-								style={{ color: this.props.party.paid ? '#6fa037' : '#c1c0c0' }}
+								style={{ color: this.state.isPaid ? '#6fa037' : '#c1c0c0' }}
 								className="details-value"
 							>
 								{dollarSign}
@@ -138,25 +167,19 @@ class PartyCard extends Component {
 						<div className="time-start-end-container">
 							<div className="detail-row" id="time-start">
 								<span className="details-title"> Start:</span>
-								<span className="details-value"> {this.props.party.timeStart}</span>
+								<span className="details-value"> {timeStart}</span>
 							</div>
 							<div className="detail-row" id="time-end">
 								<span className="details-title"> End:</span>
-								<span className="details-value"> {this.props.party.timeEnd}</span>
+								<span className="details-value"> {timeEnd}</span>
 							</div>
 						</div>
 					</div>
 					<div className="cta-container">
 						<button
-							onClick={
-								this.state.isReservation
-									? () => this.handleCheckIn()
-									: () =>
-											this.props.onClick_remove(
-												this.props.party.id,
-												this.props.party.numberInParty
-											)
-							}
+							onClick={() => {
+								this.handleButtonClick();
+							}}
 							className="complete-btn"
 						>
 							<span>{this.state.isReservation ? 'Check-In' : 'Complete'}</span>
