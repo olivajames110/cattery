@@ -10,7 +10,8 @@ const ListOfParties = props => {
 				onClick_checkReservation={props.onClick_checkReservation}
 				handleUpdateTimes={props.handleUpdateTimes}
 				party={party}
-				handleEditModal={props.handleEditModal}
+				updatePartyData={props.updatePartyData}
+				handleEditModalToggle={props.handleEditModalToggle}
 			/>
 		);
 	});

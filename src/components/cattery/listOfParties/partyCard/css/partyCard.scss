@@ -58,6 +58,8 @@
 				// color: #6fa037;
 				width: 7px;
 				margin-top: 2px;
+				cursor: pointer;
+				transition: 800ms;
 			}
 		}
 
@@ -158,6 +160,7 @@
 	animation: progressAnimiation 2s linear infinite;
 	max-width: 100%;
 	overflow: hidden;
+	transition: 1s ease-in;
 	// border-right: 4px solid red;
 	&:before,
 	&:after {

@@ -33,3 +33,8 @@ h1 {
 button {
 	cursor: pointer;
 }
+
+input[type="text"] {
+	-webkit-appearance: none;
+	border-radius: 0;
+}

@@ -51,7 +51,7 @@ class PartyCard extends Component {
 					timeRemaining: this.state.timeRemaining - 1,
 					width: widthAmt
 				});
-			}, t);
+			}, d);
 		} else {
 			this.setState({
 				width: '0%'
@@ -68,7 +68,7 @@ class PartyCard extends Component {
 					isReservation: false
 				},
 				() => {
-					this.props.handleEditModal(this.props.id);
+					this.props.handleEditModalToggle(this.props.party.id);
 					this.props.handleUpdateTimes(this.props.party.id);
 					this.handleStartCountdown();
 				}
@@ -81,7 +81,7 @@ class PartyCard extends Component {
 				},
 
 				() => {
-					this.props.handleEditModal(this.props.id);
+					this.props.handleEditModalToggle(this.props.party.id);
 					this.props.onClick_checkReservation(this.props.party.id, this.props.party.numberInParty);
 				}
 			);
@@ -122,7 +122,6 @@ class PartyCard extends Component {
 				className={`party-wrapper ${this.state.isReservation ? 'reservation' : ''}`}
 			>
 				<div className="details-container">
-					<span className="edit-btn">{edit}</span>
 					<div className="detail-row" id="name">
 						Party Name: {name}
 					</div>

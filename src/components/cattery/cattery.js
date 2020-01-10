@@ -19,6 +19,7 @@ class Cattery extends Component {
 		modalIsOpen: false,
 		currentNumOfPeople: 0,
 		currentNumOfReservations: 0,
+		selectedPartyId: null,
 		currentTime: '2:10 PM',
 		listOfParties: [
 			// {
@@ -256,10 +257,11 @@ class Cattery extends Component {
 		return party;
 	};
 
-	handleEditModal = id => {
+	handleEditModalToggle = id => {
 		this.handleModalToggle();
 		this.setState({
-			isEditMode: !this.state.isEditMode
+			isEditMode: !this.state.isEditMode,
+			currentPartyId: id || null
 		});
 	};
 
@@ -277,7 +279,11 @@ class Cattery extends Component {
 						{!this.state.isEditMode ? (
 							addUser
 						) : (
-							<EditParty party={'party'} updatePartyData={this.updatePartyData} />
+							<EditParty
+								partyId={this.state.currentPartyId}
+								updatePartyData={this.updatePartyData}
+								handleEditModalToggle={this.handleEditModalToggle}
+							/>
 						)}
 					</Modal>
 				) : (
@@ -295,7 +301,9 @@ class Cattery extends Component {
 						<div id="current-number-of-people-wrapper">
 							<span className="icon">{usersIcon}</span>
 
-							<span className="primary-value  number-in-cattery">{this.state.currentNumOfPeople}</span>
+							<span className="primary-value  number-in-cattery">
+								{15 + -+this.state.currentNumOfPeople}
+							</span>
 							<span className="open-spots">Spots Left</span>
 						</div>
 					</div>
@@ -304,14 +312,14 @@ class Cattery extends Component {
 				</div>
 				<div id="cattery-body-col">
 					<ListOfParties
-						title="Current Parties In Cattery"
+						title="Currently In Cattery"
 						currentNumOfPeople={this.state.currentNumOfPeople}
 						listArray={this.state.listOfParties}
 						onClick_remove={this.handleRemoveParty}
 						onClick_checkReservation={this.handleCheckReservation}
 						handleUpdateTimes={this.handleUpdateTimes}
 						updatePartyData={this.updatePartyData}
-						handleEditModal={this.handleEditModal}
+						handleEditModalToggle={this.handleEditModalToggle}
 					/>
 					<ListOfParties
 						title="Upcoming Reservations"
@@ -321,7 +329,7 @@ class Cattery extends Component {
 						onClick_checkReservation={this.handleCheckReservation}
 						handleUpdateTimes={this.handleUpdateTimes}
 						updatePartyData={this.updatePartyData}
-						handleEditModal={this.handleEditModal}
+						handleEditModalToggle={this.handleEditModalToggle}
 					/>
 				</div>
 			</div>

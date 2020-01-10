@@ -14,6 +14,11 @@ class EditParty extends Component {
 		});
 	};
 
+	handleSubmit = () => {
+		this.props.updatePartyData(this.props.partyId, 'description', this.state.description);
+		this.props.handleEditModalToggle();
+	};
+
 	render() {
 		return (
 			<div className="edit-party-container">
@@ -26,10 +31,7 @@ class EditParty extends Component {
 						</label>
 					</div>
 
-					<div
-						onClick={() => this.props.updatePartyData(this.props.id, 'description', this.state.description)}
-						className="input-container-button"
-					>
+					<div onClick={() => this.handleSubmit()} className="input-container-button">
 						<span>Add Party</span>
 						<span>{plusIcon}</span>
 					</div>
