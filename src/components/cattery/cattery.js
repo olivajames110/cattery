@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import AddParty from './addParty/addParty';
-import EditParty from './editParty/editParty';
-import ListOfParties from './listOfParties/listOfParties';
-import PartySizeAvailability from './partySizeAvailability/partySizeAvailability';
-import Modal from '../../utils/modal/modal';
-import './css/cattery.css';
-import { clockIcon, usersIcon, plusIcon } from '../../utils/icons/icons';
+import React, { Component } from "react";
+import AddParty from "./addParty/addParty";
+import EditParty from "./editParty/editParty";
+import ListOfParties from "./listOfParties/listOfParties";
+import PartySizeAvailability from "./partySizeAvailability/partySizeAvailability";
+import Modal from "../../utils/modal/modal";
+import "./css/cattery.css";
+import { clockIcon, usersIcon, plusIcon } from "../../utils/icons/icons";
 // Todo
 
 // -- Complete functionality
@@ -15,326 +15,358 @@ import { clockIcon, usersIcon, plusIcon } from '../../utils/icons/icons';
 
 //house timer here
 class Cattery extends Component {
-	state = {
-		modalIsOpen: false,
-		currentNumOfPeople: 0,
-		currentNumOfReservations: 0,
-		selectedPartyId: null,
-		currentTime: '2:10 PM',
-		listOfParties: [
-			// {
-			// 	id: 111,
-			// 	name: 'Test',
-			// 	description: null,
-			// 	numberInParty: 5,
-			// 	paid: true,
-			// 	status: null,
-			// 	timeRemaining: 60,
-			// 	timeStart: null,
-			// 	timeEnd: null,
-			// 	width: '100%',
-			// 	isReservation: false,
-			// 	reservationTime: null
-			// }
-		],
-		listOfReservations: [
-			// {
-			// 	name: 'Carll',
-			// 	description: '1 person with black shirt, red hat',
-			// 	numberInParty: 2,
-			// 	paid: true,
-			// 	status: 'In Room',
-			// 	timeRemaining: 60,
-			// 	timeStart: '2:10',
-			// 	timeEnd: '3:10',
-			// 	isReservation: true
-			// }
-		],
-		isEditMode: false
-	};
+  state = {
+    countDownSpeed: 60000,
+    modalIsOpen: false,
+    currentNumOfPeople: 0,
+    currentNumOfReservations: 0,
+    selectedPartyId: null,
+    currentTime: "2:10 PM",
+    listOfParties: [
+      // {
+      // 	id: 111,
+      // 	name: 'Test',
+      // 	description: null,
+      // 	numberInParty: 5,
+      // 	paid: true,
+      // 	status: null,
+      // 	timeRemaining: 60,
+      // 	timeStart: null,
+      // 	timeEnd: null,
+      // 	width: '100%',
+      // 	isReservation: false,
+      // 	reservationTime: null
+      // }
+    ],
+    listOfReservations: [
+      // {
+      // 	name: 'Carll',
+      // 	description: '1 person with black shirt, red hat',
+      // 	numberInParty: 2,
+      // 	paid: true,
+      // 	status: 'In Room',
+      // 	timeRemaining: 60,
+      // 	timeStart: '2:10',
+      // 	timeEnd: '3:10',
+      // 	isReservation: true
+      // }
+    ],
+    isEditMode: false
+  };
 
-	//sets Current Time  and Num of People in each array
-	componentDidMount() {
-		let currentTime = formatAMPM(new Date());
-		function formatAMPM(date) {
-			let hours = date.getHours();
-			let minutes = date.getMinutes();
-			let ampm = hours >= 12 ? 'pm' : 'am';
-			hours = hours % 12;
-			hours = hours ? hours : 12; // the hour '0' should be '12'
-			minutes = minutes < 10 ? '0' + minutes : minutes;
-			let currentTime = hours + ':' + minutes + '' + ampm;
-			return currentTime;
-		}
-		setInterval(this.getCurrentTime, 1000);
+  //sets Current Time  and Num of People in each array
+  componentDidMount() {
+    let currentTime = formatAMPM(new Date());
+    function formatAMPM(date) {
+      let hours = date.getHours();
+      let minutes = date.getMinutes();
+      let ampm = hours >= 12 ? "pm" : "am";
+      hours = hours % 12;
+      hours = hours ? hours : 12; // the hour '0' should be '12'
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      let currentTime = hours + ":" + minutes + "" + ampm;
+      return currentTime;
+    }
+    setInterval(this.getCurrentTime, 1000);
 
-		this.setState({
-			currentTime: currentTime
-		});
-	}
+    this.setState({
+      currentTime: currentTime
+    });
+  }
 
-	getCurrentTime = () => {
-		console.log('Current Time');
-		let currentTime = formatAMPM(new Date());
-		function formatAMPM(date) {
-			let hours = date.getHours();
-			let minutes = date.getMinutes();
-			let ampm = hours >= 12 ? 'pm' : 'am';
-			hours = hours % 12;
-			hours = hours ? hours : 12; // the hour '0' should be '12'
-			minutes = minutes < 10 ? '0' + minutes : minutes;
-			let currentTime = hours + ':' + minutes + '' + ampm;
-			return currentTime;
-		}
+  getCurrentTime = () => {
+    console.log("Current Time");
+    let currentTime = formatAMPM(new Date());
+    function formatAMPM(date) {
+      let hours = date.getHours();
+      let minutes = date.getMinutes();
+      let ampm = hours >= 12 ? "pm" : "am";
+      hours = hours % 12;
+      hours = hours ? hours : 12; // the hour '0' should be '12'
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      let currentTime = hours + ":" + minutes + "" + ampm;
+      return currentTime;
+    }
 
-		for (let i = 0; i < this.state.listOfReservations.length; i++) {
-			let party = this.state.listOfReservations;
-			party[i].reservationIsReady = true;
-			if (party[i].timeStart === currentTime) {
-				this.handleMoveParty(
-					party[i].id,
-					party[i].numberInParty,
-					this.state.listOfReservations,
-					this.state.listOfParties
-				);
-			}
-		}
+    for (let i = 0; i < this.state.listOfReservations.length; i++) {
+      let party = this.state.listOfReservations;
+      party[i].reservationIsReady = true;
+      if (party[i].timeStart === currentTime) {
+        this.handleMoveParty(
+          party[i].id,
+          party[i].numberInParty,
+          this.state.listOfReservations,
+          this.state.listOfParties
+        );
+      }
+    }
 
-		this.setState({
-			currentTime: currentTime
-		});
-	};
+    this.setState({
+      currentTime: currentTime
+    });
+  };
 
-	handleGetTimeStartTimeEnd = id => {
-		let startTime = formatAMPM(new Date(), 0);
-		let endTime = formatAMPM(new Date(), 1);
-		function formatAMPM(date, hourOffset, minOffset) {
-			let hours = date.getHours() + hourOffset;
-			let minutes = date.getMinutes();
-			let ampm = hours >= 12 ? 'pm' : 'am';
-			hours = hours % 12;
-			hours = hours ? hours : 12; // the hour '0' should be '12'
-			minutes = minutes < 10 ? '0' + minutes : minutes;
-			let startTime = hours + ':' + minutes + '' + ampm;
-			return startTime;
-		}
+  handleGetTimeStartTimeEnd = id => {
+    let startTime = formatAMPM(new Date(), 0);
+    let endTime = formatAMPM(new Date(), 1);
+    function formatAMPM(date, hourOffset, minOffset) {
+      let hours = date.getHours() + hourOffset;
+      let minutes = date.getMinutes();
+      let ampm = hours >= 12 ? "pm" : "am";
+      hours = hours % 12;
+      hours = hours ? hours : 12; // the hour '0' should be '12'
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      let startTime = hours + ":" + minutes + "" + ampm;
+      return startTime;
+    }
 
-		let timeStartTimeEnd = {
-			timeStart: startTime,
-			timeEnd: endTime
-		};
+    let timeStartTimeEnd = {
+      timeStart: startTime,
+      timeEnd: endTime
+    };
 
-		return timeStartTimeEnd;
-	};
+    return timeStartTimeEnd;
+  };
 
-	handleUpdateTimes = id => {
-		let newTimes = this.handleGetTimeStartTimeEnd();
-		let party = this.state.listOfParties.filter(party => {
-			return party.id === id;
-		});
-		party[0].timeStart = newTimes.timeStart;
-		party[0].timeEnd = newTimes.timeEnd;
+  handleUpdateTimes = id => {
+    let newTimes = this.handleGetTimeStartTimeEnd();
+    let party = this.state.listOfParties.filter(party => {
+      return party.id === id;
+    });
+    party[0].timeStart = newTimes.timeStart;
+    party[0].timeEnd = newTimes.timeEnd;
 
-		console.log(newTimes, party);
-	};
+    console.log(newTimes, party);
+  };
 
-	//Modal Toggle
-	handleModalToggle = () => {
-		this.setState({
-			modalIsOpen: !this.state.modalIsOpen
-		});
-	};
+  //Modal Toggle
+  handleModalToggle = () => {
+    this.setState({
+      modalIsOpen: !this.state.modalIsOpen
+    });
+  };
 
-	//Removes Party from list
-	handleRemoveParty = (id, numInParty, isReservation) => {
-		let updatedParties = this.state.listOfParties.filter(party => {
-			return party.id !== id;
-		});
+  //Removes Party from list
+  handleRemoveParty = (id, numInParty, isReservation) => {
+    let updatedParties = this.state.listOfParties.filter(party => {
+      return party.id !== id;
+    });
 
-		this.setState({
-			listOfParties: updatedParties,
-			currentNumOfPeople: this.state.currentNumOfPeople - numInParty
-		});
-	};
+    this.setState({
+      listOfParties: updatedParties,
+      currentNumOfPeople: this.state.currentNumOfPeople - numInParty
+    });
+  };
 
-	handleMoveParty = (id, numOfNewPeople, currentListArray, listDestinationArray) => {
-		//Returns the party
-		let filteredParty = currentListArray.filter(p => {
-			return p.id === id;
-		});
+  handleMoveParty = (
+    id,
+    numOfNewPeople,
+    currentListArray,
+    listDestinationArray
+  ) => {
+    //Returns the party
+    let filteredParty = currentListArray.filter(p => {
+      return p.id === id;
+    });
 
-		let filteredCurrentListArray = currentListArray.filter(p => {
-			return p.id !== id;
-		});
+    let filteredCurrentListArray = currentListArray.filter(p => {
+      return p.id !== id;
+    });
 
-		//Takes existing party list and adds new party
-		let newlistDestinationArray = [...listDestinationArray, ...filteredParty];
+    //Takes existing party list and adds new party
+    let newlistDestinationArray = [...listDestinationArray, ...filteredParty];
 
-		//Sets state for --Num of pople in the room --
-		this.setState({
-			currentNumOfPeople: Number(this.state.currentNumOfPeople) + Number(numOfNewPeople),
-			currentNumOfReservations: Number(this.state.currentNumOfReservations) - Number(numOfNewPeople),
-			listOfParties: newlistDestinationArray,
-			listOfReservations: filteredCurrentListArray
-		});
-	};
+    //Sets state for --Num of pople in the room --
+    this.setState({
+      currentNumOfPeople:
+        Number(this.state.currentNumOfPeople) + Number(numOfNewPeople),
+      currentNumOfReservations:
+        Number(this.state.currentNumOfReservations) - Number(numOfNewPeople),
+      listOfParties: newlistDestinationArray,
+      listOfReservations: filteredCurrentListArray
+    });
+  };
 
-	handleCheckReservation = (id, numOfNewPeople, isReservation) => {
-		console.log('Checked In' + id);
-		//Returns the party
-		let party = this.state.listOfReservations.filter(party => {
-			return party.id === id;
-		});
+  handleCheckReservation = (id, numOfNewPeople, isReservation) => {
+    console.log("Checked In" + id);
+    //Returns the party
+    let party = this.state.listOfReservations.filter(party => {
+      return party.id === id;
+    });
 
-		let newReservationList = this.state.listOfReservations.filter(party => {
-			return party.id !== id;
-		});
+    let newReservationList = this.state.listOfReservations.filter(party => {
+      return party.id !== id;
+    });
 
-		//Sets party reservation to false
-		let newTimes = this.handleGetTimeStartTimeEnd();
-		party[0].isReservation = false;
-		party[0].timeStart = newTimes.timeStart;
-		party[0].timeEnd = newTimes.timeEnd;
-		console.log(JSON.stringify(party));
-		console.log(newTimes);
+    //Sets party reservation to false
+    let newTimes = this.handleGetTimeStartTimeEnd();
+    party[0].isReservation = false;
+    party[0].timeStart = newTimes.timeStart;
+    party[0].timeEnd = newTimes.timeEnd;
+    console.log(JSON.stringify(party));
+    console.log(newTimes);
 
-		//Takes existing party list and adds new party
-		let newPartyList = [...this.state.listOfParties, ...party];
+    //Takes existing party list and adds new party
+    let newPartyList = [...this.state.listOfParties, ...party];
 
-		//Sets state for --Num of pople in the room --
-		this.setState({
-			currentNumOfPeople: Number(this.state.currentNumOfPeople) + Number(numOfNewPeople),
-			currentNumOfReservations: Number(this.state.currentNumOfReservations) - Number(numOfNewPeople),
-			listOfParties: newPartyList,
-			listOfReservations: newReservationList
-		});
+    //Sets state for --Num of pople in the room --
+    this.setState({
+      currentNumOfPeople:
+        Number(this.state.currentNumOfPeople) + Number(numOfNewPeople),
+      currentNumOfReservations:
+        Number(this.state.currentNumOfReservations) - Number(numOfNewPeople),
+      listOfParties: newPartyList,
+      listOfReservations: newReservationList
+    });
 
-		// this.updateCurrentPartyLists()
-	};
+    // this.updateCurrentPartyLists()
+  };
 
-	updateCurrentPartyLists = (party, numOfNewPeople, isReservation) => {
-		if (!isReservation) {
-			let newPartyList = [...this.state.listOfParties, ...party];
-			this.setState({
-				currentNumOfPeople: Number(this.state.currentNumOfPeople) + Number(numOfNewPeople),
-				listOfParties: newPartyList,
-				modalIsOpen: false
-			});
-		} else {
-			let newPartyList = [...this.state.listOfReservations, ...party];
-			this.setState({
-				currentNumOfReservations: Number(this.state.currentNumOfReservations) + Number(numOfNewPeople),
-				listOfReservations: newPartyList,
-				modalIsOpen: false
-			});
-		}
-	};
+  updateCurrentPartyLists = (party, numOfNewPeople, isReservation) => {
+    if (!isReservation) {
+      let newPartyList = [...this.state.listOfParties, ...party];
+      this.setState({
+        currentNumOfPeople:
+          Number(this.state.currentNumOfPeople) + Number(numOfNewPeople),
+        listOfParties: newPartyList,
+        modalIsOpen: false
+      });
+    } else {
+      let newPartyList = [...this.state.listOfReservations, ...party];
+      this.setState({
+        currentNumOfReservations:
+          Number(this.state.currentNumOfReservations) + Number(numOfNewPeople),
+        listOfReservations: newPartyList,
+        modalIsOpen: false
+      });
+    }
+  };
 
-	updatePartyData = (id, targetKey, value) => {
-		let party = this.getActiveParty(id);
-		party[0][targetKey] = value;
-		return party;
-	};
+  updatePartyData = (id, targetKey, value) => {
+    let party = this.getActiveParty(id);
+    party[0][targetKey] = value;
+    return party;
+  };
 
-	getActiveParty = id => {
-		let party;
+  getActiveParty = id => {
+    let party;
 
-		let p1 = this.state.listOfParties.filter(party => {
-			return party.id === id;
-		});
+    let p1 = this.state.listOfParties.filter(party => {
+      return party.id === id;
+    });
 
-		let p2 = this.state.listOfReservations.filter(party => {
-			return party.id === id;
-		});
+    let p2 = this.state.listOfReservations.filter(party => {
+      return party.id === id;
+    });
 
-		if (typeof p1[0] !== typeof undefined) {
-			party = p1;
-		}
-		if (typeof p2[0] !== typeof undefined) {
-			party = p2;
-		}
+    if (typeof p1[0] !== typeof undefined) {
+      party = p1;
+    }
+    if (typeof p2[0] !== typeof undefined) {
+      party = p2;
+    }
 
-		return party;
-	};
+    return party;
+  };
 
-	handleEditModalToggle = id => {
-		this.handleModalToggle();
-		this.setState({
-			isEditMode: !this.state.isEditMode,
-			currentPartyId: id || null
-		});
-	};
+  handleEditModalToggle = id => {
+    this.handleModalToggle();
+    this.setState({
+      isEditMode: !this.state.isEditMode,
+      currentPartyId: id || null
+    });
+  };
 
-	render() {
-		const addUser = (
-			<div id="number-of-people-container">
-				<AddParty updateCurrentPartyLists={this.updateCurrentPartyLists} />
-			</div>
-		);
+  handleTestMode = () => {
+    if (this.state.countDownSpeed === 900) {
+      this.setState({
+        countDownSpeed: 60000
+      });
+    }
+    if (this.state.countDownSpeed === 60000) {
+      this.setState({
+        countDownSpeed: 900
+      });
+    }
+  };
 
-		return (
-			<div className="cattery-container">
-				{this.state.modalIsOpen ? (
-					<Modal click={this.handleModalToggle}>
-						{!this.state.isEditMode ? (
-							addUser
-						) : (
-							<EditParty
-								partyId={this.state.currentPartyId}
-								updatePartyData={this.updatePartyData}
-								handleEditModalToggle={this.handleEditModalToggle}
-							/>
-						)}
-					</Modal>
-				) : (
-					<span onClick={this.handleModalToggle} className="modal-btn">
-						<span className="text"> ADD PARTY</span>
-						<span className="btn"> {plusIcon}</span>
-					</span>
-				)}
-				<div id="cattery-panel-col">
-					<div id="time-and-people-container">
-						<div id="current-time-wrapper" className="container">
-							<span className="icon">{clockIcon}</span>
-							<div className="primary-value">{this.state.currentTime}</div>
-						</div>
-						<div id="current-number-of-people-wrapper">
-							<span className="icon">{usersIcon}</span>
+  render() {
+    const addUser = (
+      <div id="number-of-people-container">
+        <AddParty updateCurrentPartyLists={this.updateCurrentPartyLists} />
+      </div>
+    );
 
-							<span className="primary-value  number-in-cattery">
-								{15 + -+this.state.currentNumOfPeople}
-							</span>
-							<span className="open-spots">Spots Left</span>
-						</div>
-					</div>
+    return (
+      <div className="cattery-container">
+        {this.state.modalIsOpen ? (
+          <Modal click={this.handleModalToggle}>
+            {!this.state.isEditMode ? (
+              addUser
+            ) : (
+              <EditParty
+                partyId={this.state.currentPartyId}
+                updatePartyData={this.updatePartyData}
+                handleEditModalToggle={this.handleEditModalToggle}
+              />
+            )}
+          </Modal>
+        ) : (
+          <span onClick={this.handleModalToggle} className="modal-btn">
+            <span className="text"> ADD PARTY</span>
+            <span className="btn"> {plusIcon}</span>
+          </span>
+        )}
+        <div id="cattery-panel-col">
+          <div id="time-and-people-container">
+            <div id="current-time-wrapper" className="container">
+              <span className="icon">{clockIcon}</span>
+              <div onClick={this.handleTestMode} className="primary-value">
+                {this.state.currentTime}
+                <div className="test-mode">
+                  {this.state.countDownSpeed === 900 ? "(Test Mode)" : ""}
+                </div>
+              </div>
+            </div>
+            <div id="current-number-of-people-wrapper">
+              <span className="icon">{usersIcon}</span>
 
-					<PartySizeAvailability />
-				</div>
-				<div id="cattery-body-col">
-					<ListOfParties
-						title="Currently In Cattery"
-						currentNumOfPeople={this.state.currentNumOfPeople}
-						listArray={this.state.listOfParties}
-						onClick_remove={this.handleRemoveParty}
-						onClick_checkReservation={this.handleCheckReservation}
-						handleUpdateTimes={this.handleUpdateTimes}
-						updatePartyData={this.updatePartyData}
-						handleEditModalToggle={this.handleEditModalToggle}
-					/>
-					<ListOfParties
-						title="Upcoming Reservations"
-						currentNumOfPeople={this.state.currentNumOfReservations}
-						listArray={this.state.listOfReservations}
-						onClick_remove={this.handleRemoveParty}
-						onClick_checkReservation={this.handleCheckReservation}
-						handleUpdateTimes={this.handleUpdateTimes}
-						updatePartyData={this.updatePartyData}
-						handleEditModalToggle={this.handleEditModalToggle}
-					/>
-				</div>
-			</div>
-		);
-	}
+              <span className="primary-value  number-in-cattery">
+                {15 + -+this.state.currentNumOfPeople}
+              </span>
+              <span className="open-spots">Spots Left</span>
+            </div>
+          </div>
+
+          <PartySizeAvailability />
+        </div>
+        <div id="cattery-body-col">
+          <ListOfParties
+            countDownSpeed={this.state.countDownSpeed}
+            title="Currently In Cattery"
+            currentNumOfPeople={this.state.currentNumOfPeople}
+            listArray={this.state.listOfParties}
+            onClick_remove={this.handleRemoveParty}
+            onClick_checkReservation={this.handleCheckReservation}
+            handleUpdateTimes={this.handleUpdateTimes}
+            updatePartyData={this.updatePartyData}
+            handleEditModalToggle={this.handleEditModalToggle}
+          />
+          <ListOfParties
+            countDownSpeed={this.state.countDownSpeed}
+            title="Upcoming Reservations"
+            currentNumOfPeople={this.state.currentNumOfReservations}
+            listArray={this.state.listOfReservations}
+            onClick_remove={this.handleRemoveParty}
+            onClick_checkReservation={this.handleCheckReservation}
+            handleUpdateTimes={this.handleUpdateTimes}
+            updatePartyData={this.updatePartyData}
+            handleEditModalToggle={this.handleEditModalToggle}
+          />
+        </div>
+      </div>
+    );
+  }
 }
 
 export default Cattery;
