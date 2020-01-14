@@ -7,31 +7,9 @@
         padding-bottom: 15px;
     }
 
-    .checkmark,
-    svg {
-        color: #6fa037;
-        width: 14px;
-    }
 
     .next-available-time {
         font-size: 14px;
     }
 
-}
-
-.party-size-wrapper {
-
-    // margin-top: 20px;
-    // padding: 0 10px 20px;
-    padding: 12px;
-    display: flex;
-    // width: 250px;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid rgb(182, 182, 182);
-
-    .party-size {
-        font-size: 14px;
-        font-weight: bold;
-    }
 }

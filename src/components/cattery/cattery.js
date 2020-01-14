@@ -18,10 +18,11 @@ class Cattery extends Component {
   state = {
     countDownSpeed: 60000,
     modalIsOpen: false,
-    currentNumOfPeople: 0,
+    currentNumOfPeople: 5,
     currentNumOfReservations: 0,
     selectedPartyId: null,
     currentTime: "2:10 PM",
+    endTimes: 80,
     listOfParties: [
       // {
       // 	id: 111,
@@ -338,7 +339,11 @@ class Cattery extends Component {
             </div>
           </div>
 
-          <PartySizeAvailability />
+          <PartySizeAvailability
+            currentTime={this.state.currentTime}
+            currentNumOfPeople={this.state.currentNumOfPeople}
+            listOfParties={this.state.listOfParties}
+          />
         </div>
         <div id="cattery-body-col">
           <ListOfParties

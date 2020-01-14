@@ -7,32 +7,7 @@
   padding-bottom: 15px;
 }
 
-#party-size-availability-container .checkmark,
-#party-size-availability-container svg {
-  color: #6fa037;
-  width: 14px;
-}
-
 #party-size-availability-container .next-available-time {
   font-size: 14px;
-}
-
-.party-size-wrapper {
-  padding: 12px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  border-bottom: 1px solid #b6b6b6;
-}
-
-.party-size-wrapper .party-size {
-  font-size: 14px;
-  font-weight: bold;
 }
 /*# sourceMappingURL=partySizeAvailability.css.map */
