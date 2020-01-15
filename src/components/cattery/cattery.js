@@ -18,7 +18,7 @@ class Cattery extends Component {
   state = {
     countDownSpeed: 60000,
     modalIsOpen: false,
-    currentNumOfPeople: 5,
+    currentNumOfPeople: 0,
     currentNumOfReservations: 0,
     selectedPartyId: null,
     currentTime: "2:10 PM",

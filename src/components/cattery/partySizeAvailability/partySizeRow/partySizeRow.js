@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { checkMark } from "../../../../utils/icons/icons";
 import "./css/partySizeRow.css";
 import { render } from "@testing-library/react";
 
@@ -20,12 +21,12 @@ class PartySizeRow extends Component {
   checkIfAvailable = () => {
     let currentParty = this.props.partySize * 60;
     let currentParties = this.props.currentNumOfPeople * 60;
-    let currentParties = this.props.listOfParties;
+    let listOfParties = this.props.listOfParties;
 
     if (currentParty < currentParties) {
       console.log("Current: " + currentParty);
       console.log("End: " + currentParties);
-      console.log("Parties: " + currentParties);
+      console.log("Parties: " + this.props.currentNumOfPeople);
       this.setState({
         isAvailable: true
       });
@@ -36,32 +37,54 @@ class PartySizeRow extends Component {
     }
   };
 
+  getNextAvailableTime = () => {
+    let nextAvailableTime;
+    let timeRemaining = this.props.currentNumOfPeople * 60;
+    // if (this.props.partySize * 60 <= timeRemaining) {
+    //   // let sortedList = this.props.listOfParties.sort();
+    //   this.props.listOfParties[0].timeEnd;
+    // }
+
+    let endTime = this.props.listOfParties[0].timeEnd;
+    //
+    let numInEndtimeParty = this.props.listOfParties[0].numberInParty;
+    let numInEndtimeParty__min = this.props.listOfParties[0].numberInParty * 60;
+    //
+    let numInEnteringPary = this.props.partySize;
+    let numInEnteringPary__min = this.props.partySize * 60;
+
+    let newTimeRemaining__min = numInEndtimeParty__min;
+
+    if (numInEnteringPary__min < newTimeRemaining__min) {
+      console.log("You May Enter");
+    } else {
+      //   console.log("Return NextAvailableTime (${tis})");
+      console.log(
+        `Return NextAvailableTime (Current Time + (Current Time - End Time)|| ${this.props.currentTime} + time remainings`
+      );
+    }
+    console.log(`End Time: ${endTime}`);
+
+    // return currentTime + timeDifference;
+    // return nextAvailableTime;
+  };
+
   render() {
     const { partySize } = this.props;
-    const checkMark = (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="checkmark"
-        aria-hidden="true"
-        focusable="false"
-        data-prefix="fas"
-        data-icon="check"
-        class="svg-inline--fa fa-check fa-w-16"
-        role="img"
-        viewBox="0 0 512 512"
-      >
-        <path
-          fill="currentColor"
-          d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
-        />
-      </svg>
-    );
 
     return (
-      <div id="party-size1" className="party-size-wrapper">
+      <div
+        onClick={() => {
+          this.getNextAvailableTime();
+        }}
+        id="party-size1"
+        className="party-size-wrapper"
+      >
         <div className="party-size">{partySize}</div>
         <div className="next-available-time">
-          {this.state.isAvailable ? checkMark : this.state.nextAvailableTime}
+          {partySize * 60 <= 900 - this.props.currentNumOfPeople * 60
+            ? checkMark
+            : this.state.nextAvailableTime}
         </div>
       </div>
     );
