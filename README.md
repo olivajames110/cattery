@@ -14,8 +14,8 @@ To make the process of managing walk-ins easier for the employee
 15 People
 
 *How Cattery Works:* 
-Users currently make a reservation online through third party service. Walk-ins are allowed, however reverations slots take priority, even if the party has currently not arrived for their time slot.
-For example, if the Current Time is 2pm, and Current Occupancy is 10 people, and there is a reservation for 2pm but the party has yet to arrive, even if there is currently enough room for them, a party of 5 walks in will then not be allowed to enter because of the booked reservation slot.
+Users currently make a reservation online through a third party service. Walk-ins are allowed, however reservation slots take priority, even if the party has currently not arrived for their time slot.
+For example: the Current Time is 2pm. and Current Occupancy of the Cattery is 10 people. There is currently is a reservation set for 2pm but the party has yet to arrive. If a party of 5 walks in, they will not be allowed to enter because of the booked reservation slot at 2pm.
 
 
 *Notable Features*
@@ -25,5 +25,4 @@ For example, if the Current Time is 2pm, and Current Occupancy is 10 people, and
 - Reservations: countdown will not begin until user checks in. If party Start Time is equal to the Current Time, the reservation will automatically move into "Currently In Cattery" container
 
 *Upcoming Updates:*
-
 - Party Size Availability: quickly shows if a party size of X walks through the door at the current time, are there enough available spots for the party? If there are not enough spots, it will display the next possible time that a party size of X will be allowed to enter based on the current occupants End Time.
