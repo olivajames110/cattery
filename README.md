@@ -12,12 +12,9 @@ Test Mode: double click the time to go into test mode. This makes the countdown 
 *Notable Features*
 
 - Red cards indicate overdue, gray cards indicate currently in cattery, blue cards indicate reservation
-- When time goes past zero, card turns red to indicate time is expired. Time continues to count down past zero to shower employee that the guest is X minutes past their end time
-  •Guests are usually allowed to stay past end time if not busy. If busy rush occurs, employee now knows which customer to ask first ask to leave
+- When time goes past zero, card turns red to indicate time is expired. Time continues to count down past zero to shower employee that the guest is X minutes past their end time. Guests are usually allowed to stay past end time if not busy. If busy rush occurs, employee now knows which customer to ask first ask to leave
 - Click the payment container to toggle between Paid and Not Paid
-- Reservations:
-  • Countdown will not begin until user checks in
-  • If party Start Time is equal to the Current Time, the reservation will automatically move into "Currently In Cattery" container
+- Reservations: countdown will not begin until user checks in. If party Start Time is equal to the Current Time, the reservation will automatically move into "Currently In Cattery" container
 
 Upcoming Updates:
 
