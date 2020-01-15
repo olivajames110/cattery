@@ -8,7 +8,7 @@ export const checkMark = (
 		focusable="false"
 		data-prefix="fas"
 		data-icon="check"
-		class="svg-inline--fa fa-check fa-w-16"
+		className="svg-inline--fa fa-check fa-w-16"
 		role="img"
 		viewBox="0 0 512 512"
 	>
@@ -26,7 +26,7 @@ export const edit = (
 		focusable="false"
 		data-prefix="far"
 		data-icon="edit"
-		class="svg-inline--fa fa-edit fa-w-18"
+		className="svg-inline--fa fa-edit fa-w-18"
 		role="img"
 		viewBox="0 0 576 512"
 	>
@@ -44,7 +44,7 @@ export const dollarSign = (
 		focusable="false"
 		data-prefix="fas"
 		data-icon="dollar-sign"
-		class="svg-inline--fa fa-dollar-sign fa-w-9"
+		className="svg-inline--fa fa-dollar-sign fa-w-9"
 		role="img"
 		viewBox="0 0 288 512"
 	>
@@ -62,7 +62,7 @@ export const clockIcon = (
 		focusable="false"
 		data-prefix="far"
 		data-icon="clock"
-		class="svg-inline--fa fa-clock fa-w-16"
+		className="svg-inline--fa fa-clock fa-w-16"
 		role="img"
 		viewBox="0 0 512 512"
 	>
@@ -80,7 +80,7 @@ export const usersIcon = (
 		focusable="false"
 		data-prefix="fas"
 		data-icon="user-friends"
-		class="svg-inline--fa fa-user-friends fa-w-20"
+		className="svg-inline--fa fa-user-friends fa-w-20"
 		role="img"
 		viewBox="0 0 640 512"
 	>
@@ -98,7 +98,7 @@ export const plusIcon = (
 		focusable="false"
 		data-prefix="fas"
 		data-icon="plus"
-		class="svg-inline--fa fa-plus fa-w-14"
+		className="svg-inline--fa fa-plus fa-w-14"
 		role="img"
 		viewBox="0 0 448 512"
 	>
@@ -116,7 +116,7 @@ export const plusIcon = (
 // 	focusable="false"
 // 	data-prefix="fab"
 // 	data-icon="facebook-square"
-// 	class="svg-inline--fa fa-facebook-square fa-w-14"
+// 	className="svg-inline--fa fa-facebook-square fa-w-14"
 // 	role="img"
 // 	xmlns="http://www.w3.org/2000/svg"
 // 	viewBox="0 0 448 512"

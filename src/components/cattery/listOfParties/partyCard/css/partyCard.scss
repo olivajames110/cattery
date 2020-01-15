@@ -9,6 +9,8 @@
 	border-radius: 2px;
 	background: #fbfbfb;
 	box-shadow: 0px 0px 3.5px 2.5px #00000014;
+
+	animation: partyCardSlideIn 500ms cubic-bezier(0.68, -0.55, 0.27, 1.55);
 	.details-container {
 		position: relative;
 		display: flex;
@@ -214,5 +216,16 @@
 		// height: 2px;
 		top: 110%;
 		// box-shadow: 0 0 8px 4px rgba(5, 73, 5, 0.489);
+	}
+}
+
+@keyframes partyCardSlideIn {
+	from {
+		transform: translateY(-30px);
+		// transform: scale(0);
+	}
+	to {
+		// transform: scale(1);
+		transform: translateY(0px);
 	}
 }

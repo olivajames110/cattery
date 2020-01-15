@@ -2,13 +2,13 @@ import React from 'react';
 
 const Input = props => {
 	return (
-		<div class="input-container">
+		<div className="input-container">
 			<label>{props.label}</label>
 			<input
 				onChange={props.onChange}
 				style={props.style}
 				id={props.id}
-				class={props.class}
+				className={props.class}
 				type={props.type}
 				value={props.value}
 				placeholder={props.placeholder}

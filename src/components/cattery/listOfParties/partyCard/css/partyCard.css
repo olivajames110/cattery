@@ -12,6 +12,8 @@
   background: #fbfbfb;
   -webkit-box-shadow: 0px 0px 3.5px 2.5px #00000014;
           box-shadow: 0px 0px 3.5px 2.5px #00000014;
+  -webkit-animation: partyCardSlideIn 500ms cubic-bezier(0.68, -0.55, 0.27, 1.55);
+          animation: partyCardSlideIn 500ms cubic-bezier(0.68, -0.55, 0.27, 1.55);
 }
 
 .party-wrapper .details-container {
@@ -269,6 +271,28 @@
   }
   100% {
     top: 110%;
+  }
+}
+
+@-webkit-keyframes partyCardSlideIn {
+  from {
+    -webkit-transform: translateY(-30px);
+            transform: translateY(-30px);
+  }
+  to {
+    -webkit-transform: translateY(0px);
+            transform: translateY(0px);
+  }
+}
+
+@keyframes partyCardSlideIn {
+  from {
+    -webkit-transform: translateY(-30px);
+            transform: translateY(-30px);
+  }
+  to {
+    -webkit-transform: translateY(0px);
+            transform: translateY(0px);
   }
 }
 /*# sourceMappingURL=partyCard.css.map */
