@@ -192,7 +192,6 @@
   margin-top: 15px;
   -webkit-transition: 100ms;
   transition: 100ms;
-  cursor: pointer;
   margin-top: 20px;
 }
 
@@ -206,6 +205,7 @@
 
 #walkIn-res__container .walkIn-res__wrapper .walkIn-res__btn,
 #payment-container .walkIn-res__wrapper .walkIn-res__btn {
+  cursor: pointer;
   padding: 8px 14px;
   border-radius: 2px;
   border: 2px solid #cac8c8a6;
@@ -214,37 +214,6 @@
 #walkIn-res__container .walkIn-res__wrapper .walkIn-res__btn #reservation,
 #payment-container .walkIn-res__wrapper .walkIn-res__btn #reservation {
   margin-left: -1px;
-}
-
-#walkIn-res__container .time-input-container,
-#payment-container .time-input-container {
-  position: absolute;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  z-index: 100000;
-}
-
-#walkIn-res__container .time-input-container .current-time,
-#payment-container .time-input-container .current-time {
-  font-size: 16px;
-  margin-bottom: 5px;
-  font-weight: 600;
-  color: #616c70;
-}
-
-#walkIn-res__container .time-input-container button.save-btn,
-#payment-container .time-input-container button.save-btn {
-  background-color: #616c70;
-  color: white;
-  border: none;
-  padding: 6px 8px;
-  border-radius: 2px;
-  cursor: pointer;
 }
 
 #walkIn-res__container .active,

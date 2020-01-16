@@ -1,0 +1,61 @@
+.time-input-container {
+	position: relative;
+
+	z-index: 100;
+}
+
+.edit-container {
+	position: absolute;
+	right: 0;
+	top: -29px;
+	display: flex;
+	align-items: center;
+	.reservation-time {
+		font-size: 16px;
+		color: #616c70;
+		margin-right: 8px;
+	}
+
+	#title {
+		font-weight: normal;
+	}
+	#time {
+		font-weight: 600;
+	}
+	button {
+		color: #444444;
+		font-weight: 600;
+		text-decoration: underline;
+		cursor: pointer;
+		background: none;
+		border: none;
+		svg {
+			width: 15px;
+		}
+	}
+}
+
+.time-picker-container {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	right: -50px;
+	top: -340px;
+	box-shadow: rgba(0, 0, 0, 0.13) 0px 3px 6px, #606060 0px 3px 6px;
+	button.save-btn {
+		background-color: #616c70;
+		color: white;
+		border: none;
+		padding: 15px 8px;
+		border-radius: 2px;
+		margin-top: -2px;
+		z-index: 10000;
+		border: 1px solid #f4f4f4;
+		box-shadow: rgba(0, 0, 0, 0.13) 0px 3px 6px, rgba(0, 0, 0, 0.19) 0px 3px 6px;
+		cursor: pointer;
+		// position: absolute;
+		// bottom: -30px;
+		// width: 100%;
+		// box-shadow: 0 3px 11px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.15);
+	}
+}

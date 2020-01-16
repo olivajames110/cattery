@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import Input from '../../../utils/input/input';
 import TimeKeeper from 'react-timekeeper';
+import TimePicker from './timeKeeper';
 import { plusIcon } from '../../../utils/icons/icons';
+import * as moment from 'moment';
 import './css/addParty.css';
 
 class AddParty extends Component {
@@ -11,27 +13,19 @@ class AddParty extends Component {
 		description: null,
 		numberInParty: 1,
 		paid: true,
-		timeStart: null,
-		timeEnd: null,
+		timeStart: '12:00 PM',
+		timeEnd: '1:00 PM',
+		reservationTime: null,
 		isReservation: false,
 		isOverdue: false,
-		reservationTime: null,
 		reservationIsReady: null
 	};
 
 	componentDidMount() {
-		let startTime = formatAMPM(new Date(), 0);
-		let endTime = formatAMPM(new Date(), 1);
-		function formatAMPM(date, hourOffset, minOffset) {
-			let hours = date.getHours() + hourOffset;
-			let minutes = date.getMinutes();
-			let ampm = hours >= 12 ? 'pm' : 'am';
-			hours = hours % 12;
-			hours = hours ? hours : 12; // the hour '0' should be '12'
-			minutes = minutes < 10 ? '0' + minutes : minutes;
-			let startTime = hours + ':' + minutes + '' + ampm;
-			return startTime;
-		}
+		let startTime = moment().format('h:mm A');
+		let endTime = moment()
+			.add('hours', 1)
+			.format('h:mm A');
 
 		this.setState({
 			timeStart: startTime,
@@ -47,6 +41,7 @@ class AddParty extends Component {
 	handleUpdateWalkIn = () => {
 		this.setState({ isReservation: false });
 	};
+
 	handleUpdateReservation = () => {
 		this.setState({ isReservation: true });
 	};
@@ -54,22 +49,23 @@ class AddParty extends Component {
 	handleUpdatePaymentYes = () => {
 		this.setState({ paid: true });
 	};
+
 	handleUpdatePaymentNo = () => {
 		this.setState({ paid: false });
 	};
 
 	handleUpdateTime = time => {
-		console.log(time);
+		console.log(time.formatted.toString().toUpperCase());
 		let endMeridiem;
 		if (time.hour <= 12) {
-			endMeridiem = 'pm';
+			endMeridiem = ' PM';
 		} else {
-			endMeridiem = 'am';
+			endMeridiem = ' PM';
 		}
 
 		let endTime = `${time.hour + 1}:${('0' + time.minute).slice(-2)}${endMeridiem}`;
 		this.setState({
-			reservationTime: `${time.formattedSimple}${time.meridiem}`,
+			reservationTime: time.formatted.toString().toUpperCase(),
 			// timeStart: time.formatted,
 			timeEnd: endTime
 		});
@@ -105,44 +101,6 @@ class AddParty extends Component {
 	};
 
 	render() {
-		const styles_absBnt = {
-			padding: ' 8px 0',
-
-			position: 'absolute',
-			bottom: '-30px',
-			width: '100%',
-			boxShadow: '0 3px 11px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.15)'
-		};
-
-		const styles_normalBnt = {
-			// backgroundColor: 'red'
-		};
-
-		const styles = {
-			right: '60px',
-			top: '10px'
-		};
-		const styles2 = {
-			right: '-50px',
-			top: '-240px'
-		};
-		const timeInputs = (
-			<div style={this.state.timeStart === null ? styles2 : styles} className="time-input-container">
-				{this.state.timeStart === null ? (
-					<TimeKeeper onChange={newTime => this.handleUpdateTime(newTime)} />
-				) : (
-					<span className="current-time">{this.state.timeStart}</span>
-				)}
-				<button
-					style={this.state.timeStart === null ? styles_absBnt : styles_normalBnt}
-					onClick={this.handleSaveTime}
-					className="save-btn"
-				>
-					{this.state.timeStart === null ? 'Save' : 'Edit'}
-				</button>
-			</div>
-		);
-
 		return (
 			<div id="add-people-container">
 				<h2>Add Party</h2>
@@ -319,7 +277,17 @@ class AddParty extends Component {
 								Reservation
 							</span>
 						</div>
-						{!this.state.isReservation ? '' : timeInputs}
+						{this.state.isReservation ? (
+							<TimePicker
+								timeStart={this.state.timeStart}
+								reservationTime={this.state.reservationTime}
+								handleSaveTime={this.handleSaveTime}
+								time={this.state.timeStar}
+								onChange={this.handleUpdateTime}
+							/>
+						) : (
+							''
+						)}
 					</div>
 					<div id="payment-container">
 						<span className="title">Payment</span>
