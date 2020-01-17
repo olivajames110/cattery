@@ -1,5 +1,12 @@
 .modal-container {
   position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
 }
 
 .backdrop {
@@ -23,6 +30,7 @@
   -webkit-box-shadow: 0 0 13px 9px rgba(0, 0, 0, 0.1);
           box-shadow: 0 0 13px 9px rgba(0, 0, 0, 0.1);
   position: relative;
+  margin-top: 7.4%;
   padding: 25px;
   height: initial;
   width: 500px;
@@ -31,6 +39,8 @@
   border-radius: 2px;
   border-bottom-right-radius: 25px;
   border-top-left-radius: 25px;
+  -webkit-transition: 120ms;
+  transition: 120ms;
   -webkit-animation: modalSlideIn 500ms cubic-bezier(0.4, 0, 0.2, 1);
           animation: modalSlideIn 500ms cubic-bezier(0.4, 0, 0.2, 1);
 }

@@ -10,6 +10,7 @@
 	top: -29px;
 	display: flex;
 	align-items: center;
+
 	.reservation-time {
 		font-size: 16px;
 		color: #616c70;
@@ -19,9 +20,11 @@
 	#title {
 		font-weight: normal;
 	}
+
 	#time {
 		font-weight: 600;
 	}
+
 	button {
 		color: #444444;
 		font-weight: 600;
@@ -29,6 +32,7 @@
 		cursor: pointer;
 		background: none;
 		border: none;
+
 		svg {
 			width: 15px;
 		}
@@ -39,9 +43,10 @@
 	position: absolute;
 	display: flex;
 	flex-direction: column;
-	right: -50px;
-	top: -340px;
+	right: -41px;
+	top: -131px;
 	box-shadow: rgba(0, 0, 0, 0.13) 0px 3px 6px, #606060 0px 3px 6px;
+
 	button.save-btn {
 		background-color: #616c70;
 		color: white;
