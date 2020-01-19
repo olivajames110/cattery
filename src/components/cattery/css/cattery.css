@@ -11,14 +11,14 @@
   color: #616c70;
 }
 
-#cattery-panel-col {
+#party-size-availability-col {
   height: 100vh;
   background: #f0f0f0;
   overflow-y: scroll;
 }
 
 #cattery-body-col {
-  padding: 25px;
+  padding: 25px 20px;
 }
 
 #cattery-body-col h3 {
@@ -34,7 +34,7 @@
 
 .modal-btn {
   position: fixed;
-  top: 3%;
+  top: 2.5%;
   right: 3%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -48,9 +48,7 @@
           align-items: center;
   cursor: pointer;
   z-index: 10000;
-  -webkit-box-shadow: 0 0 16px 13px #ffffff;
-          box-shadow: 0 0 16px 13px #ffffff;
-  background: white;
+  color: white;
   border-radius: 50%;
 }
 
@@ -93,34 +91,27 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  height: 150px;
+  height: 80px;
 }
 
-#time-and-people-container #current-time-wrapper,
-#time-and-people-container #current-number-of-people-wrapper {
+#time-and-people-container .container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  margin: 0 20px;
 }
 
 #time-and-people-container .primary-value {
   position: relative;
   font-size: 30px;
   font-weight: bold;
-  margin-left: 8px;
+  margin-left: 4px;
 }
 
 #time-and-people-container svg {
@@ -134,16 +125,24 @@
 }
 
 #time-and-people-container .open-spots {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: normal;
 }
 
-.test-mode {
+.test-mode,
+.upcoming-reservations {
   display: block;
   text-align: center;
   font-size: 12px;
   font-weight: normal;
   position: absolute;
-  /* left: 50%; */
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  left: 0;
+  background: #c9dfeb;
+  color: #424242;
+  padding: 2.6px 6px;
+  border-radius: 50px;
 }
 /*# sourceMappingURL=cattery.css.map */

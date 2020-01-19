@@ -17,6 +17,7 @@ class AddParty extends Component {
     timeEnd: "1:00 PM",
     reservationTime: null,
     isReservation: false,
+    isUpcomingReservation: false,
     isOverdue: false,
     reservationIsReady: null
   };

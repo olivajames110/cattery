@@ -1,94 +1,89 @@
-import React, { Component } from 'react';
-import { checkMark } from '../../../../utils/icons/icons';
-import './css/partySizeRow.css';
-import { render } from '@testing-library/react';
+import React, { Component } from "react";
+import { checkMark } from "../../../../utils/icons/icons";
+import "./css/partySizeRow.css";
+import { render } from "@testing-library/react";
 
 class PartySizeRow extends Component {
-	state = {
-		isAvailable: false,
-		nextAvailableTime: '2:45'
-	};
+  state = {
+    isAvailable: false,
+    nextAvailableTime: "2:45"
+  };
 
-	componentWillMount() {
-		this.checkIfAvailable();
-	}
+  componentWillMount() {
+    this.checkIfAvailable();
+  }
 
-	//   shouldComponentUpdate(nextProps, nextState) {
-	//     this.checkIfAvailable();
-	//     return nextState.blocks.length > this.state.blocks.length;
-	//   }
+  checkIfAvailable = () => {
+    let currentParty = this.props.partySize;
+    let currentParties = this.props.currentOccupancy;
+    let listOfParties = this.props.listOfParties;
 
-	checkIfAvailable = () => {
-		let currentParty = this.props.partySize * 60;
-		let currentParties = this.props.currentOccupancy * 60;
-		let listOfParties = this.props.listOfParties;
+    if (currentParty < currentParties) {
+      // console.log('Current: ' + currentParty);
+      // console.log('End: ' + currentParties);
+      // console.log('Parties: ' + this.props.currentOccupancy);
+      this.setState({
+        isAvailable: true
+      });
+    } else {
+      this.setState({
+        isAvailable: false
+      });
+    }
+  };
 
-		if (currentParty < currentParties) {
-			// console.log('Current: ' + currentParty);
-			// console.log('End: ' + currentParties);
-			// console.log('Parties: ' + this.props.currentOccupancy);
-			this.setState({
-				isAvailable: true
-			});
-		} else {
-			this.setState({
-				isAvailable: false
-			});
-		}
-	};
+  getNextAvailableTime = () => {
+    let nextAvailableTime;
+    let timeRemaining = this.props.currentOccupancy;
+    // if (this.props.partySize * 60 <= timeRemaining) {
+    //   // let sortedList = this.props.listOfParties.sort();
+    //   this.props.listOfParties[0].timeEnd;
+    // }
 
-	getNextAvailableTime = () => {
-		let nextAvailableTime;
-		let timeRemaining = this.props.currentOccupancy * 60;
-		// if (this.props.partySize * 60 <= timeRemaining) {
-		//   // let sortedList = this.props.listOfParties.sort();
-		//   this.props.listOfParties[0].timeEnd;
-		// }
+    let endTime = this.props.listOfParties[0].timeEnd;
+    //
+    let numInEndtimeParty__min = this.props.listOfParties[0].numberInParty;
+    //
+    let numInEnteringPary__min = this.props.partySize;
 
-		let endTime = this.props.listOfParties[0].timeEnd;
-		//
-		let numInEndtimeParty = this.props.listOfParties[0].numberInParty;
-		let numInEndtimeParty__min = this.props.listOfParties[0].numberInParty * 60;
-		//
-		let numInEnteringPary = this.props.partySize;
-		let numInEnteringPary__min = this.props.partySize * 60;
+    let newTimeRemaining__min = numInEndtimeParty__min;
 
-		let newTimeRemaining__min = numInEndtimeParty__min;
+    if (numInEnteringPary__min < newTimeRemaining__min) {
+      // console.log('You May Enter');
+      return endTime;
+    } else {
+      //   console.log("Return NextAvailableTime (${tis})");
+      // console.log(
+      // 	`Return NextAvailableTime (Current Time + (Current Time - End Time)|| ${this.props.currentTime} + time remainings`
+      // );
+      return endTime;
+    }
+    console.log(`End Time: ${endTime}`);
 
-		if (numInEnteringPary__min < newTimeRemaining__min) {
-			// console.log('You May Enter');
-			return endTime;
-		} else {
-			//   console.log("Return NextAvailableTime (${tis})");
-			// console.log(
-			// 	`Return NextAvailableTime (Current Time + (Current Time - End Time)|| ${this.props.currentTime} + time remainings`
-			// );
-			return endTime;
-		}
-		console.log(`End Time: ${endTime}`);
+    // return currentTime + timeDifference;
+    // return nextAvailableTime;
+  };
 
-		// return currentTime + timeDifference;
-		// return nextAvailableTime;
-	};
+  render() {
+    const { partySize } = this.props;
 
-	render() {
-		const { partySize } = this.props;
-
-		return (
-			<div
-				onClick={() => {
-					this.getNextAvailableTime();
-				}}
-				id="party-size1"
-				className="party-size-wrapper"
-			>
-				<div className="party-size">{partySize}</div>
-				<div className="next-available-time">
-					{partySize * 60 <= 900 - this.props.currentOccupancy * 60 ? checkMark : this.getNextAvailableTime()}
-				</div>
-			</div>
-		);
-	}
+    return (
+      <div
+        onClick={() => {
+          this.getNextAvailableTime();
+        }}
+        id="party-size1"
+        className="party-size-wrapper"
+      >
+        <div className="party-size">{partySize}</div>
+        <div className="next-available-time">
+          {partySize <= 15 - this.props.currentOccupancy
+            ? checkMark
+            : this.getNextAvailableTime()}
+        </div>
+      </div>
+    );
+  }
 }
 
 export default PartySizeRow;

@@ -3,8 +3,10 @@
 }
 
 #party-size-availability-container h2 {
-  font-size: 16px;
+  font-size: 17px;
   padding-bottom: 15px;
+  font-weight: normal;
+  font-family: 'Work Sans', sans-serif;
 }
 
 #party-size-availability-container .next-available-time {

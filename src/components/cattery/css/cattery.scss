@@ -10,14 +10,14 @@
 	}
 }
 
-#cattery-panel-col {
+#party-size-availability-col {
 	height: 100vh;
 	background: rgb(240, 240, 240);
 	overflow-y: scroll;
 }
 
 #cattery-body-col {
-	padding: 25px;
+	padding: 25px 20px;
 	// max-width: 850px;
 
 	h3 {
@@ -26,7 +26,7 @@
 		color: #616c70;
 	}
 
-	.row-container + .row-container {
+	.row-container+.row-container {
 		margin-top: 40px;
 		padding-top: 30px;
 		border-top: 2px solid #cdc9c9b8;
@@ -35,15 +35,16 @@
 
 .modal-btn {
 	position: fixed;
-	top: 3%;
+	top: 2.5%;
 	right: 3%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	cursor: pointer;
 	z-index: 10000;
-	box-shadow: 0 0 16px 13px #ffffff;
-	background: white;
+	color: white;
+	// box-shadow: 0 0 16px 13px #ffffff;
+	// background: white;
 	border-radius: 50%;
 
 	.text {
@@ -77,23 +78,23 @@
 	background-color: rgb(66, 66, 66);
 	color: white;
 	display: flex;
-	flex-direction: column;
-	justify-content: space-evenly;
+	// flex-direction: column;
+	// justify-content: space-evenly;
 	align-items: center;
-	height: 150px;
+	height: 80px;
 
 	//Makes both wrappers Flex
-	#current-time-wrapper,
-	#current-number-of-people-wrapper {
+	.container {
 		display: flex;
 		align-items: center;
+		margin: 0 20px;
 	}
 
 	.primary-value {
 		position: relative;
 		font-size: 30px;
 		font-weight: bold;
-		margin-left: 8px;
+		margin-left: 4px;
 	}
 
 	//The icon
@@ -110,17 +111,22 @@
 
 	//Current time wrapper
 	.open-spots {
-		font-size: 12px;
+		font-size: 14px;
 		font-weight: normal;
 	}
 }
 
-.test-mode {
+.test-mode,
+.upcoming-reservations {
 	display: block;
 	text-align: center;
 	font-size: 12px;
 	font-weight: normal;
 	position: absolute;
-	/* left: 50%; */
-	// top: 10px;
+	width: max-content;
+	left: 0;
+	background: #c9dfeb;
+	color: #424242;
+	padding: 2.6px 6px;
+	border-radius: 50px;
 }

@@ -1,5 +1,5 @@
 .party-size-wrapper {
-  padding: 12px;
+  padding: 10px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -9,7 +9,7 @@
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  border-bottom: 1px solid #b6b6b6;
+  border-bottom: 1px solid lightgray;
 }
 
 .party-size-wrapper .checkmark,

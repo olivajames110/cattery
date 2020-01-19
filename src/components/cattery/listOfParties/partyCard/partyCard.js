@@ -118,7 +118,8 @@ class PartyCard extends Component {
       isReservation,
       reservationIsReady,
       timeStart,
-      timeEnd
+      timeEnd,
+      isUpcomingReservation
     } = this.props.party;
 
     return (
@@ -130,7 +131,12 @@ class PartyCard extends Component {
           this.state.isReservation ? "reservation" : ""
         }`}
       >
-        <div className="details-container">
+        <div
+          className="details-container"
+          style={{
+            backgroundColor: isUpcomingReservation ? "#c9dfeb" : "#fbfbfb"
+          }}
+        >
           <div className="detail-row" id="party-name">
             <span id="title">Party Name:</span>
             <span id="name">{name}</span>
