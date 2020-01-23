@@ -1,89 +1,88 @@
-import React, { Component } from "react";
-import { checkMark } from "../../../../utils/icons/icons";
-import "./css/partySizeRow.css";
-import { render } from "@testing-library/react";
+import React, { Component } from 'react';
+import { checkMark } from '../../../../utils/icons/icons';
+import './css/partySizeRow.css';
+import { render } from '@testing-library/react';
 
 class PartySizeRow extends Component {
-  state = {
-    isAvailable: false,
-    nextAvailableTime: "2:45"
-  };
+	state = {
+		isAvailable: false,
+		nextAvailableTime: '2:45'
+	};
 
-  componentWillMount() {
-    this.checkIfAvailable();
-  }
+	componentWillMount() {
+		this.checkIfAvailable();
+	}
 
-  checkIfAvailable = () => {
-    let currentParty = this.props.partySize;
-    let currentParties = this.props.currentOccupancy;
-    let listOfParties = this.props.listOfParties;
+	checkIfAvailable = () => {
+		let currentParty = this.props.partySize;
+		let currentParties = this.props.currentOccupancy;
+		let listOfParties = this.props.listOfParties;
 
-    if (currentParty < currentParties) {
-      // console.log('Current: ' + currentParty);
-      // console.log('End: ' + currentParties);
-      // console.log('Parties: ' + this.props.currentOccupancy);
-      this.setState({
-        isAvailable: true
-      });
-    } else {
-      this.setState({
-        isAvailable: false
-      });
-    }
-  };
+		if (currentParty < currentParties) {
+			// console.log('Current: ' + currentParty);
+			// console.log('End: ' + currentParties);
+			// console.log('Parties: ' + this.props.currentOccupancy);
+			this.setState({
+				isAvailable: true
+			});
+		} else {
+			this.setState({
+				isAvailable: false
+			});
+		}
+	};
 
-  getNextAvailableTime = () => {
-    let nextAvailableTime;
-    let timeRemaining = this.props.currentOccupancy;
-    // if (this.props.partySize * 60 <= timeRemaining) {
-    //   // let sortedList = this.props.listOfParties.sort();
-    //   this.props.listOfParties[0].timeEnd;
-    // }
+	getNextAvailableTime = partySize => {
+		let nextAvailableTime;
+		let spotsRemaining = 15 - this.props.currentOccupancy;
+		let exitedGuests = spotsRemaining + this.props.listOfParties[0].numberInParty;
+		let firstPartyEndTime = this.props.listOfParties[0].timeEnd;
 
-    let endTime = this.props.listOfParties[0].timeEnd;
-    //
-    let numInEndtimeParty__min = this.props.listOfParties[0].numberInParty;
-    //
-    let numInEnteringPary__min = this.props.partySize;
+		console.log(`spotsRemaining: ${spotsRemaining}`);
+		console.log(`--------partySize: ${partySize}`);
+		console.log(`-----exitedGuests: ${exitedGuests}`);
 
-    let newTimeRemaining__min = numInEndtimeParty__min;
+		// if (partySize <= exitedGuests) {
+		// 	return firstPartyEndTime;
+		// } else {
+		// 	return 'Later';
+		// }
 
-    if (numInEnteringPary__min < newTimeRemaining__min) {
-      // console.log('You May Enter');
-      return endTime;
-    } else {
-      //   console.log("Return NextAvailableTime (${tis})");
-      // console.log(
-      // 	`Return NextAvailableTime (Current Time + (Current Time - End Time)|| ${this.props.currentTime} + time remainings`
-      // );
-      return endTime;
-    }
-    console.log(`End Time: ${endTime}`);
+		// do {
 
-    // return currentTime + timeDifference;
-    // return nextAvailableTime;
-  };
+		// }
+		// while(partySize <= exitedGuests)
 
-  render() {
-    const { partySize } = this.props;
+		for (let i = 0; i < this.props.listOfParties.length; i++) {
+			if (partySize <= exitedGuests) {
+				nextAvailableTime = this.props.listOfParties[i].timeEnd;
+				break;
+			} else {
+				exitedGuests += this.props.listOfParties[i].numberInParty;
+			}
+		}
 
-    return (
-      <div
-        onClick={() => {
-          this.getNextAvailableTime();
-        }}
-        id="party-size1"
-        className="party-size-wrapper"
-      >
-        <div className="party-size">{partySize}</div>
-        <div className="next-available-time">
-          {partySize <= 15 - this.props.currentOccupancy
-            ? checkMark
-            : this.getNextAvailableTime()}
-        </div>
-      </div>
-    );
-  }
+		return nextAvailableTime;
+	};
+
+	render() {
+		const { partySize } = this.props;
+
+		return (
+			<div
+				onClick={() => {
+					this.getNextAvailableTime();
+				}}
+				id="party-size1"
+				className="party-size-wrapper"
+			>
+				<div className="party-size">{partySize}</div>
+				<div className="next-available-time">
+					{partySize <= 15 - this.props.currentOccupancy ? checkMark : this.getNextAvailableTime(partySize)}
+				</div>
+			</div>
+		);
+	}
 }
 
 export default PartySizeRow;

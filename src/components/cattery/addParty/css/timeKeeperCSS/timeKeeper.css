@@ -52,9 +52,7 @@
       -ms-flex-direction: column;
           flex-direction: column;
   right: -41px;
-  top: -131px;
-  -webkit-box-shadow: rgba(0, 0, 0, 0.13) 0px 3px 6px, #606060 0px 3px 6px;
-          box-shadow: rgba(0, 0, 0, 0.13) 0px 3px 6px, #606060 0px 3px 6px;
+  top: -43px;
 }
 
 .time-picker-container button.save-btn {
@@ -63,11 +61,9 @@
   border: none;
   padding: 15px 8px;
   border-radius: 2px;
-  margin-top: -2px;
+  margin-bottom: -2px;
   z-index: 10000;
   border: 1px solid #f4f4f4;
-  -webkit-box-shadow: rgba(0, 0, 0, 0.13) 0px 3px 6px, rgba(0, 0, 0, 0.19) 0px 3px 6px;
-          box-shadow: rgba(0, 0, 0, 0.13) 0px 3px 6px, rgba(0, 0, 0, 0.19) 0px 3px 6px;
   cursor: pointer;
 }
 /*# sourceMappingURL=timeKeeper.css.map */

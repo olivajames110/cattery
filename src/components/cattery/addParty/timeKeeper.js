@@ -57,13 +57,13 @@ class TimePicker extends Component {
 
     const timePickerContainer = (
       <div className="time-picker-container">
+		<button onClick={this.updateData} className="save-btn">
+		  Save
+		</button>
         <TimeKeeper
           time={this.state.timeStart}
           onChange={newTime => this.handleUpdateTime(newTime)}
         />
-        <button onClick={this.updateData} className="save-btn">
-          Save
-        </button>
       </div>
     );
 

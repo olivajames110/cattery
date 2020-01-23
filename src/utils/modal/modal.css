@@ -1,5 +1,5 @@
 .modal-container {
-  position: absolute;
+  position: fixed;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -7,6 +7,11 @@
       -ms-flex-pack: center;
           justify-content: center;
   width: 100%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100%;
+  z-index: 100;
 }
 
 .backdrop {
@@ -15,22 +20,12 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.623);
   position: fixed;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
 }
 
 #modal {
   -webkit-box-shadow: 0 0 13px 9px rgba(0, 0, 0, 0.1);
           box-shadow: 0 0 13px 9px rgba(0, 0, 0, 0.1);
   position: relative;
-  margin-top: 7.4%;
   padding: 25px;
   height: initial;
   width: 500px;

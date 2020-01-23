@@ -44,8 +44,8 @@
 	display: flex;
 	flex-direction: column;
 	right: -41px;
-	top: -131px;
-	box-shadow: rgba(0, 0, 0, 0.13) 0px 3px 6px, #606060 0px 3px 6px;
+	top: -43px;
+	// box-shadow: rgba(0, 0, 0, 0.13) 0px 3px 6px, #606060 0px 3px 6px;
 
 	button.save-btn {
 		background-color: #616c70;
@@ -53,10 +53,10 @@
 		border: none;
 		padding: 15px 8px;
 		border-radius: 2px;
-		margin-top: -2px;
+		margin-bottom: -2px;
 		z-index: 10000;
 		border: 1px solid #f4f4f4;
-		box-shadow: rgba(0, 0, 0, 0.13) 0px 3px 6px, rgba(0, 0, 0, 0.19) 0px 3px 6px;
+		// box-shadow: rgba(0, 0, 0, 0.13) 0px 3px 6px, rgba(0, 0, 0, 0.19) 0px 3px 6px;
 		cursor: pointer;
 		// position: absolute;
 		// bottom: -30px;
