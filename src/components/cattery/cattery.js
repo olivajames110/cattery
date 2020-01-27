@@ -18,46 +18,35 @@ import { clockIcon, usersIcon, plusIcon } from '../../utils/icons/icons';
 //house timer here
 class Cattery extends Component {
 	state = {
-		countDownSpeed: 60000,
-		modalIsOpen: false,
-		currentOccupancy: 0,
-		currentNumOfReservations: 0,
-		currentNumOfUpcomingReservations: 0,
-		currentNumOverdue: 0,
-		totalGuests: 0,
-		selectedPartyId: null,
-		currentTime: '2:10 PM',
-		endTimes: 80,
-		listOfParties: [
-			// {
-			// 	id: 111,
-			// 	name: 'Test',
-			// 	description: null,
-			// 	numberInParty: 5,
-			// 	paid: true,
-			// 	status: null,
-			// 	timeRemaining: 60,
-			// 	timeStart: null,
-			// 	timeEnd: null,
-			// 	width: '100%',
-			// 	isReservation: false,
-			// 	reservationTime: null
-			// }
-		],
-		listOfReservations: [
-			// {
-			// 	name: 'Carll',
-			// 	description: '1 person with black shirt, red hat',
-			// 	numberInParty: 2,
-			// 	paid: true,
-			// 	status: 'In Room',
-			// 	timeRemaining: 60,
-			// 	timeStart: '2:10',
-			// 	timeEnd: '3:10',
-			// 	isReservation: true
-			// }
-		],
-		isEditMode: false
+		countDownSpeed                   : 60000,
+		modalIsOpen                      : false,
+		currentOccupancy                 : 0,
+		currentNumOfReservations         : 0,
+		currentNumOfUpcomingReservations : 0,
+		currentNumOverdue                : 0,
+		totalGuests                      : 0,
+		selectedPartyId                  : null,
+		currentTime                      : '2:10 PM',
+		endTimes                         : 80,
+		listOfParties                    : [],
+		listOfReservations               : [],
+		isEditMode                       : false,
+		parties                          : [
+			{
+				partyData : {
+					id            : null,
+					name          : null,
+					description   : null,
+					numberInParty : 1,
+					paid          : true,
+					timeStart     : '12:00 PM',
+					timeEnd       : '1:00 PM'
+				},
+				isActive  : false,
+				isPresent : false,
+				status    : 'Reservation'
+			}
+		]
 	};
 
 	//sets Current Time  and Num of People in each array
@@ -66,7 +55,7 @@ class Cattery extends Component {
 		setInterval(this.getCurrentTime, 1000);
 
 		this.setState({
-			currentTime: currentTime
+			currentTime : currentTime
 		});
 	}
 
@@ -74,12 +63,10 @@ class Cattery extends Component {
 		let currentTime = moment().format('h:mm A');
 		for (let i = 0; i < this.state.listOfReservations.length; i++) {
 			let party = this.state.listOfReservations;
-			let now = moment()
-				.add('hours', 1)
-				.format('h:mm A');
 			party[i].reservationIsReady = true;
 
 			if (party[i].timeStart === currentTime) {
+				party[i].isUpcomingReservation = true;
 				this.handleMoveParty(
 					party[i].id,
 					party[i].numberInParty,
@@ -89,38 +76,34 @@ class Cattery extends Component {
 			}
 			console.log(`Party Time Start: ${party[i].timeStart}`);
 
-			let currentTimePlus1 = moment()
-				.add('hours', 1)
-				.format('h:mm A');
+			let currentTimePlus1 = moment().add('hours', 1).format('h:mm A');
 			if (party[i].timeStart === currentTimePlus1 && party[i].isUpcomingReservation === false) {
 				console.log('Match');
 				party[i].isUpcomingReservation = true;
 				this.setState({
-					currentNumOfUpcomingReservations:
+					currentNumOfUpcomingReservations :
 						this.state.currentNumOfUpcomingReservations + party[i].numberInParty
 				});
 			}
 		}
 
 		this.setState({
-			currentTime: currentTime
+			currentTime : currentTime
 		});
 	};
 
-	handleGetTimeStartTimeEnd = id => {
+	handleGetTimeStartTimeEnd = (id) => {
 		let timeStartTimeEnd = {
-			timeStart: moment().format('h:mm A'),
-			timeEnd: moment()
-				.add('hours', 1)
-				.format('h:mm A')
+			timeStart : moment().format('h:mm A'),
+			timeEnd   : moment().add('hours', 1).format('h:mm A')
 		};
 
 		return timeStartTimeEnd;
 	};
 
-	handleUpdateTimes = id => {
+	handleUpdateTimes = (id) => {
 		let newTimes = this.handleGetTimeStartTimeEnd();
-		let party = this.state.listOfParties.filter(party => {
+		let party = this.state.listOfParties.filter((party) => {
 			return party.id === id;
 		});
 		party[0].timeStart = newTimes.timeStart;
@@ -132,55 +115,55 @@ class Cattery extends Component {
 	//Modal Toggle
 	handleModalToggle = () => {
 		this.setState({
-			modalIsOpen: !this.state.modalIsOpen,
-			isEditMode: false
+			modalIsOpen : !this.state.modalIsOpen,
+			isEditMode  : false
 		});
 	};
 
 	//Removes Party from list
 	handleRemoveParty = (id, numInParty, timeRemaining) => {
-		let updatedParties = this.state.listOfParties.filter(party => {
+		let updatedParties = this.state.listOfParties.filter((party) => {
 			return party.id !== id;
 		});
 
 		this.setState({
-			listOfParties: updatedParties,
-			currentOccupancy: this.state.currentOccupancy - numInParty,
-			totalGuests: this.state.totalGuests + numInParty,
-			currentNumOverdue: timeRemaining <= 0 ? this.state.currentNumOverdue - numInParty : 0
+			listOfParties     : updatedParties,
+			currentOccupancy  : this.state.currentOccupancy - numInParty,
+			totalGuests       : this.state.totalGuests + numInParty,
+			currentNumOverdue : timeRemaining <= 0 ? this.state.currentNumOverdue - numInParty : 0
 		});
 	};
 
 	handleMoveParty = (id, numOfNewPeople, currentListArray, listDestinationArray) => {
 		//Returns the party
-		let filteredParty = currentListArray.filter(p => {
+		let filteredParty = currentListArray.filter((p) => {
 			return p.id === id;
 		});
 
-		let filteredCurrentListArray = currentListArray.filter(p => {
+		let filteredCurrentListArray = currentListArray.filter((p) => {
 			return p.id !== id;
 		});
 
 		//Takes existing party list and adds new party
-		let newlistDestinationArray = [...listDestinationArray, ...filteredParty];
+		let newlistDestinationArray = [ ...listDestinationArray, ...filteredParty ];
 
 		//Sets state for --Num of pople in the room --
 		this.setState({
-			currentOccupancy: Number(this.state.currentOccupancy) + Number(numOfNewPeople),
-			currentNumOfReservations: Number(this.state.currentNumOfReservations) - Number(numOfNewPeople),
-			listOfParties: newlistDestinationArray,
-			listOfReservations: filteredCurrentListArray
+			currentOccupancy         : Number(this.state.currentOccupancy) + Number(numOfNewPeople),
+			currentNumOfReservations : Number(this.state.currentNumOfReservations) - Number(numOfNewPeople),
+			listOfParties            : newlistDestinationArray,
+			listOfReservations       : filteredCurrentListArray
 		});
 	};
 
 	handleCheckReservation = (id, numOfNewPeople) => {
 		console.log('Checked In' + id);
 		//Returns the party
-		let party = this.state.listOfReservations.filter(party => {
+		let party = this.state.listOfReservations.filter((party) => {
 			return party.id === id;
 		});
 
-		let newReservationList = this.state.listOfReservations.filter(party => {
+		let newReservationList = this.state.listOfReservations.filter((party) => {
 			return party.id !== id;
 		});
 
@@ -191,15 +174,15 @@ class Cattery extends Component {
 		party[0].timeEnd = newTimes.timeEnd;
 
 		//Takes existing party list and adds new party
-		let newPartyList = [...this.state.listOfParties, ...party];
+		let newPartyList = [ ...this.state.listOfParties, ...party ];
 		let numOfUpcoming = party[0].isUpcomingReservation ? Number(numOfNewPeople) : 0;
 		//Sets state for --Num of pople in the room --
 		this.setState({
-			currentOccupancy: Number(this.state.currentOccupancy) + Number(numOfNewPeople),
-			currentNumOfReservations: Number(this.state.currentNumOfReservations) - Number(numOfNewPeople),
-			currentNumOfUpcomingReservations: this.state.currentNumOfUpcomingReservations - numOfUpcoming,
-			listOfParties: newPartyList,
-			listOfReservations: newReservationList
+			currentOccupancy                 : Number(this.state.currentOccupancy) + Number(numOfNewPeople),
+			currentNumOfReservations         : Number(this.state.currentNumOfReservations) - Number(numOfNewPeople),
+			currentNumOfUpcomingReservations : this.state.currentNumOfUpcomingReservations - numOfUpcoming,
+			listOfParties                    : newPartyList,
+			listOfReservations               : newReservationList
 		});
 
 		if (party[0].isUpcomingReservation) {
@@ -211,20 +194,18 @@ class Cattery extends Component {
 
 	updateCurrentPartyLists = (party, numOfNewPeople, isReservation) => {
 		if (!isReservation) {
-			let newPartyList = [...this.state.listOfParties, ...party];
-
+			let newPartyList = [ ...this.state.listOfParties, ...party ];
 			this.setState({
-				currentOccupancy: Number(this.state.currentOccupancy) + Number(numOfNewPeople),
-				listOfParties: newPartyList,
-				modalIsOpen: false
+				currentOccupancy : Number(this.state.currentOccupancy) + Number(numOfNewPeople),
+				listOfParties    : newPartyList,
+				modalIsOpen      : false
 			});
 		} else {
-			let newPartyList = [...this.state.listOfReservations, ...party];
+			let newPartyList = [ ...this.state.listOfReservations, ...party ];
 			this.setState({
-				currentNumOfReservations: Number(this.state.currentNumOfReservations) + Number(numOfNewPeople),
-
-				listOfReservations: newPartyList,
-				modalIsOpen: false
+				currentNumOfReservations : Number(this.state.currentNumOfReservations) + Number(numOfNewPeople),
+				listOfReservations       : newPartyList,
+				modalIsOpen              : false
 			});
 		}
 	};
@@ -235,14 +216,14 @@ class Cattery extends Component {
 		return party;
 	};
 
-	getActiveParty = id => {
+	getActiveParty = (id) => {
 		let party;
 
-		let p1 = this.state.listOfParties.filter(party => {
+		let p1 = this.state.listOfParties.filter((party) => {
 			return party.id === id;
 		});
 
-		let p2 = this.state.listOfReservations.filter(party => {
+		let p2 = this.state.listOfReservations.filter((party) => {
 			return party.id === id;
 		});
 
@@ -256,34 +237,34 @@ class Cattery extends Component {
 		return party;
 	};
 
-	handleEditModalToggle = id => {
+	handleEditModalToggle = (id) => {
 		this.handleModalToggle();
 		this.setState({
-			isEditMode: !this.state.isEditMode,
-			currentPartyId: id || null
+			isEditMode     : !this.state.isEditMode,
+			currentPartyId : id || null
 		});
 	};
 
 	handleTestMode = () => {
 		if (this.state.countDownSpeed === 110) {
 			this.setState({
-				countDownSpeed: 60000
+				countDownSpeed : 60000
 			});
 		}
 		if (this.state.countDownSpeed === 60000) {
 			this.setState({
-				countDownSpeed: 110
+				countDownSpeed : 110
 			});
 		}
 	};
 
-	calcCurrentNumOfSpotsLeft = numInParty => {
-		let filteredNumOfSpotsLeft__LIST = this.state.listOfParties.filter(party => {
+	calcCurrentNumOfSpotsLeft = (numInParty) => {
+		let filteredNumOfSpotsLeft__LIST = this.state.listOfParties.filter((party) => {
 			return party.isOverdue === true;
 		});
 		let numOfOverdue = this.getNumPeopleInList(filteredNumOfSpotsLeft__LIST, 'numberInParty');
 		this.setState({
-			currentNumOverdue: numOfOverdue
+			currentNumOverdue : numOfOverdue
 		});
 	};
 
