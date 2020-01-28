@@ -16,7 +16,7 @@ class PartySizeRow extends Component {
 	checkIfAvailable = () => {
 		let currentParty = this.props.partySize;
 		let currentParties = this.props.currentOccupancy;
-		let listOfParties = this.props.listOfParties;
+		let listOfParties = this.props.parties;
 
 		if (currentParty < currentParties) {
 			// console.log('Current: ' + currentParty);
@@ -35,12 +35,12 @@ class PartySizeRow extends Component {
 	getNextAvailableTime = (partySize) => {
 		let nextAvailableTime;
 		let spotsRemaining = 15 - this.props.currentOccupancy;
-		let exitedGuests = spotsRemaining + this.props.listOfParties[0].numberInParty;
-		let firstPartyEndTime = this.props.listOfParties[0].timeEnd;
+		let exitedGuests = spotsRemaining + this.props.parties[0].numberInParty;
+		let firstPartyEndTime = this.props.parties[0].timeEnd;
 
-		// console.log(`spotsRemaining: ${spotsRemaining}`);
-		// console.log(`--------partySize: ${this.props.partySize}`);
-		// console.log(`-----exitedGuests: ${exitedGuests}`);
+		console.log(`spotsRemaining: ${spotsRemaining}`);
+		console.log(`--------partySize: ${this.props.partySize}`);
+		console.log(`-----exitedGuests: ${exitedGuests}`);
 
 		// if (this.props.partySize <= exitedGuests) {
 		// 	return firstPartyEndTime;
@@ -53,12 +53,12 @@ class PartySizeRow extends Component {
 		// }
 		// while(this.props.partySize <= exitedGuests)
 
-		for (let i = 0; i < this.props.listOfParties.length; i++) {
+		for (let i = 0; i < this.props.parties.length; i++) {
 			if (this.props.partySize <= exitedGuests) {
-				nextAvailableTime = this.props.listOfParties[i].timeEnd;
+				nextAvailableTime = this.props.parties[i].timeEnd;
 				break;
 			} else {
-				exitedGuests += this.props.listOfParties[i].numberInParty;
+				exitedGuests += this.props.parties[i].numberInParty;
 			}
 		}
 

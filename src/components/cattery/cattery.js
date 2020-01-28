@@ -298,7 +298,7 @@ class Cattery extends Component {
 								this.state.currentNumOfUpcomingReservations -
 								this.state.currentNumOverdue
 							}
-							listOfParties={this.state.parties}
+							parties={this.state.parties}
 						/>
 					</div>
 					<div id="cattery-body-col">
