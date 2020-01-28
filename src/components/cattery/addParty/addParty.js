@@ -17,6 +17,7 @@ class AddParty extends Component {
     timeEnd: "1:00 PM",
     reservationTime: null,
     isReservation: false,
+    rowNum: 1,
     isUpcomingReservation: false,
     isOverdue: false,
     reservationIsReady: null
@@ -41,6 +42,7 @@ class AddParty extends Component {
 
   handleUpdateReservation = data => {
     this.setState({
+      rowNum: 2,
       timeStart: data.timeStart,
       timeEnd: data.timeEnd
     });

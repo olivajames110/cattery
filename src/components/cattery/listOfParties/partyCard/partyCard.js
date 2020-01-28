@@ -66,14 +66,15 @@ class PartyCard extends Component {
         this.props.party.id,
         this.props.party.numberInParty
       );
-    } else if (this.state.isReservation && this.state.reservationIsReady) {
+    } else if (this.state.isReservation) {
+      this.props.handleMoveParty(this.props.party.id, 1);
       this.setState(
         {
           isReservation: false
         },
         () => {
-          this.props.handleEditModalToggle(this.props.party.id);
-          this.props.handleUpdateTimes(this.props.party.id);
+          // this.props.handleEditModalToggle(this.props.party.id);
+          // this.props.handleUpdateTimes(this.props.party.id);
           this.handleStartCountdown();
         }
       );
