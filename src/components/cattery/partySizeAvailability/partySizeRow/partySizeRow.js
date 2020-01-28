@@ -5,8 +5,8 @@ import { render } from '@testing-library/react';
 
 class PartySizeRow extends Component {
 	state = {
-		isAvailable: false,
-		nextAvailableTime: '2:45'
+		isAvailable       : false,
+		nextAvailableTime : '2:45'
 	};
 
 	componentWillMount() {
@@ -23,24 +23,24 @@ class PartySizeRow extends Component {
 			// console.log('End: ' + currentParties);
 			// console.log('Parties: ' + this.props.currentOccupancy);
 			this.setState({
-				isAvailable: true
+				isAvailable : true
 			});
 		} else {
 			this.setState({
-				isAvailable: false
+				isAvailable : false
 			});
 		}
 	};
 
-	getNextAvailableTime = partySize => {
+	getNextAvailableTime = (partySize) => {
 		let nextAvailableTime;
 		let spotsRemaining = 15 - this.props.currentOccupancy;
 		let exitedGuests = spotsRemaining + this.props.listOfParties[0].numberInParty;
 		let firstPartyEndTime = this.props.listOfParties[0].timeEnd;
 
-		console.log(`spotsRemaining: ${spotsRemaining}`);
-		console.log(`--------partySize: ${this.props.partySize}`);
-		console.log(`-----exitedGuests: ${exitedGuests}`);
+		// console.log(`spotsRemaining: ${spotsRemaining}`);
+		// console.log(`--------partySize: ${this.props.partySize}`);
+		// console.log(`-----exitedGuests: ${exitedGuests}`);
 
 		// if (this.props.partySize <= exitedGuests) {
 		// 	return firstPartyEndTime;
