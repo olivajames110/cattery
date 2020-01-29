@@ -1,51 +1,125 @@
-import React, { Component } from "react";
-import "./css/partySizeAvailability.css";
-import PartySizeRow from "./partySizeRow/partySizeRow";
-import * as moment from "moment";
-const PartySizeAvailability = props => {
-  //   let partyRows = function() {
-  //     let partyRows = (
-  //       <div className="containr">
-  //         <PartySizeRow partySize="1" />
-  //         <PartySizeRow partySize="1" />
-  //         <PartySizeRow partySize="1" />
-  //       </div>
-  //     );
-  let filteredParties = () => {
-    let newParties = props.parties.filter(party => {
-      return (
-        (party.rowNum === 1 || party.isUpcomingReservation === true) &&
-        party.isOverdue === false
-      );
-    });
+import React, { Component } from 'react';
+import './css/partySizeAvailability.css';
+import PartySizeRow from './partySizeRow/partySizeRow';
+import { useState, useEffect } from 'react';
+import * as moment from 'moment';
+const PartySizeAvailability = (props) => {
+	const [ filteredParties, setFilteredParties ] = useState(props.parties);
 
-    console.dir(newParties);
-    // console.log(moment("8:49 PM")._locale);
-    // return newParties;
-  };
+	// let filteredParties = () => {
+	// 	let newParties = props.parties.filter((party) => {
+	// 		return (party.rowNum === 1 || party.isUpcomingReservation === true) && party.isOverdue === false;
+	// 	});
 
-  let partyRows = Array.from(Array(15)).map((x, i) => (
-    <PartySizeRow
-      currentTime={props.currentTime}
-      currentOccupancy={props.currentOccupancy}
-      parties={props.parties}
-      partySize={i + 1}
-      key={Math.random()}
-    />
-  ));
+	// 	console.dir(props.parties);
+	// 	let sortedParties = newParties.sort(function(p1, p2) {
+	// 		// console.dir(p1);
+	// 		// console.dir(p2);
+	// 		if (p1.times.hour >= p2.times.hour) {
+	// 			if (p1.times.minute > p2.times.minute) {
+	// 				return 1;
+	// 			} else {
+	// 				return -1;
+	// 			}
+	// 		} else {
+	// 			// moves larger to the top of array
+	// 			return -1;
+	// 		}
+	// 	});
 
-  // for (let i = 0; i <= 15; i++) {
-  //   //   console.log("Party: " + i);
-  //   return <PartySizeRow partySize="1" />;
-  // }
+	// 	console.dir(sortedParties);
 
-  return (
-    <div id="party-size-availability-container">
-      <h2>Walk-In Availability</h2>
-      {partyRows}
-      {filteredParties()}
-    </div>
-  );
+	// 	console.log(moment("8:49 PM")._locale);
+	// 	return newParties;
+	// };
+
+	useEffect(
+		() => {
+			let newParties = props.parties.filter((party) => {
+				return (party.rowNum === 1 || party.isUpcomingReservation === true) && party.isOverdue === false;
+			});
+
+			let sortedParties = newParties.sort(function(p1, p2) {
+				if (p1.times.hour >= p2.times.hour) {
+					if (p1.times.minute > p2.times.minute) {
+						return 1;
+					} else {
+						return -1;
+					}
+				} else {
+					// moves larger to the top of array
+					return -1;
+				}
+			});
+			console.dir(props.parties);
+
+			let partyRows = Array.from(Array(15)).map((x, i) => (
+				<PartySizeRow
+					currentTime={props.currentTime}
+					currentOccupancy={props.currentOccupancy}
+					parties={sortedParties}
+					partySize={i + 1}
+					key={Math.random()}
+				/>
+			));
+
+			setFilteredParties(partyRows);
+		},
+		[ props.currentOccupancy ]
+	);
+
+	// for (let i = 0; i <= 15; i++) {
+	//   //   console.log("Party: " + i);
+	//   return <PartySizeRow partySize="1" />;
+	// }
+
+	return (
+		<div id="party-size-availability-container">
+			<h2>Walk-In Availability</h2>
+			{filteredParties}
+		</div>
+	);
 };
 
 export default PartySizeAvailability;
+
+// import React, { Component } from 'react';
+// import './css/partySizeAvailability.css';
+// import PartySizeRow from './partySizeRow/partySizeRow';
+// import * as moment from 'moment';
+// import { useState, useEffect } from 'react';
+// const PartySizeAvailability = (props) => {
+// 	const [ filteredParties, setFilteredParties ] = useState([]);
+
+// 	useEffect(() => {
+// 		let newParties = props.parties.filter((party) => {
+// 			return (party.rowNum === 1 || party.isUpcomingReservation === true) && party.isOverdue === false;
+// 		});
+// 		console.dir(newParties);
+// 		setFilteredParties(newParties);
+// 	}, props.parties);
+
+// 	let partyRows = Array.from(Array(15)).map((x, i) => (
+// 		<PartySizeRow
+// 			currentTime={props.currentTime}
+// 			currentOccupancy={props.currentOccupancy}
+// 			parties={filteredParties}
+// 			partySize={i + 1}
+// 			key={Math.random()}
+// 		/>
+// 	));
+
+// 	// for (let i = 0; i <= 15; i++) {
+// 	//   //   console.log("Party: " + i);
+// 	//   return <PartySizeRow partySize="1" />;
+// 	// }
+
+// 	return (
+// 		<div id="party-size-availability-container">
+// 			<h2>Walk-In Availability</h2>
+// 			{partyRows}
+// 		</div>
+// 	);
+// };
+
+// export default PartySizeAvailability;

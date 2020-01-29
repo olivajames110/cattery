@@ -9,6 +9,7 @@ import './css/addParty.css';
 class AddParty extends Component {
 	state = {
 		description           : null,
+		reservationTime       : null,
 		id                    : null,
 		isReservation         : false,
 		isOverdue             : false,
@@ -17,19 +18,28 @@ class AddParty extends Component {
 		numberInParty         : 1,
 		paid                  : true,
 		rowNum                : 1,
-		reservationTime       : null,
-		timeEnd               : '1:00 PM',
-		timeStart             : '12:00 PM'
+		times                 : {
+			start           : null,
+			start_fomratted : null,
+			end             : null,
+			end_formatted   : null
+		}
 	};
 
 	componentDidMount() {
 		let startTime = moment().format('h:mm A');
 		let endTime = moment().add('hours', 1).format('h:mm A');
-
+		let times = {
+			minute : moment().minute(),
+			hour   : moment().hour(),
+			start  : moment().format('h:mm A'),
+			end    : moment().add('hours', 1).format('h:mm A')
+		};
 		this.setState({
-			timeStart : startTime,
-			timeEnd   : endTime,
-			id        : Math.random() * 10
+			// timeStart : startTime,
+			// timeEnd   : endTime,
+			id    : Math.random() * 10,
+			times : times
 		});
 	}
 
@@ -38,10 +48,18 @@ class AddParty extends Component {
 	};
 
 	handleUpdateReservation = (data) => {
+		// let times = { start: data.timeStart, end: data.timeEnd };
+		let times = {
+			minute : data.minute,
+			hour   : data.hour,
+			start  : data.start,
+			end    : data.end
+		};
 		this.setState({
-			rowNum    : 2,
-			timeStart : data.timeStart,
-			timeEnd   : data.timeEnd
+			rowNum : 2,
+			// timeStart : data.timeStart,
+			// timeEnd   : data.timeEnd,
+			times  : times
 		});
 	};
 
@@ -103,9 +121,9 @@ class AddParty extends Component {
 				</div>
 				{this.state.isReservation ? (
 					<TimePicker
-						timeStart={this.state.timeStart}
+						timeStart={this.state.times.start}
 						reservationTime={this.state.reservationTime}
-						time={this.state.timeStart}
+						time={this.state.times.start}
 						handleUpdateReservation={this.handleUpdateReservation}
 					/>
 				) : (

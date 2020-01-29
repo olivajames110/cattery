@@ -1,78 +1,81 @@
-import React, { Component } from "react";
-import TimeKeeper from "react-timekeeper";
-import "./css/timeKeeperCSS/timeKeeper.css";
-import { pencil } from "../../../utils/icons/icons";
+import React, { Component } from 'react';
+import TimeKeeper from 'react-timekeeper';
+import './css/timeKeeperCSS/timeKeeper.css';
+import { pencil } from '../../../utils/icons/icons';
 
 class TimePicker extends Component {
-  state = {
-    isOpen: true,
-    timeStart: null,
-    timeEnd: null
-  };
+	state = {
+		isOpen : true,
+		// timeStart : null,
+		// timeEnd   : null,
+		start  : null,
+		end    : null,
+		hour   : null,
+		minute : null
+	};
 
-  handleUpdateTime = time => {
-    console.log(time.formatted.toString().toUpperCase());
-    let endMeridiem;
-    if (time.hour <= 12) {
-      endMeridiem = " PM";
-    } else {
-      endMeridiem = " PM";
-    }
+	handleUpdateTime = (time) => {
+		console.log(time.formatted.toString().toUpperCase());
+		console.log(time);
 
-    let endTime = `${time.hour + 1}:${("0" + time.minute).slice(
-      -2
-    )}${endMeridiem}`;
-    this.setState({
-      timeStart: time.formatted.toString().toUpperCase(),
-      // timeStart: time.formatted,
-      timeEnd: endTime
-    });
-  };
+		console.log(time.hour);
+		console.log(time.minute);
+		let endMeridiem;
+		if (time.hour <= 12) {
+			endMeridiem = ' PM';
+		} else {
+			endMeridiem = ' PM';
+		}
 
-  toggleOpenTimeKeeper = () => {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  };
+		let endTime = `${time.hour + 1}:${('0' + time.minute).slice(-2)}${endMeridiem}`;
+		this.setState({
+			// timeStart : time.formatted.toString().toUpperCase(),
+			// timeStart: time.formatted,
+			// timeEnd   : endTime,
+			start  : time.formatted.toString().toUpperCase(),
+			end    : endTime,
+			hour   : time.hour24,
+			minute : time.minute
+		});
+	};
 
-  updateData = () => {
-    this.props.handleUpdateReservation(this.state);
-    this.toggleOpenTimeKeeper();
-  };
+	toggleOpenTimeKeeper = () => {
+		this.setState({
+			isOpen : !this.state.isOpen
+		});
+	};
 
-  render() {
-    const editContainer = (
-      <div className="edit-container">
-        <span id="title" className="reservation-time">
-          Reservation:
-        </span>
-        <span id="time" className="reservation-time">
-          {this.state.timeStart}
-        </span>
-        <button onClick={this.toggleOpenTimeKeeper} className="save-btn">
-          {pencil}
-        </button>
-      </div>
-    );
+	updateData = () => {
+		this.props.handleUpdateReservation(this.state);
+		this.toggleOpenTimeKeeper();
+	};
 
-    const timePickerContainer = (
-      <div className="time-picker-container">
-		<button onClick={this.updateData} className="save-btn">
-		  Save
-		</button>
-        <TimeKeeper
-          time={this.state.timeStart}
-          onChange={newTime => this.handleUpdateTime(newTime)}
-        />
-      </div>
-    );
+	render() {
+		const editContainer = (
+			<div className="edit-container">
+				<span id="title" className="reservation-time">
+					Reservation:
+				</span>
+				<span id="time" className="reservation-time">
+					{this.state.timeStart}
+				</span>
+				<button onClick={this.toggleOpenTimeKeeper} className="save-btn">
+					{pencil}
+				</button>
+			</div>
+		);
 
-    return (
-      <div className="time-input-container">
-        {this.state.isOpen ? timePickerContainer : editContainer}
-      </div>
-    );
-  }
+		const timePickerContainer = (
+			<div className="time-picker-container">
+				<button onClick={this.updateData} className="save-btn">
+					Save
+				</button>
+				<TimeKeeper time={this.state.timeStart} onChange={(newTime) => this.handleUpdateTime(newTime)} />
+			</div>
+		);
+
+		return <div className="time-input-container">{this.state.isOpen ? timePickerContainer : editContainer}</div>;
+	}
 }
 
 export default TimePicker;

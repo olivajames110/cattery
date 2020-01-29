@@ -49,14 +49,14 @@ class Cattery extends Component {
 			let currentTimePlus1 = moment().add('hours', 1).format('h:mm A');
 
 			// -- Make party upcoming  if timeStart is equal to currentTime + 1 hour
-			if (party[i].timeStart === currentTimePlus1 && party[i].isUpcomingReservation === false) {
+			if (party[i].times.start === currentTimePlus1 && party[i].isUpcomingReservation === false) {
 				console.log('Match');
 				party[i].isUpcomingReservation = true;
 				this.modifyStateNum(party[i].numberInParty, 'currentNumOfUpcomingReservations');
 			}
 
 			// -- Move party if timeStart is equal to currentTime
-			if (party[i].timeStart === currentTime && party[i].rowNum !== 1) {
+			if (party[i].times.start === currentTime && party[i].rowNum !== 1) {
 				party[i].isUpcomingReservation = true;
 				this.handleMoveParty(party[i].id, 1);
 				// this.modifyStateNum(party[i].numberInParty, 'currentNumOfUpcomingReservations');
@@ -95,11 +95,13 @@ class Cattery extends Component {
 		//------->
 
 		//Sets party reservation to false
-		let newTimes = this.handleGetTimeStartTimeEnd();
+		let newTimes = this.handleGetTimes();
+		console.log(newTimes);
+
 		filteredParty[0].rowNum = 1;
 		filteredParty[0].isReservation = false;
-		filteredParty[0].timeStart = newTimes.timeStart;
-		filteredParty[0].timeEnd = newTimes.timeEnd;
+		filteredParty[0].times.start = newTimes.start;
+		filteredParty[0].times.end = newTimes.end;
 		let numOfUpcoming = filteredParty[0].isUpcomingReservation ? Number(numOfNewPeople) : 0;
 		this.handleMoveParty(id, 1);
 		this.modifyStateNum(numOfNewPeople, 'currentOccupancy');
@@ -170,21 +172,27 @@ class Cattery extends Component {
 	};
 
 	//returns object of start and end time
-	handleGetTimeStartTimeEnd = (id) => {
-		let timeStartTimeEnd = {
-			timeStart : moment().format('h:mm A'),
-			timeEnd   : moment().add('hours', 1).format('h:mm A')
+	handleGetTimes = (id) => {
+		// let timeStartTimeEnd = {
+		// 	timeStart : moment().format('h:mm A'),
+		// 	timeEnd   : moment().add('hours', 1).format('h:mm A')
+		// };
+		let times = {
+			minute : moment().minute(),
+			hour   : moment().hour(),
+			start  : moment().format('h:mm A'),
+			end    : moment().add('hours', 1).format('h:mm A')
 		};
 
-		return timeStartTimeEnd;
+		return times;
 	};
 
 	// Updates start/end times
 	handleUpdateTimes = (id) => {
-		let newTimes = this.handleGetTimeStartTimeEnd();
+		let newTimes = this.handleGetTimes();
 		let filteredParty = this.getFilteredParty(id);
-		filteredParty[0].timeStart = newTimes.timeStart;
-		filteredParty[0].timeEnd = newTimes.timeEnd;
+		filteredParty[0].times.start = newTimes.times.start;
+		filteredParty[0].times.end = newTimes.times.end;
 	};
 
 	//Updates data

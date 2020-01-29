@@ -85,7 +85,7 @@ class PartyCard extends Component {
 			numberInParty,
 			paid,
 			isReservation,
-
+			times,
 			timeStart,
 			timeEnd,
 			isUpcomingReservation
@@ -107,7 +107,7 @@ class PartyCard extends Component {
 					// }}
 				>
 					<div className="detail-row" id="party-name">
-						<span id="title">Party Name:</span>
+						<span id="title">Name:</span>
 						<span id="name">{name}</span>
 					</div>
 
@@ -133,7 +133,7 @@ class PartyCard extends Component {
 						>
 							<span className="details-title">Paid:</span>
 							<span
-								style={{ color: this.state.isPaid ? '#6fa037' : '#c1c0c0' }}
+								style={{ color: this.state.isPaid ? '#6fa037' : '#ff0000' }}
 								className="details-value"
 							>
 								{dollarSign}
@@ -150,11 +150,11 @@ class PartyCard extends Component {
 						<div className="time-start-end-container">
 							<div className="detail-row" id="time-start">
 								<span className="details-title"> Start:</span>
-								<span className="details-value"> {timeStart}</span>
+								<span className="details-value"> {times.start}</span>
 							</div>
 							<div className="detail-row" id="time-end">
 								<span className="details-title"> End:</span>
-								<span className="details-value"> {timeEnd}</span>
+								<span className="details-value"> {times.end}</span>
 							</div>
 						</div>
 					</div>
