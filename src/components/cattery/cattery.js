@@ -27,36 +27,70 @@ class Cattery extends Component {
 		isEditMode                       : false,
 		modalIsOpen                      : false,
 		parties                          : [],
-		totalGuests                      : 0
+		totalGuests                      : 0,
+		times                            : {
+			minute              : null,
+			hour                : null,
+			currentTime         : null,
+			currentTimePlusHour : null
+		}
 	};
 
 	//sets Current Time  and Num of People in each array
 	componentDidMount() {
 		let currentTime = moment().format('h:mm A');
+		let currentDate = moment().format('D-MM-YYYY').toString();
+		let times = {
+			minute              : moment().minute(),
+			hour                : moment().hour(),
+			currentTime         : currentTime,
+			currentTimePlusHour : moment().add('hours', 1).format('h:mm A'),
+			timeStamp           : moment(`${currentDate} ${currentTime}`, 'D-MM-YYYY h:mmA').unix()
+		};
 		setInterval(this.checkPartyStartTimes, 1000);
 
 		this.setState({
-			currentTime : currentTime
+			times : times
 		});
 	}
 
 	checkPartyStartTimes = () => {
 		let currentTime = moment().format('h:mm A');
+		let currentDate = moment().format('D-MM-YYYY').toString();
+		let times = {
+			minute              : moment().minute(),
+			hour                : moment().hour(),
+			currentTime         : currentTime,
+			currentTimePlusHour : moment().add('hours', 1).format('h:mm A'),
+			timeStamp           : moment(`${currentDate} ${currentTime}`, 'D-MM-YYYY h:mmA').unix()
+		};
+
+		// ***let c = moment('30-01-2020 4:50 PM', 'D-MM-YYYY h:mmA').unix();
+
+		// let time = '4:50 PM';
+		// let date = moment().format('D-MM-YYYY').toString();
+		// let c = moment(`${date} ${time}`, 'D-MM-YYYY h:mmA').unix();
+
+		// console.log(`m: ${m}`);
+		// console.log(`c: ${c}`);
 
 		// Checks startTime for each party in Parties
 		for (let i = 0; i < this.state.parties.length; i++) {
 			let party = this.state.parties;
-			let currentTimePlus1 = moment().add('hours', 1).format('h:mm A');
 
 			// -- Make party upcoming  if timeStart is equal to currentTime + 1 hour
-			if (party[i].times.start === currentTimePlus1 && party[i].isUpcomingReservation === false) {
+			if (
+				party[i].times.timeStamp - this.state.times.timeStamp <= 3600 &&
+				party[i].isUpcomingReservation === false &&
+				party[i].rowNum === 2
+			) {
 				console.log('Match');
 				party[i].isUpcomingReservation = true;
 				this.modifyStateNum(party[i].numberInParty, 'currentNumOfUpcomingReservations');
 			}
 
 			// -- Move party if timeStart is equal to currentTime
-			if (party[i].times.start === currentTime && party[i].rowNum !== 1) {
+			if (party[i].times.start === this.state.times.currentTime && party[i].rowNum !== 1) {
 				party[i].isUpcomingReservation = true;
 				this.handleMoveParty(party[i].id, 1);
 				// this.modifyStateNum(party[i].numberInParty, 'currentNumOfUpcomingReservations');
@@ -64,7 +98,7 @@ class Cattery extends Component {
 		}
 
 		this.setState({
-			currentTime : currentTime
+			times : times
 		});
 	};
 
@@ -247,7 +281,7 @@ class Cattery extends Component {
 				<div id="current-time" className="container">
 					<span className="icon">{clockIcon}</span>
 					<div onClick={this.handleTestMode} className="primary-value">
-						{this.state.currentTime}
+						{this.state.times.currentTime}
 						{this.state.countDownSpeed === 110 ? <div className="test-mode">Test Mode</div> : ''}
 					</div>
 				</div>
@@ -300,7 +334,7 @@ class Cattery extends Component {
 					{this.state.modalIsOpen ? modal : addPartyBtn}
 					<div id="party-size-availability-col">
 						<PartySizeAvailability
-							currentTime={this.state.currentTime}
+							currentTime={this.state.times.currentTime}
 							currentOccupancy={
 								this.state.currentOccupancy +
 								this.state.currentNumOfUpcomingReservations -

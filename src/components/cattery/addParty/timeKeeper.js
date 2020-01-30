@@ -2,40 +2,39 @@ import React, { Component } from 'react';
 import TimeKeeper from 'react-timekeeper';
 import './css/timeKeeperCSS/timeKeeper.css';
 import { pencil } from '../../../utils/icons/icons';
+import * as moment from 'moment';
 
 class TimePicker extends Component {
 	state = {
-		isOpen : true,
+		isOpen    : true,
 		// timeStart : null,
 		// timeEnd   : null,
-		start  : null,
-		end    : null,
-		hour   : null,
-		minute : null
+		start     : null,
+		end       : null,
+		hour      : null,
+		minute    : null,
+		timeStamp : null
 	};
 
 	handleUpdateTime = (time) => {
-		console.log(time.formatted.toString().toUpperCase());
-		console.log(time);
+		// console.log(time.formatted.toString().toUpperCase());
+		// console.log(time);
+		// console.log(time.hour);
+		// console.log(time.minute);
+		let formattedTime = time.formatted.toString().toUpperCase();
+		let startTime = moment(formattedTime, 'h:mmA').format('h:mm A');
+		let endTime = moment(formattedTime, 'h:mmA').add('hours', 1).format('h:mm A');
+		let currentDate = moment().format('D-MM-YYYY').toString();
+		let timeStamp = moment(`${currentDate} ${startTime}`, 'D-MM-YYYY h:mmA').unix();
 
-		console.log(time.hour);
-		console.log(time.minute);
-		let endMeridiem;
-		if (time.hour <= 12) {
-			endMeridiem = ' PM';
-		} else {
-			endMeridiem = ' PM';
-		}
+		console.log(timeStamp);
 
-		let endTime = `${time.hour + 1}:${('0' + time.minute).slice(-2)}${endMeridiem}`;
 		this.setState({
-			// timeStart : time.formatted.toString().toUpperCase(),
-			// timeStart: time.formatted,
-			// timeEnd   : endTime,
-			start  : time.formatted.toString().toUpperCase(),
-			end    : endTime,
-			hour   : time.hour24,
-			minute : time.minute
+			start     : startTime,
+			end       : endTime,
+			hour      : time.hour24,
+			minute    : time.minute,
+			timeStamp : timeStamp
 		});
 	};
 

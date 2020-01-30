@@ -19,21 +19,24 @@ class AddParty extends Component {
 		paid                  : true,
 		rowNum                : 1,
 		times                 : {
-			start           : null,
-			start_fomratted : null,
-			end             : null,
-			end_formatted   : null
+			minute    : null,
+			hour      : null,
+			start     : null,
+			end       : null,
+			timeStamp : null
 		}
 	};
 
 	componentDidMount() {
 		let startTime = moment().format('h:mm A');
-		let endTime = moment().add('hours', 1).format('h:mm A');
+		let currentDate = moment().format('D-MM-YYYY').toString();
+		let timeStamp = moment(`${currentDate} ${startTime}`, 'D-MM-YYYY h:mmA').unix();
 		let times = {
-			minute : moment().minute(),
-			hour   : moment().hour(),
-			start  : moment().format('h:mm A'),
-			end    : moment().add('hours', 1).format('h:mm A')
+			minute    : moment().minute(),
+			hour      : moment().hour(),
+			start     : startTime,
+			end       : moment().add('hours', 1).format('h:mm A'),
+			timeStamp : timeStamp
 		};
 		this.setState({
 			// timeStart : startTime,
@@ -50,15 +53,14 @@ class AddParty extends Component {
 	handleUpdateReservation = (data) => {
 		// let times = { start: data.timeStart, end: data.timeEnd };
 		let times = {
-			minute : data.minute,
-			hour   : data.hour,
-			start  : data.start,
-			end    : data.end
+			minute    : data.minute,
+			hour      : data.hour,
+			start     : data.start,
+			end       : data.end,
+			timeStamp : data.timeStamp
 		};
 		this.setState({
 			rowNum : 2,
-			// timeStart : data.timeStart,
-			// timeEnd   : data.timeEnd,
 			times  : times
 		});
 	};

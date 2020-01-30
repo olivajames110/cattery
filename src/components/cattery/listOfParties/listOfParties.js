@@ -16,8 +16,25 @@ const ListOfParties = (props) => {
 				return party.rowNum === 2;
 			});
 
-			setParties(partiesList);
-			setReservations(reservationsList);
+			let sortedPartiesList = partiesList.sort(function(p1, p2) {
+				if (p1.times.timeStamp >= p2.times.timeStamp) {
+					return 1;
+				} else {
+					// moves larger to the top of array
+					return -1;
+				}
+			});
+			let sortedReservationsList = reservationsList.sort(function(p1, p2) {
+				if (p1.times.timeStamp >= p2.times.timeStamp) {
+					return 1;
+				} else {
+					// moves larger to the top of array
+					return -1;
+				}
+			});
+
+			setParties(sortedPartiesList);
+			setReservations(sortedReservationsList);
 		},
 		[ props.parties ]
 	);

@@ -40,21 +40,6 @@ class PartySizeRow extends Component {
 		let exitedGuests = spotsRemaining + this.props.parties[0].numberInParty;
 		let firstPartyEndTime = this.props.parties[0].times.end;
 
-		// console.log(`spotsRemaining: ${spotsRemaining}`);
-		// console.log(`--------partySize: ${this.props.partySize}`);
-		// console.log(`-----exitedGuests: ${exitedGuests}`);
-
-		// if (this.props.partySize <= exitedGuests) {
-		// 	return firstPartyEndTime;
-		// } else {
-		// 	return 'Later';
-		// }
-
-		// do {
-
-		// }
-		// while(this.props.partySize <= exitedGuests)
-
 		for (let i = 0; i < this.props.parties.length; i++) {
 			if (this.props.partySize <= exitedGuests) {
 				nextAvailableTime = this.props.parties[i].times.end;
