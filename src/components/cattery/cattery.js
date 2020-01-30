@@ -16,6 +16,34 @@ import { clockIcon, usersIcon, plusIcon } from '../../utils/icons/icons';
 // -- Add 5 min button
 
 //house timer here
+const testParty = [
+	{
+		description           : null,
+		reservationTime       : null,
+		id                    : 4.297502936186963,
+		isReservation         : false,
+		isOverdue             : false,
+		isUpcomingReservation : false,
+		name                  : null,
+		numberInParty         : 2,
+		paid                  : true,
+		rowNum                : 1,
+		times                 : { minute: 53, hour: 12, start: '12:53 PM', end: '1:53 PM', timeStamp: 1580406780 }
+	},
+	{
+		description           : null,
+		reservationTime       : null,
+		id                    : 4.297502936186963,
+		isReservation         : false,
+		isOverdue             : false,
+		isUpcomingReservation : false,
+		name                  : null,
+		numberInParty         : 2,
+		paid                  : true,
+		rowNum                : 1,
+		times                 : { minute: 53, hour: 12, start: '12:53 PM', end: '1:53 PM', timeStamp: 1580406780 }
+	}
+];
 class Cattery extends Component {
 	state = {
 		countDownSpeed                   : 60000,
@@ -65,20 +93,10 @@ class Cattery extends Component {
 			timeStamp           : moment(`${currentDate} ${currentTime}`, 'D-MM-YYYY h:mmA').unix()
 		};
 
-		// ***let c = moment('30-01-2020 4:50 PM', 'D-MM-YYYY h:mmA').unix();
-
-		// let time = '4:50 PM';
-		// let date = moment().format('D-MM-YYYY').toString();
-		// let c = moment(`${date} ${time}`, 'D-MM-YYYY h:mmA').unix();
-
-		// console.log(`m: ${m}`);
-		// console.log(`c: ${c}`);
-
-		// Checks startTime for each party in Parties
 		for (let i = 0; i < this.state.parties.length; i++) {
 			let party = this.state.parties;
 
-			// -- Make party upcoming  if timeStart is equal to currentTime + 1 hour
+			// -- Make party upcoming  if timestamp difference of party and state is <= 3600
 			if (
 				party[i].times.timeStamp - this.state.times.timeStamp <= 3600 &&
 				party[i].isUpcomingReservation === false &&
