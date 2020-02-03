@@ -42,7 +42,6 @@
 				margin-left: 4px;
 				// font-size: 13px;
 			}
-
 		}
 
 		.details-title {
@@ -112,13 +111,14 @@
 			color: white;
 
 			#title {
-				font-size: 12px;
+				font-size: 11px;
 				margin-bottom: 5px;
 				max-width: 100px;
 			}
 
 			#time {
-				font-size: 28px;
+				font-size: 22px;
+				font-weight: bold;
 			}
 
 			#time-remaining {

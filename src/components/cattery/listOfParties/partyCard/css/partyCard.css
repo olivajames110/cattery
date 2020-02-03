@@ -146,13 +146,14 @@
 }
 
 .party-wrapper .time-remaining-cta-container .time-remaining-container #title {
-  font-size: 12px;
+  font-size: 11px;
   margin-bottom: 5px;
   max-width: 100px;
 }
 
 .party-wrapper .time-remaining-cta-container .time-remaining-container #time {
-  font-size: 28px;
+  font-size: 22px;
+  font-weight: bold;
 }
 
 .party-wrapper .time-remaining-cta-container .time-remaining-container #time-remaining {

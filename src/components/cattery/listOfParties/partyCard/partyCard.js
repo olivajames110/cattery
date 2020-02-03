@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import './css/partyCard.css';
 import { edit, checkMark, dollarSign } from '../../../../utils/icons/icons';
 
@@ -144,8 +144,17 @@ class PartyCard extends Component {
 				<div className="time-remaining-cta-container">
 					<div className="time-remaining-container">
 						<span id="time-remaining">
-							<span id="title">Time Left:</span>
-							<span id="time">{this.state.timeRemaining}</span>
+							<span id="title">{isReservation ? 'Reservation Time' : 'Time Left'}:</span>
+							<span id="time">
+								{isReservation ? (
+									times.start
+								) : (
+									<Fragment>
+										<span>{this.state.timeRemaining}</span>
+										<span> min</span>
+									</Fragment>
+								)}
+							</span>
 						</span>
 						<div className="time-start-end-container">
 							<div className="detail-row" id="time-start">
