@@ -1,58 +1,53 @@
-import React, { Component } from 'react';
-import { checkMark } from '../../../../utils/icons/icons';
-import './css/partySizeRow.css';
-import { render } from '@testing-library/react';
-import { useState, useEffect } from 'react';
+import React, { Component } from "react";
+import { checkMark } from "../../../../utils/icons/icons";
+import "./css/partySizeRow.css";
+import { render } from "@testing-library/react";
+import { useState, useEffect } from "react";
 
-const PartySizeRow = (props) => {
-	const { isAvailable, setIsAvailable } = useState(false);
-	const { nextTimeAvailable, setNextTimeAvailable } = useState('2:45PM');
-	const { exitedGuests, setExitedGuests } = useState(0);
+const PartySizeRow = props => {
+  const { currentOccupancy, partySize, parties } = props;
 
-	useEffect(() => {
-		let currentParty = this.props.partySize;
-		let currentParties = this.props.currentOccupancy;
-		if (currentParty < currentParties) {
-			setIsAvailable(true);
-		} else {
-			setIsAvailable(false);
-		}
-	}, []);
+  const [isAvailable, setIsAvailable] = useState(false);
+  const [nextTimeAvailable, setNextTimeAvailable] = useState("");
+  //   const [exitedGuests, setExitedGuests] = useState(currentOccupancy);
+  const spotsRemaining = 15 - currentOccupancy;
 
-	useEffect(() => {
-		console.log(this.props.parties);
+  let getNextTime = () => {
+    // let firstPartyEndTime = parties[0].times.end;
+    let newTime;
+    let numSpotsAvailable = spotsRemaining + parties[0].numberInParty;
 
-		let nextAvailableTime;
-		let spotsRemaining = 15 - this.props.currentOccupancy;
-		let exitedGuests = spotsRemaining + this.props.parties[0].numberInParty;
-		let firstPartyEndTime = this.props.parties[0].times.end;
+    for (let i = 0; i < parties.length; i++) {
+      //14 <= 7 + 3
+      if (partySize <= numSpotsAvailable) {
+        console.log("Enter" + parties[i].times.end);
 
-		// for (let i = 0; i < this.props.parties.length; i++) {
-		// 	if (this.props.partySize <= exitedGuests) {
-		// 		nextAvailableTime = this.props.parties[i].times.end;
-		// 		break;
-		// 	} else {
-		// 		exitedGuests += this.props.parties[i].numberInParty;
-		// 	}
-		// }
-		let time = 'time';
-		setNextTimeAvailable(time);
-	}, exitedGuests);
+        newTime = parties[i].times.end;
+        break;
+      } else {
+        console.log(`Else ${numSpotsAvailable + parties[i].numberInParty}`);
+        newTime = parties[i].times.end;
+        numSpotsAvailable = numSpotsAvailable + parties[i].numberInParty;
 
-	return (
-		<div
-			onClick={() => {
-				this.getNextAvailableTime();
-			}}
-			id="party-size1"
-			className="party-size-wrapper"
-		>
-			<div className="party-size">{this.props.partySize}</div>
-			<div className="next-available-time">
-				{this.props.partySize <= 15 - this.props.currentOccupancy ? checkMark : nextAvailableTime}
-			</div>
-		</div>
-	);
+        // exitedGuests += parties[i].numberInParty;
+      }
+    }
+    return newTime;
+  };
+  //   useEffect(() => {
+  //     console.log(parties);
+
+  //     setNextTimeAvailable(newTime);
+  //   }, [currentOccupancy]);
+
+  return (
+    <div id="party-size1" className="party-size-wrapper">
+      <div className="party-size">{partySize}</div>
+      <div className="next-available-time">
+        {partySize <= spotsRemaining ? checkMark : getNextTime()}
+      </div>
+    </div>
+  );
 };
 
 // this.getNextAvailableTime(partySize)
