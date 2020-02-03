@@ -20,8 +20,8 @@ const PartySizeAvailability = (props) => {
 					return -1;
 				}
 			});
-			console.dir(props.parties);
-			console.dir(sortedParties);
+			// console.dir(props.parties);
+			// console.dir(sortedParties);
 
 			let partyRows = Array.from(Array(15)).map((x, i) => (
 				<PartySizeRow

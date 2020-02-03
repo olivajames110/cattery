@@ -1,37 +1,15 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import './listOfParties.css';
 import PartyCard from './partyCard/partyCard';
+import { sortPartyArray } from '../../../utils/helpers/helpers';
 const ListOfParties = (props) => {
 	const [ parties, setParties ] = useState([]);
 	const [ reservations, setReservations ] = useState([]);
 
 	useEffect(
 		() => {
-			//Takes list of all parties. Sorts by if isReservation is true or false
-			let partiesList = props.parties.filter((party) => {
-				return party.rowNum === 1;
-			});
-
-			let reservationsList = props.parties.filter((party) => {
-				return party.rowNum === 2;
-			});
-
-			let sortedPartiesList = partiesList.sort(function(p1, p2) {
-				if (p1.times.timeStamp >= p2.times.timeStamp) {
-					return 1;
-				} else {
-					// moves larger to the top of array
-					return -1;
-				}
-			});
-			let sortedReservationsList = reservationsList.sort(function(p1, p2) {
-				if (p1.times.timeStamp >= p2.times.timeStamp) {
-					return 1;
-				} else {
-					// moves larger to the top of array
-					return -1;
-				}
-			});
+			let sortedPartiesList = sortPartyArray(props.parties, 1, true);
+			let sortedReservationsList = sortPartyArray(props.parties, 2, true);
 
 			setParties(sortedPartiesList);
 			setReservations(sortedReservationsList);

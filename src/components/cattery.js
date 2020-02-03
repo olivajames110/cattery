@@ -1,13 +1,17 @@
 import React, { Component, Fragment } from 'react';
-import AddParty from './addParty/addParty';
-import EditParty from './editParty/editParty';
-import ListOfParties from './listOfParties/listOfParties';
-import PartySizeAvailability from './partySizeAvailability/partySizeAvailability';
-import Modal from '../../utils/modal/modal';
+import AddParty from './cattery/addParty/addParty';
+import EditParty from './cattery/editParty/editParty';
+import ListOfParties from './cattery/listOfParties/listOfParties';
+import SpotsAvailable from './ui-components/spotsAvailable';
+import PartySizeAvailability from './cattery/partySizeAvailability/partySizeAvailability';
+import Modal from '../utils/modal/modal';
+import Header from './ui-components/header';
+import AddUser from './ui-components/addUser';
+import AddPartyButton from './ui-components/addPartyButton';
 import './css/cattery.css';
 import * as moment from 'moment';
-import { clockIcon, usersIcon, plusIcon } from '../../utils/icons/icons';
-// import { formatAMPM } from '../../utils/helpers/formatTime';
+import { clockIcon, usersIcon, plusIcon } from '../utils/icons/icons';
+
 // Todo
 
 // -- Complete functionality
@@ -284,51 +288,10 @@ class Cattery extends Component {
 	};
 
 	render() {
-		const addUser = (
-			<div id="number-of-people-container">
-				<AddParty handleAddParty={this.handleAddParty} />
-			</div>
-		);
-
-		const upcomingTag = (
-			<div className="upcoming-reservations">Includes {this.state.currentNumOfUpcomingReservations} Upcoming</div>
-		);
-
-		const header = (
-			<div id="time-and-people-container">
-				<div id="current-time" className="container">
-					<span className="icon">{clockIcon}</span>
-					<div onClick={this.handleTestMode} className="primary-value">
-						{this.state.times.currentTime}
-						{this.state.countDownSpeed === 110 ? <div className="test-mode">Test Mode</div> : ''}
-					</div>
-				</div>
-				<div id="current-spots remaining" className="container">
-					<span className="icon">{usersIcon}</span>
-					<span className="primary-value  number-in-cattery">
-						<span>
-							{15 -
-								(this.state.currentOccupancy +
-									this.state.currentNumOfUpcomingReservations -
-									this.state.currentNumOverdue)}
-						</span>
-						{this.state.currentNumOfUpcomingReservations === 0 ? '' : upcomingTag}
-					</span>
-					<span className="open-spots">Spots Available</span>
-				</div>
-				<div id="current-occupancy" className="container">
-					<span className="primary-value  number-in-cattery">
-						<span>{this.state.totalGuests}</span>
-					</span>
-					<span className="open-spots">Total Guests Today</span>
-				</div>
-			</div>
-		);
-
 		const modal = (
 			<Modal click={this.handleModalToggle}>
 				{!this.state.isEditMode ? (
-					addUser
+					<AddUser handleAddParty={this.handleAddParty} />
 				) : (
 					<EditParty
 						partyId={this.state.currentPartyId}
@@ -338,18 +301,21 @@ class Cattery extends Component {
 				)}
 			</Modal>
 		);
-		const addPartyBtn = (
-			<span onClick={this.handleModalToggle} className="modal-btn">
-				<span className="text"> ADD PARTY</span>
-				<span className="btn"> {plusIcon}</span>
-			</span>
-		);
 
 		return (
 			<Fragment>
-				{header}
+				<Header
+					parties={this.state.parties}
+					currentTime={this.state.times.currentTime}
+					countDownSpeed={this.state.countDownSpeed}
+					handleTestMode={this.handleTestMode}
+					currentOccupancy={this.state.currentOccupancy}
+					currentNumOfUpcomingReservations={this.state.currentNumOfUpcomingReservations}
+					currentNumOverdue={this.state.currentNumOverdue}
+					totalGuests={this.state.totalGuests}
+				/>
 				<div className="cattery-container">
-					{this.state.modalIsOpen ? modal : addPartyBtn}
+					{this.state.modalIsOpen ? modal : <AddPartyButton handleModalToggle={this.handleModalToggle} />}
 					<div id="party-size-availability-col">
 						<PartySizeAvailability
 							currentTime={this.state.times.currentTime}
