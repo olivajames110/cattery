@@ -68,6 +68,14 @@ export function handleGetTimes() {
 	return times;
 }
 
+export function getFilteredParty(id) {
+	let filteredParty = this.state.parties.filter((party) => {
+		return party.id === id;
+	});
+
+	return filteredParty;
+}
+
 export function updatePartyData(id, targetKey, value) {
 	let filteredParty = this.getFilteredParty(id);
 	filteredParty[0][targetKey] = value;

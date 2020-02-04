@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './editParty.css';
 import { plusIcon } from '../../../utils/icons/icons';
+import { updatePartyData } from '../../../utils/helpers/helpers';
 class EditParty extends Component {
 	state = {
 		description : 'testttt'

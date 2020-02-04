@@ -102,6 +102,9 @@ class Cattery extends Component {
 
 	handleCheckReservation = (id, numOfNewPeople) => {
 		//<-------
+		let filteredArray = this.state.parties.filter((party) => {
+			return party.id !== id;
+		});
 
 		let filteredParty = this.getFilteredParty(id);
 		console.dir(filteredParty[0]);
@@ -184,6 +187,22 @@ class Cattery extends Component {
 
 		return filteredParty;
 	};
+
+	// Updates start/end times
+	handleUpdateTimes = (id) => {
+		let newTimes = handleGetTimes();
+		let filteredParty = this.getFilteredParty(id);
+		filteredParty[0].times.start = newTimes.times.start;
+		filteredParty[0].times.end = newTimes.times.end;
+	};
+
+	//Updates data
+	updatePartyData = (id, targetKey, value) => {
+		let filteredParty = this.getFilteredParty(id);
+		filteredParty[0][targetKey] = value;
+	};
+
+	// --------------
 
 	//Calculating numbers
 
