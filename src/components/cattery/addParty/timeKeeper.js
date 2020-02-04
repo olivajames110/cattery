@@ -56,7 +56,7 @@ class TimePicker extends Component {
 					Reservation:
 				</span>
 				<span id="time" className="reservation-time">
-					{this.state.timeStart}
+					{this.state.start}
 				</span>
 				<button onClick={this.toggleOpenTimeKeeper} className="save-btn">
 					{pencil}
