@@ -1,53 +1,14 @@
 import React, { Component, Fragment } from 'react';
-import AddParty from './cattery/addParty/addParty';
 import EditParty from './cattery/editParty/editParty';
 import ListOfParties from './cattery/listOfParties/listOfParties';
-import SpotsAvailable from './ui-components/spotsAvailable';
 import PartySizeAvailability from './cattery/partySizeAvailability/partySizeAvailability';
 import Modal from '../utils/modal/modal';
 import Header from './ui-components/header';
 import AddUser from './ui-components/addUser';
 import AddPartyButton from './ui-components/addPartyButton';
+import { handleGetTimes } from '../utils/helpers/helpers';
 import './css/cattery.css';
 import * as moment from 'moment';
-import { clockIcon, usersIcon, plusIcon } from '../utils/icons/icons';
-
-// Todo
-
-// -- Complete functionality
-// -- Move complete to new section (undo btn in place of complete)
-// -- Party size availability functionality
-// -- Add 5 min button
-
-//house timer here
-const testParty = [
-	{
-		description           : null,
-		reservationTime       : null,
-		id                    : 4.297502936186963,
-		isReservation         : false,
-		isOverdue             : false,
-		isUpcomingReservation : false,
-		name                  : null,
-		numberInParty         : 2,
-		paid                  : true,
-		rowNum                : 1,
-		times                 : { minute: 53, hour: 12, start: '12:53 PM', end: '1:53 PM', timeStamp: 1580406780 }
-	},
-	{
-		description           : null,
-		reservationTime       : null,
-		id                    : 4.297502936186963,
-		isReservation         : false,
-		isOverdue             : false,
-		isUpcomingReservation : false,
-		name                  : null,
-		numberInParty         : 2,
-		paid                  : true,
-		rowNum                : 1,
-		times                 : { minute: 53, hour: 12, start: '12:53 PM', end: '1:53 PM', timeStamp: 1580406780 }
-	}
-];
 class Cattery extends Component {
 	state = {
 		countDownSpeed                   : 60000,
@@ -141,9 +102,6 @@ class Cattery extends Component {
 
 	handleCheckReservation = (id, numOfNewPeople) => {
 		//<-------
-		let filteredArray = this.state.parties.filter((party) => {
-			return party.id !== id;
-		});
 
 		let filteredParty = this.getFilteredParty(id);
 		console.dir(filteredParty[0]);
@@ -151,7 +109,7 @@ class Cattery extends Component {
 		//------->
 
 		//Sets party reservation to false
-		let newTimes = this.handleGetTimes();
+		let newTimes = handleGetTimes();
 		console.log(newTimes);
 
 		filteredParty[0].rowNum = 1;
@@ -226,38 +184,6 @@ class Cattery extends Component {
 
 		return filteredParty;
 	};
-
-	//returns object of start and end time
-	handleGetTimes = (id) => {
-		// let timeStartTimeEnd = {
-		// 	timeStart : moment().format('h:mm A'),
-		// 	timeEnd   : moment().add('hours', 1).format('h:mm A')
-		// };
-		let times = {
-			minute : moment().minute(),
-			hour   : moment().hour(),
-			start  : moment().format('h:mm A'),
-			end    : moment().add('hours', 1).format('h:mm A')
-		};
-
-		return times;
-	};
-
-	// Updates start/end times
-	handleUpdateTimes = (id) => {
-		let newTimes = this.handleGetTimes();
-		let filteredParty = this.getFilteredParty(id);
-		filteredParty[0].times.start = newTimes.times.start;
-		filteredParty[0].times.end = newTimes.times.end;
-	};
-
-	//Updates data
-	updatePartyData = (id, targetKey, value) => {
-		let filteredParty = this.getFilteredParty(id);
-		filteredParty[0][targetKey] = value;
-	};
-
-	// --------------
 
 	//Calculating numbers
 

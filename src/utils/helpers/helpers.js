@@ -1,3 +1,5 @@
+import * as moment from 'moment';
+
 export function formatAMPM(date) {
 	let hours = date.getHours();
 	let minutes = date.getMinutes();
@@ -13,14 +15,13 @@ export function checkIfMultiple(props) {}
 
 export function checkifOverlap(props) {}
 
-
 //creates a new sorted array only containing specificed key
 export function sortArrayByKey(party, key, value) {
 	let partiesList;
 	partiesList = party.filter((party) => {
 		return party[key] === value;
 	});
-	let sortedPartiesList = partiesList.sort(function (p1, p2) {
+	let sortedPartiesList = partiesList.sort(function(p1, p2) {
 		if (p1.times.timeStamp >= p2.times.timeStamp) {
 			return 1;
 		} else {
@@ -44,7 +45,7 @@ export function sortPartyArray(party, rowNum, seperateByRow) {
 		partiesList = party;
 	}
 
-	let sortedPartiesList = partiesList.sort(function (p1, p2) {
+	let sortedPartiesList = partiesList.sort(function(p1, p2) {
 		if (p1.times.timeStamp >= p2.times.timeStamp) {
 			return 1;
 		} else {
@@ -54,6 +55,27 @@ export function sortPartyArray(party, rowNum, seperateByRow) {
 	});
 
 	return sortedPartiesList;
+}
 
+export function handleGetTimes() {
+	let times = {
+		minute : moment().minute(),
+		hour   : moment().hour(),
+		start  : moment().format('h:mm A'),
+		end    : moment().add('hours', 1).format('h:mm A')
+	};
 
+	return times;
+}
+
+export function updatePartyData(id, targetKey, value) {
+	let filteredParty = this.getFilteredParty(id);
+	filteredParty[0][targetKey] = value;
+}
+
+export function handleUpdateTimes(id) {
+	let newTimes = handleGetTimes();
+	let filteredParty = this.getFilteredParty(id);
+	filteredParty[0].times.start = newTimes.times.start;
+	filteredParty[0].times.end = newTimes.times.end;
 }

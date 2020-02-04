@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import './css/partyCard.css';
-import { edit, checkMark, dollarSign } from '../../../../utils/icons/icons';
+import { dollarSign } from '../../../../utils/icons/icons';
+import { updatePartyData } from '../../../../utils/helpers/helpers';
 
 class PartyCard extends Component {
 	state = {
@@ -39,7 +40,7 @@ class PartyCard extends Component {
 				}
 
 				if (this.state.timeRemaining === 0) {
-					this.props.updatePartyData(this.props.party.id, 'isOverdue', true);
+					updatePartyData(this.props.party.id, 'isOverdue', true);
 					this.props.modifyStateNum(this.props.party.numberInParty, 'currentNumOverdue');
 				}
 
@@ -67,7 +68,7 @@ class PartyCard extends Component {
 	};
 
 	handleIsPaidToggle = () => {
-		this.props.updatePartyData(this.props.party.id, 'paid', !this.state.isPaid);
+		updatePartyData(this.props.party.id, 'paid', !this.state.isPaid);
 		this.setState({ isPaid: !this.state.isPaid });
 	};
 
@@ -79,15 +80,13 @@ class PartyCard extends Component {
 
 	render() {
 		const {
-			id,
 			name,
 			description,
 			numberInParty,
-			paid,
+
 			isReservation,
 			times,
-			timeStart,
-			timeEnd,
+
 			isUpcomingReservation
 		} = this.props.party;
 
