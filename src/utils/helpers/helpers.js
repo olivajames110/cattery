@@ -13,16 +13,14 @@ export function checkIfMultiple(props) {}
 
 export function checkifOverlap(props) {}
 
-export function sortArrayByKey(party, key,value) {
-	let partiesList;
 
+//creates a new sorted array only containing specificed key
+export function sortArrayByKey(party, key, value) {
+	let partiesList;
 	partiesList = party.filter((party) => {
 		return party[key] === value;
 	});
-
-	
-
-	let sortedPartiesList = partiesList.sort(function(p1, p2) {
+	let sortedPartiesList = partiesList.sort(function (p1, p2) {
 		if (p1.times.timeStamp >= p2.times.timeStamp) {
 			return 1;
 		} else {
@@ -33,6 +31,8 @@ export function sortArrayByKey(party, key,value) {
 
 	return sortedPartiesList;
 }
+
+//sorts array ---> returns sorted array in select
 export function sortPartyArray(party, rowNum, seperateByRow) {
 	let partiesList;
 
@@ -44,7 +44,7 @@ export function sortPartyArray(party, rowNum, seperateByRow) {
 		partiesList = party;
 	}
 
-	let sortedPartiesList = partiesList.sort(function(p1, p2) {
+	let sortedPartiesList = partiesList.sort(function (p1, p2) {
 		if (p1.times.timeStamp >= p2.times.timeStamp) {
 			return 1;
 		} else {
@@ -54,4 +54,6 @@ export function sortPartyArray(party, rowNum, seperateByRow) {
 	});
 
 	return sortedPartiesList;
+
+
 }
