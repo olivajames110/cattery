@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './css/partySizeAvailability.css';
 import PartySizeRow from './partySizeRow/partySizeRow';
 import { useState, useEffect } from 'react';
-import * as moment from 'moment';
+
 const PartySizeAvailability = (props) => {
 	const [ filteredParties, setFilteredParties ] = useState(props.parties);
 
@@ -47,44 +47,3 @@ const PartySizeAvailability = (props) => {
 };
 
 export default PartySizeAvailability;
-
-// import React, { Component } from 'react';
-// import './css/partySizeAvailability.css';
-// import PartySizeRow from './partySizeRow/partySizeRow';
-// import * as moment from 'moment';
-// import { useState, useEffect } from 'react';
-// const PartySizeAvailability = (props) => {
-// 	const [ filteredParties, setFilteredParties ] = useState([]);
-
-// 	useEffect(() => {
-// 		let newParties = props.parties.filter((party) => {
-// 			return (party.rowNum === 1 || party.isUpcomingReservation === true) && party.isOverdue === false;
-// 		});
-// 		console.dir(newParties);
-// 		setFilteredParties(newParties);
-// 	}, props.parties);
-
-// 	let partyRows = Array.from(Array(15)).map((x, i) => (
-// 		<PartySizeRow
-// 			currentTime={props.currentTime}
-// 			currentOccupancy={props.currentOccupancy}
-// 			parties={filteredParties}
-// 			partySize={i + 1}
-// 			key={Math.random()}
-// 		/>
-// 	));
-
-// 	// for (let i = 0; i <= 15; i++) {
-// 	//   //   console.log("Party: " + i);
-// 	//   return <PartySizeRow partySize="1" />;
-// 	// }
-
-// 	return (
-// 		<div id="party-size-availability-container">
-// 			<h2>Walk-In Availability</h2>
-// 			{partyRows}
-// 		</div>
-// 	);
-// };
-
-// export default PartySizeAvailability;

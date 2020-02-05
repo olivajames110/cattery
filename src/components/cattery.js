@@ -1,34 +1,17 @@
 import React, { Component, Fragment } from "react";
-import AddParty from "./cattery/addParty/addParty";
 import EditParty from "./cattery/editParty/editParty";
 import ListOfParties from "./cattery/listOfParties/listOfParties";
-import SpotsAvailable from "./ui-components/spotsAvailable";
 import PartySizeAvailability from "./cattery/partySizeAvailability/partySizeAvailability";
 import Modal from "../utils/modal/modal";
 import Header from "./ui-components/header";
 import AddUser from "./ui-components/addUser";
 import AddPartyButton from "./ui-components/addPartyButton";
+import { handleGetTimes, sortArrayByKey } from "../utils/helpers/helpers";
 import "./css/cattery.css";
 import * as moment from "moment";
-import {
-  handleGetTimes,
-  handleUpdateTimes,
-  updatePartyData
-} from "../utils/helpers/helpers";
-import { clockIcon, usersIcon, plusIcon } from "../utils/icons/icons";
-
-// Todo
-
-// -- Complete functionality
-// -- Move complete to new section (undo btn in place of complete)
-// -- Party size availability functionality
-// -- Add 5 min button
-
-//house timer here
-
 class Cattery extends Component {
   state = {
-    countDownSpeed: 15000,
+    countDownSpeed: 60000,
     currentNumOfReservations: 0,
     currentNumOfUpcomingReservations: 0,
     currentNumOverdue: 0,
@@ -59,12 +42,9 @@ class Cattery extends Component {
       currentTimePlusHour: moment()
         .add("hours", 1)
         .format("h:mm A"),
-      timeStamp: moment(
-        `${currentDate} ${currentTime}`,
-        "D-MM-YYYY h:mmA"
-      ).unix()
+      timeStamp: moment(`${currentDate} ${currentTime}`, "D-MM-YYYY h:mmA").unix()
     };
-    setInterval(this.checkPartyStartTimes, 15000);
+    setInterval(this.checkPartyStartTimes, 1000);
 
     this.setState({
       times: times
@@ -83,10 +63,7 @@ class Cattery extends Component {
       currentTimePlusHour: moment()
         .add("hours", 1)
         .format("h:mm A"),
-      timeStamp: moment(
-        `${currentDate} ${currentTime}`,
-        "D-MM-YYYY h:mmA"
-      ).unix()
+      timeStamp: moment(`${currentDate} ${currentTime}`, "D-MM-YYYY h:mmA").unix()
     };
 
     for (let i = 0; i < this.state.parties.length; i++) {
@@ -100,17 +77,11 @@ class Cattery extends Component {
       ) {
         console.log("Match");
         party[i].isUpcomingReservation = true;
-        this.modifyStateNum(
-          party[i].numberInParty,
-          "currentNumOfUpcomingReservations"
-        );
+        this.modifyStateNum(party[i].numberInParty, "currentNumOfUpcomingReservations");
       }
 
       // -- Move party if timeStart is equal to currentTime
-      if (
-        party[i].times.start === this.state.times.currentTime &&
-        party[i].rowNum !== 1
-      ) {
+      if (party[i].times.start === this.state.times.currentTime && party[i].rowNum !== 1) {
         party[i].isUpcomingReservation = true;
         this.handleMoveParty(party[i].id, 1);
         // this.modifyStateNum(party[i].numberInParty, 'currentNumOfUpcomingReservations');
@@ -127,7 +98,8 @@ class Cattery extends Component {
     if (isReservation) {
       this.modifyStateNum(numOfNewPeople, "currentNumOfReservations");
     } else {
-      this.modifyStateNum(numOfNewPeople, "currentOccupancy");
+      //   this.modifyStateNum(numOfNewPeople, "currentOccupancy");
+      this.modifyCurrentOccupancy(numOfNewPeople, false);
     }
     let newPartyList = [...this.state.parties, ...party];
     this.modifyStateNum(numOfNewPeople);
@@ -156,17 +128,12 @@ class Cattery extends Component {
     filteredParty[0].isReservation = false;
     filteredParty[0].times.start = newTimes.start;
     filteredParty[0].times.end = newTimes.end;
-    let numOfUpcoming = filteredParty[0].isUpcomingReservation
-      ? Number(numOfNewPeople)
-      : 0;
+    let numOfUpcoming = filteredParty[0].isUpcomingReservation ? Number(numOfNewPeople) : 0;
     this.handleMoveParty(id, 1);
-    this.modifyStateNum(numOfNewPeople, "currentOccupancy");
+    // this.modifyStateNum(numOfNewPeople, "currentOccupancy");
+    this.modifyCurrentOccupancy(numOfNewPeople, false);
     this.modifyStateNum(numOfNewPeople, "currentNumOfReservations", true);
-    this.modifyStateNum(
-      numOfUpcoming,
-      "currentNumOfUpcomingReservations",
-      true
-    );
+    this.modifyStateNum(numOfUpcoming, "currentNumOfUpcomingReservations", true);
 
     // if (filteredParty[0].isUpcomingReservation) {
     // 	filteredParty[0].isUpcomingReservation = false;
@@ -212,7 +179,8 @@ class Cattery extends Component {
     let party = this.getFilteredParty(id);
 
     let overDueNum = party[0].isOverdue ? numInParty : 0;
-    this.modifyStateNum(numInParty, "currentOccupancy", true);
+    // this.modifyStateNum(numInParty, "currentOccupancy", true);
+    this.modifyCurrentOccupancy(numInParty, true);
     this.modifyStateNum(numInParty, "totalGuests");
     this.modifyStateNum(overDueNum, "currentNumOverdue", true);
 
@@ -221,12 +189,28 @@ class Cattery extends Component {
     });
   };
 
+  // -----CRUD functions------
+  //Returns party
   getFilteredParty = id => {
     let filteredParty = this.state.parties.filter(party => {
       return party.id === id;
     });
 
     return filteredParty;
+  };
+
+  // Updates start/end times
+  handleUpdateTimes = id => {
+    let newTimes = handleGetTimes();
+    let filteredParty = this.getFilteredParty(id);
+    filteredParty[0].times.start = newTimes.times.start;
+    filteredParty[0].times.end = newTimes.times.end;
+  };
+
+  //Updates data
+  updatePartyData = (id, targetKey, value) => {
+    let filteredParty = this.getFilteredParty(id);
+    filteredParty[0][targetKey] = value;
   };
 
   // --------------
@@ -243,6 +227,25 @@ class Cattery extends Component {
         [stateName]: Number(this.state[stateName]) + Number(num)
       });
     }
+  };
+
+  modifyCurrentOccupancy = (num, isSubtract) => {
+    let currentOccupancyList__rowNum = sortArrayByKey(this.state.parties, "rowNum", 1);
+    let currentOccupancyList = sortArrayByKey(currentOccupancyList__rowNum, "isReservation", false);
+    let currentOccupancyNum = currentOccupancyList.reduce(function(prev, cur) {
+      return prev + cur.numberInParty;
+    }, 0);
+    let statenum;
+
+    if (isSubtract) {
+      statenum = currentOccupancyNum - num;
+    } else {
+      statenum = currentOccupancyNum + num;
+    }
+
+    this.setState({
+      currentOccupancy: statenum
+    });
   };
 
   //Test
@@ -262,16 +265,15 @@ class Cattery extends Component {
   render() {
     const modal = (
       <Modal click={this.handleModalToggle}>
-        {" "}
         {!this.state.isEditMode ? (
           <AddUser handleAddParty={this.handleAddParty} />
         ) : (
           <EditParty
             partyId={this.state.currentPartyId}
-            updatePartyData={updatePartyData}
+            updatePartyData={this.updatePartyData}
             handleEditModalToggle={this.handleEditModalToggle}
           />
-        )}{" "}
+        )}
       </Modal>
     );
 
@@ -283,19 +285,12 @@ class Cattery extends Component {
           countDownSpeed={this.state.countDownSpeed}
           handleTestMode={this.handleTestMode}
           currentOccupancy={this.state.currentOccupancy}
-          currentNumOfUpcomingReservations={
-            this.state.currentNumOfUpcomingReservations
-          }
+          currentNumOfUpcomingReservations={this.state.currentNumOfUpcomingReservations}
           currentNumOverdue={this.state.currentNumOverdue}
           totalGuests={this.state.totalGuests}
-        />{" "}
+        />
         <div className="cattery-container">
-          {" "}
-          {this.state.modalIsOpen ? (
-            modal
-          ) : (
-            <AddPartyButton handleModalToggle={this.handleModalToggle} />
-          )}{" "}
+          {this.state.modalIsOpen ? modal : <AddPartyButton handleModalToggle={this.handleModalToggle} />}
           <div id="party-size-availability-col">
             <PartySizeAvailability
               currentTime={this.state.times.currentTime}
@@ -305,8 +300,8 @@ class Cattery extends Component {
                 this.state.currentNumOverdue
               }
               parties={this.state.parties}
-            />{" "}
-          </div>{" "}
+            />
+          </div>
           <div id="cattery-body-col">
             <ListOfParties
               title="Current Occupancy"
@@ -317,14 +312,14 @@ class Cattery extends Component {
               handleRemoveParty={this.handleRemoveParty}
               handleCheckReservation={this.handleCheckReservation}
               handleUpdateTimes={this.handleUpdateTimes}
-              updatePartyData={updatePartyData}
+              updatePartyData={this.updatePartyData}
               handleEditModalToggle={this.handleEditModalToggle}
               handleAddParty={this.handleAddParty}
               parties={this.state.parties}
               handleMoveParty={this.handleMoveParty}
-            />{" "}
-          </div>{" "}
-        </div>{" "}
+            />
+          </div>
+        </div>
       </Fragment>
     );
   }

@@ -1,4 +1,5 @@
 import * as moment from "moment";
+
 export function formatAMPM(date) {
   let hours = date.getHours();
   let minutes = date.getMinutes();
@@ -52,6 +53,7 @@ export function sortPartyArray(party, rowNum, seperateByRow) {
       return -1;
     }
   });
+
   return sortedPartiesList;
 }
 
@@ -68,23 +70,22 @@ export function handleGetTimes() {
   return times;
 }
 
-export function handleUpdateTimes(id) {
-  let newTimes = this.handleGetTimes();
-  let filteredParty = this.getFilteredParty(id);
-  filteredParty[0].times.start = newTimes.times.start;
-  filteredParty[0].times.end = newTimes.times.end;
+export function getFilteredParty(id) {
+  let filteredParty = this.state.parties.filter(party => {
+    return party.id === id;
+  });
+
+  return filteredParty;
 }
-
-//Returns party
-// export function getFilteredParty(id) {
-//   let filteredParty = this.state.parties.filter(party => {
-//     return party.id === id;
-//   });
-
-//   return filteredParty;
-// }
 
 export function updatePartyData(id, targetKey, value) {
   let filteredParty = this.getFilteredParty(id);
   filteredParty[0][targetKey] = value;
+}
+
+export function handleUpdateTimes(id) {
+  let newTimes = handleGetTimes();
+  let filteredParty = this.getFilteredParty(id);
+  filteredParty[0].times.start = newTimes.times.start;
+  filteredParty[0].times.end = newTimes.times.end;
 }

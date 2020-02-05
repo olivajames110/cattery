@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import "./css/partyCard.css";
-import { edit, checkMark, dollarSign } from "../../../../utils/icons/icons";
+import { dollarSign } from "../../../../utils/icons/icons";
 
 class PartyCard extends Component {
   state = {
@@ -90,15 +90,12 @@ class PartyCard extends Component {
 
   render() {
     const {
-      id,
       name,
       description,
       numberInParty,
-      paid,
       isReservation,
       times,
-      timeStart,
-      timeEnd,
+
       isUpcomingReservation
     } = this.props.party;
 
