@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 import React, { Component, Fragment } from "react";
 import "./css/partyCard.css";
 import { dollarSign } from "../../../../utils/icons/icons";
+=======
+import React, { Component, Fragment } from 'react';
+import './css/partyCard.css';
+import { dollarSign } from '../../../../utils/icons/icons';
+>>>>>>> 26be11cecd74c7adec95eb4d0994bbcc4a0529a0
 
 class PartyCard extends Component {
   state = {
@@ -88,6 +94,7 @@ class PartyCard extends Component {
     });
   };
 
+<<<<<<< HEAD
   render() {
     const {
       name,
@@ -95,6 +102,19 @@ class PartyCard extends Component {
       numberInParty,
       isReservation,
       times,
+=======
+	render() {
+		const {
+			name,
+			description,
+			numberInParty,
+
+			isReservation,
+			times,
+
+			isUpcomingReservation
+		} = this.props.party;
+>>>>>>> 26be11cecd74c7adec95eb4d0994bbcc4a0529a0
 
       isUpcomingReservation
     } = this.props.party;
