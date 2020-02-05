@@ -2,13 +2,13 @@ import React from 'react';
 import { checkMark } from '../../../../utils/icons/icons';
 import './css/partySizeRow.css';
 
-import { useState } from 'react';
+// import { useState } from 'react';
 
 const PartySizeRow = (props) => {
 	const { currentOccupancy, partySize, parties } = props;
 
-	const [ isAvailable, setIsAvailable ] = useState(false);
-	const [ nextTimeAvailable, setNextTimeAvailable ] = useState('');
+	// const [ isAvailable, setIsAvailable ] = useState(false);
+	// const [ nextTimeAvailable, setNextTimeAvailable ] = useState('');
 	//   const [exitedGuests, setExitedGuests] = useState(currentOccupancy);
 	const spotsRemaining = 15 - currentOccupancy;
 

@@ -3,12 +3,12 @@ import './css/partySizeAvailability.css';
 import PartySizeRow from './partySizeRow/partySizeRow';
 import { useState, useEffect } from 'react';
 
-const PartySizeAvailability = (props) => {
-	const [ filteredParties, setFilteredParties ] = useState(props.parties);
+const PartySizeAvailability = ({ currentOccupancy, parties }) => {
+	const [ filteredParties, setFilteredParties ] = useState(parties);
 
 	useEffect(
 		() => {
-			let newParties = props.parties.filter((party) => {
+			let newParties = parties.filter((party) => {
 				return (party.rowNum === 1 || party.isUpcomingReservation === true) && party.isOverdue === false;
 			});
 
@@ -20,13 +20,12 @@ const PartySizeAvailability = (props) => {
 					return -1;
 				}
 			});
-			// console.dir(props.parties);
+			// console.dir(parties);
 			// console.dir(sortedParties);
 
 			let partyRows = Array.from(Array(15)).map((x, i) => (
 				<PartySizeRow
-					currentTime={props.currentTime}
-					currentOccupancy={props.currentOccupancy}
+					currentOccupancy={currentOccupancy}
 					parties={sortedParties}
 					partySize={i + 1}
 					key={Math.random()}
@@ -35,7 +34,7 @@ const PartySizeAvailability = (props) => {
 
 			setFilteredParties(partyRows);
 		},
-		[ props.currentOccupancy ]
+		[ currentOccupancy, parties ]
 	);
 
 	return (
