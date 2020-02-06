@@ -9,6 +9,7 @@ import AddPartyButton from './ui-components/addPartyButton';
 import { handleGetTimes, sortArrayByKey } from '../utils/helpers/helpers';
 import './css/cattery.css';
 import * as moment from 'moment';
+
 class Cattery extends Component {
 	state = {
 		countDownSpeed                   : 60000,
@@ -28,6 +29,17 @@ class Cattery extends Component {
 			currentTimePlusHour : null
 		}
 	};
+
+	//LIST OF ACTIONS
+	//- Toggle Payment
+	//- Add current party
+	//- Remove current party (mark complete)
+	//- Add reservation party
+	//- Check in reservation party
+	//- Change reservation to upcoming party when within 1 hour
+	//- Change reservation to upcoming party
+	//- Move Reservation from Row 2 to Row 1 when start time is equal to current time
+	//- Detect if parties overlap with reservation
 
 	//sets Current Time  and Num of People in each array
 	componentDidMount() {
@@ -85,7 +97,6 @@ class Cattery extends Component {
 		});
 	};
 
-	// -----Shared
 	handleAddParty = (party, numOfNewPeople, isReservation) => {
 		if (isReservation) {
 			this.modifyStateNum(numOfNewPeople, 'currentNumOfReservations');
@@ -160,6 +171,7 @@ class Cattery extends Component {
 		let newPartyArray = [ ...filteredArray, ...filteredParty ];
 
 		this.setState({
+			//this is where i would put emitter function
 			parties : newPartyArray
 		});
 	};
@@ -181,8 +193,7 @@ class Cattery extends Component {
 		});
 	};
 
-	// -----CRUD functions------
-	//Returns party
+	//Returns specified party
 	getFilteredParty = (id) => {
 		let filteredParty = this.state.parties.filter((party) => {
 			return party.id === id;
@@ -199,15 +210,11 @@ class Cattery extends Component {
 		filteredParty[0].times.end = newTimes.times.end;
 	};
 
-	//Updates data
+	//Updates party data property
 	updatePartyData = (id, targetKey, value) => {
 		let filteredParty = this.getFilteredParty(id);
 		filteredParty[0][targetKey] = value;
 	};
-
-	// --------------
-
-	//Calculating numbers
 
 	modifyStateNum = (num, stateName, isSubtract) => {
 		if (isSubtract) {
@@ -240,7 +247,7 @@ class Cattery extends Component {
 		});
 	};
 
-	//Test
+	//Test mode
 	handleTestMode = () => {
 		if (this.state.countDownSpeed === 110) {
 			this.setState({

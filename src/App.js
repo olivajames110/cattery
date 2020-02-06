@@ -15,8 +15,8 @@ let DUMMY_ARRAY = [
 
 const App = () => {
 	// const [ parties, setParties ] = useState(DUMMY_ARRAY);
-	const [ socketState, setSocketState ] = useState(DUMMY_ARRAY);
-	const [ clientState, setClientState ] = useState(DUMMY_ARRAY);
+
+	const [ catteryState, setcatteryState ] = useState(DUMMY_ARRAY);
 	const ENDPOINT = 'localhost:5000';
 	const btnStyles = {
 		position        : 'fixed',
@@ -31,57 +31,42 @@ const App = () => {
 		cursor          : 'pointer',
 		zIndex          : 100000
 	};
-	const fixed = {
-		position : 'fixed',
-		width    : 100
-	};
 
 	let addTestUser = () => {
-		let num = clientState.length + 1;
+		let num = catteryState.length + 1;
+
 		let DUMMY_USER = {
 			name : 'Client',
 			id   : num
 		};
-		let newState = [ ...clientState, DUMMY_USER ];
-		setClientState(newState);
+		let newState = [ ...catteryState, DUMMY_USER ];
+		socket.emit('client_send', newState);
 	};
 
-	// socket = io(ENDPOINT);
-	// socket.on("client_recieve", ({ server_data }) => {
-	//     console.log(server_data);
-	// });
+	useEffect(() => {
+		socket = io(ENDPOINT);
+		console.log(socket);
 
-	useEffect(
-		() => {
-			socket = io(ENDPOINT);
+		socket.on('server_send', (server_data) => {
+			setcatteryState(server_data);
+			console.log(server_data);
+		});
+		return () => {
+			socket.emit('disconnect');
+		};
+	}, []);
 
-			socket.emit('client_send', clientState);
-
-			socket.on('server_send', (server_data) => {
-				setSocketState(server_data);
-				console.log(socketState);
-			});
-			// socket.on("client_recieve", ({ server_data }) => {
-			//     console.log(server_data);
-			//     // setParties(server_data);
-			// });
-			// socket.emit('join', { name });
-			// console.log("Socket: " + socket);
-			// console.dir(parties);
-
-			return () => {
-				socket.emit('disconnect');
-			};
-		},
-		[ ENDPOINT, clientState ]
-	);
+	//make update state component. From here emit new state to socket/server.
+	let updateCatteryState = (state) => {
+		socket.emit('client_send', newState);
+	};
 
 	return (
 		<div className="App">
 			<div onClick={addTestUser} style={btnStyles}>
 				Send Request
 			</div>
-			<Cattery parties={DUMMY_ARRAY} />
+			<Cattery parties={catteryState} />
 		</div>
 	);
 };

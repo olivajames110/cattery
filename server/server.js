@@ -2,6 +2,7 @@ const express = require('express');
 const socketio = require('socket.io');
 const http = require('http');
 
+// const PORT = process.env.PORT || 5000;
 const PORT = process.env.PORT || 5000;
 
 const app = express();
@@ -16,10 +17,11 @@ let SERVER_DUMMY = {
 io.on('connection', (socket) => {
 	console.log('New Connection');
 
-	socket.on('client_send', (clientState) => {
+	socket.on('client_send', (socketState) => {
 		// console.log(clientState);
+		console.log(socketState);
 
-		socket.broadcast.emit('server_send', [ ...clientState ]);
+		socket.broadcast.emit('server_send', [ ...socketState ]);
 		// callback(server_data);
 	});
 	// socket.emit("party data", SERVER_DUMMY);
