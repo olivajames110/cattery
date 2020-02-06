@@ -49,10 +49,15 @@ const App = () => {
 
     useEffect(() => {
         socket = io(ENDPOINT);
+
         socket.emit("client_send", { partiesList }, server_data => {
-            console.log("Parties from Server: ");
-            console.dir(server_data);
+            // console.log("Parties from Server: ");
+            // console.dir(server_data);
             setPartiesList(server_data);
+        });
+
+        socket.on("party data", data => {
+            console.log(data);
         });
         // socket.on("client_recieve", ({ server_data }) => {
         //     console.log(server_data);

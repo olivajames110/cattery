@@ -15,12 +15,14 @@ let SERVER_DUMMY = {
 
 io.on("connection", socket => {
     console.log("New Connection");
-    socket.on("client_send", ({ partiesList }, callback) => {
-        console.log(partiesList);
-        let server_data = [...partiesList, SERVER_DUMMY];
-        callback(server_data);
-    });
 
+    socket.on("client_send", ({ partiesList }, callback) => {
+        // console.log(partiesList);
+
+        socket.broadcast.emit("party data", ...partiesList);
+        // callback(server_data);
+    });
+    // socket.emit("party data", SERVER_DUMMY);
     // socket.emit("client_recieve", {
     // 	server_data
     // })
