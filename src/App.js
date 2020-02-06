@@ -1,65 +1,81 @@
-import React from 'react';
-import Cattery from './components/cattery';
-import './App.css';
-import { useEffect, useState } from 'react';
-import io from 'socket.io-client';
+import React from "react";
+import Cattery from "./components/cattery";
+import "./App.css";
+import { useEffect, useState } from "react";
+import io from "socket.io-client";
 
 let socket;
 
-let test = [
-	{
-		description           : null,
-		reservationTime       : null,
-		id                    : 2.758276184647954,
-		isReservation         : false,
-		isOverdue             : false,
-		isUpcomingReservation : false,
-		isOverlap             : false,
-		name                  : null,
-		numberInParty         : 4,
-		paid                  : true,
-		rowNum                : 1,
-		times                 : { minute: 36, hour: 11, start: '11:36 AM', end: '12:36 PM', timeStamp: 1580920560 }
-	},
-	{
-		description           : null,
-		reservationTime       : null,
-		id                    : 1.9791307559099702,
-		isReservation         : false,
-		isOverdue             : false,
-		isUpcomingReservation : false,
-		isOverlap             : false,
-		name                  : null,
-		numberInParty         : 2,
-		paid                  : true,
-		rowNum                : 1,
-		times                 : { minute: 36, hour: 11, start: '11:36 AM', end: '12:36 PM', timeStamp: 1580920560 }
-	}
+let DUMMY_ARRAY = [
+    {
+        name: "CLIENT",
+        id: 1
+    }
 ];
 
 const App = () => {
-	const [ parties, setParties ] = useState('JIMMY');
-	const ENDPOINT = 'localhost:5000';
+    const [parties, setParties] = useState(DUMMY_ARRAY);
+    const [partiesList, setPartiesList] = useState(DUMMY_ARRAY);
+    const ENDPOINT = "localhost:5000";
+    const btnStyles = {
+        position: "fixed",
+        width: 100,
+        height: 80,
+        textAlign: "center",
+        backgroundColor: "#ffb310",
+        display: "flex",
+        placeItems: "center",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%,-50%)",
+        cursor: "pointer",
+        zIndex: 100000
+    };
 
-	useEffect(
-		() => {
-			// socket.emit('join', { name });
-			setParties(test);
-			socket = io(ENDPOINT);
-			console.log(socket);
-			socket.emit('get data', { data: 'data' });
+    let addTestUser = () => {
+        let num = partiesList.length + 1;
+        let DUMMY_USER = {
+            name: "Client",
+            id: num
+        };
+        let newState = [...partiesList, DUMMY_USER];
+        setParties(newState);
+    };
 
-			return () => {
-				socket.emit('disconnect');
-			};
-		},
-		[ ENDPOINT ]
-	);
-	return (
-		<div className="App">
-			<Cattery parties={test} />
-		</div>
-	);
+    // socket = io(ENDPOINT);
+    // socket.on("client_recieve", ({ server_data }) => {
+    //     console.log(server_data);
+    // });
+
+    useEffect(() => {
+        socket = io(ENDPOINT);
+        socket.emit("client_send", { partiesList }, server_data => {
+            console.log("Parties from Server: ");
+            console.dir(server_data);
+            setPartiesList(server_data);
+        });
+        // socket.on("client_recieve", ({ server_data }) => {
+        //     console.log(server_data);
+        //     // setParties(server_data);
+        // });
+        // socket.emit('join', { name });
+        // console.log("Socket: " + socket);
+        // console.dir(parties);
+
+        return () => {
+            socket.emit("disconnect");
+        };
+    }, [ENDPOINT, parties]);
+
+    return (
+        <div className="App">
+            <div onClick={addTestUser} style={btnStyles}>
+                Send Request
+                <span>{partiesList.length}</span>
+            </div>
+            <Cattery parties={DUMMY_ARRAY} />
+        </div>
+    );
 };
 
 export default App;
