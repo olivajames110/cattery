@@ -87,3 +87,10 @@ export function handleUpdateTimes(id) {
 	filteredParty[0].times.start = newTimes.times.start;
 	filteredParty[0].times.end = newTimes.times.end;
 }
+
+export function addArrayByKey(array, key) {
+	let num = array.reduce(function(prev, cur) {
+		return prev + cur[key];
+	}, 0);
+	return num;
+}

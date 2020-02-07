@@ -16,19 +16,16 @@ const PartySizeRow = (props) => {
 		// let firstPartyEndTime = parties[0].times.end;
 		let newTime;
 		let numSpotsAvailable = spotsRemaining + parties[0].numberInParty;
-
 		for (let i = 0; i < parties.length; i++) {
 			//14 <= 7 + 3
 			if (partySize <= numSpotsAvailable) {
 				// console.log("Enter" + parties[i].times.end);
-
 				newTime = parties[i].times.end;
 				break;
 			} else {
 				// console.log(`Else ${numSpotsAvailable + parties[i].numberInParty}`);
 				newTime = parties[i].times.end;
 				numSpotsAvailable = numSpotsAvailable + parties[i].numberInParty;
-
 				// exitedGuests += parties[i].numberInParty;
 			}
 		}
