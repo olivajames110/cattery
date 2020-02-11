@@ -65,15 +65,35 @@ class Cattery extends Component {
 		if (prevProps.parties !== this.props.parties) {
 			console.log('incoming parties', this.props.parties.length);
 			let sumOfNewCurrentOccupancy = 0;
+			let sumOfNewCurrentNumOfReservations = 0;
+			let sumOfNewCurrentNumOfUpcomingReservations = 0;
+			let sumOfNewCurrentNumOverdue = 0;
+			let sumOfNewTotalGuests = 0;
 			if (this.props.parties.length >= 1) {
 				let newParties = sortArrayByKey(this.props.parties, 'isReservation', false);
 				sumOfNewCurrentOccupancy = addArrayByKey(newParties, 'numberInParty') || 0;
-				console.log('newwww num', sumOfNewCurrentOccupancy);
+				console.log(`Current Occupancy: ${sumOfNewCurrentOccupancy}`);
+
+				let newPartiesReservations = sortArrayByKey(this.props.parties, 'isReservation', true);
+				sumOfNewCurrentNumOfReservations = addArrayByKey(newPartiesReservations, 'numberInParty') || 0;
+				console.log(`Reservations: ${sumOfNewCurrentNumOfReservations}`);
+
+				let newUpcomingReservations = sortArrayByKey(this.props.parties, 'isUpcomingReservation', true);
+				sumOfNewCurrentNumOfUpcomingReservations = addArrayByKey(newUpcomingReservations, 'numberInParty') || 0;
+				console.log(`Reservations: ${sumOfNewCurrentNumOfUpcomingReservations}`);
+
+				let newOverdueList = sortArrayByKey(this.props.parties, 'isOverdue', true);
+				sumOfNewCurrentNumOverdue = addArrayByKey(newOverdueList, 'numberInParty') || 0;
+				console.log(`Reservations: ${sumOfNewCurrentNumOverdue}`);
 			}
 
 			this.setState({
-				parties          : this.props.parties,
-				currentOccupancy : sumOfNewCurrentOccupancy
+				parties                          : this.props.parties,
+				currentOccupancy                 : sumOfNewCurrentOccupancy,
+				currentNumOfReservations         : sumOfNewCurrentNumOfReservations,
+				currentNumOfUpcomingReservations : sumOfNewCurrentNumOfUpcomingReservations,
+				currentNumOverdue                : sumOfNewCurrentNumOverdue,
+				totalGuests                      : sumOfNewTotalGuests
 			});
 		}
 	}
@@ -100,13 +120,16 @@ class Cattery extends Component {
 			) {
 				console.log('Match');
 				party[i].isUpcomingReservation = true;
-				this.modifyStateNum(party[i].numberInParty, 'currentNumOfUpcomingReservations');
+				this.handleSendToServer();
+				// this.modifyStateNum(party[i].numberInParty, 'currentNumOfUpcomingReservations');
 			}
 
 			// -- Move party if timeStart is equal to currentTime
 			if (party[i].times.start === this.state.times.currentTime && party[i].rowNum !== 1) {
 				party[i].isUpcomingReservation = true;
-				this.handleMoveParty(party[i].id, 1);
+				party[i].rowNum = 1;
+				// this.handleMoveParty(party[i].id, 1);
+				this.handleSendToServer();
 				// this.modifyStateNum(party[i].numberInParty, 'currentNumOfUpcomingReservations');
 			}
 		}
@@ -117,47 +140,38 @@ class Cattery extends Component {
 	};
 
 	handleAddParty = (party, numOfNewPeople, isReservation) => {
-		if (isReservation) {
-			this.modifyStateNum(numOfNewPeople, 'currentNumOfReservations');
-		} else {
-			//   this.modifyStateNum(numOfNewPeople, "currentOccupancy");
-			this.modifyCurrentOccupancy(numOfNewPeople, false);
-		}
+		// if (isReservation) {
+		// 	this.modifyStateNum(numOfNewPeople, 'currentNumOfReservations');
+		// } else {
+		// 	//   this.modifyStateNum(numOfNewPeople, "currentOccupancy");
+		// 	this.modifyCurrentOccupancy(numOfNewPeople, false);
+		// }
+		// this.modifyStateNum(numOfNewPeople);
 		let newPartyList = [ ...this.state.parties, ...party ];
-		this.modifyStateNum(numOfNewPeople);
 		this.props.updateCatteryState(newPartyList);
 		this.setState({
-			parties     : newPartyList,
+			// parties     : newPartyList,
 			modalIsOpen : false
 		});
 	};
 
 	handleCheckReservation = (id, numOfNewPeople) => {
-		//<-------
-		// let filteredArray = this.state.parties.filter(party => {
-		//   return party.id !== id;
-		// });
-
 		let filteredParty = this.getFilteredParty(id);
-		// console.dir(filteredParty[0]);
-
-		//------->
-
-		//Sets party reservation to false
 		let newTimes = handleGetTimes();
-		console.log(newTimes);
 
 		filteredParty[0].rowNum = 1;
 		filteredParty[0].isReservation = false;
 		filteredParty[0].times.start = newTimes.start;
 		filteredParty[0].times.end = newTimes.end;
-		let numOfUpcoming = filteredParty[0].isUpcomingReservation ? Number(numOfNewPeople) : 0;
-		this.handleMoveParty(id, 1);
+		filteredParty[0].rowNum = 1;
+		// let numOfUpcoming = filteredParty[0].isUpcomingReservation ? Number(numOfNewPeople) : 0;
+		// this.handleMoveParty(id, 1);
 		// this.modifyStateNum(numOfNewPeople, "currentOccupancy")
-		this.modifyCurrentOccupancy(numOfNewPeople, false);
-		this.modifyStateNum(numOfNewPeople, 'currentNumOfReservations', true);
-		this.modifyStateNum(numOfUpcoming, 'currentNumOfUpcomingReservations', true);
-
+		// this.modifyCurrentOccupancy(numOfNewPeople, false);
+		// this.modifyStateNum(numOfNewPeople, 'currentNumOfReservations', true);
+		// this.modifyStateNum(numOfUpcoming, 'currentNumOfUpcomingReservations', true);
+		let updatedParties = this.state.parties;
+		this.props.updateCatteryState([ ...updatedParties ]);
 		// if (filteredParty[0].isUpcomingReservation) {
 		// 	filteredParty[0].isUpcomingReservation = false;
 		// }
@@ -205,9 +219,9 @@ class Cattery extends Component {
 
 		let overDueNum = party[0].isOverdue ? numInParty : 0;
 		// this.modifyStateNum(numInParty, "currentOccupancy", true);
-		this.modifyCurrentOccupancy(numInParty, true);
-		this.modifyStateNum(numInParty, 'totalGuests');
-		this.modifyStateNum(overDueNum, 'currentNumOverdue', true);
+		// this.modifyCurrentOccupancy(numInParty, true);
+		// this.modifyStateNum(numInParty, 'totalGuests');
+		// this.modifyStateNum(overDueNum, 'currentNumOverdue', true);
 		this.setState({
 			parties : [ ...updatedParties ]
 		});
@@ -270,6 +284,8 @@ class Cattery extends Component {
 		});
 	};
 
+	handleUpdateStateNums = (parties) => {};
+
 	//Test mode
 	handleTestMode = () => {
 		if (this.state.countDownSpeed === 110) {
@@ -282,6 +298,11 @@ class Cattery extends Component {
 				countDownSpeed : 110
 			});
 		}
+	};
+
+	handleSendToServer = () => {
+		let updatedParties = this.state.parties;
+		this.props.updateCatteryState([ ...updatedParties ]);
 	};
 
 	render() {
