@@ -9,8 +9,8 @@ let socket;
 const App = () => {
 	const [ socketState, setSocketState ] = useState([]);
 	const [ partyState, setPartyState ] = useState([]);
-	const ENDPOINT = 'localhost:5000';
-
+	const ENDPOINT = 'https://cattery-server.herokuapp.com/';
+	//cors
 	let addTestUser = () => {
 		let newState = [ ...partyState, ...PARTY ];
 		setPartyState(newState);
