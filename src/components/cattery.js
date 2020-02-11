@@ -251,6 +251,7 @@ class Cattery extends Component {
 	updatePartyData = (id, targetKey, value) => {
 		let filteredParty = this.getFilteredParty(id);
 		filteredParty[0][targetKey] = value;
+		this.handleSendToServer();
 	};
 
 	modifyStateNum = (num, stateName, isSubtract) => {
