@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/cattery/static/css/main.adb6f559.chunk.css",
-    "main.js": "/cattery/static/js/main.c99169d7.chunk.js",
-    "main.js.map": "/cattery/static/js/main.c99169d7.chunk.js.map",
+    "main.js": "/cattery/static/js/main.6ba3fa79.chunk.js",
+    "main.js.map": "/cattery/static/js/main.6ba3fa79.chunk.js.map",
     "runtime-main.js": "/cattery/static/js/runtime-main.d217457e.js",
     "runtime-main.js.map": "/cattery/static/js/runtime-main.d217457e.js.map",
-    "static/js/2.110f0bf6.chunk.js": "/cattery/static/js/2.110f0bf6.chunk.js",
-    "static/js/2.110f0bf6.chunk.js.map": "/cattery/static/js/2.110f0bf6.chunk.js.map",
+    "static/js/2.bc519930.chunk.js": "/cattery/static/js/2.bc519930.chunk.js",
+    "static/js/2.bc519930.chunk.js.map": "/cattery/static/js/2.bc519930.chunk.js.map",
     "index.html": "/cattery/index.html",
-    "precache-manifest.5cdbd36f9eeac8c079c1814006cfd8aa.js": "/cattery/precache-manifest.5cdbd36f9eeac8c079c1814006cfd8aa.js",
+    "precache-manifest.12462c51d38d9d29cfbac3bcedfb74b2.js": "/cattery/precache-manifest.12462c51d38d9d29cfbac3bcedfb74b2.js",
     "service-worker.js": "/cattery/service-worker.js",
     "static/css/main.adb6f559.chunk.css.map": "/cattery/static/css/main.adb6f559.chunk.css.map",
-    "static/js/2.110f0bf6.chunk.js.LICENSE": "/cattery/static/js/2.110f0bf6.chunk.js.LICENSE"
+    "static/js/2.bc519930.chunk.js.LICENSE": "/cattery/static/js/2.bc519930.chunk.js.LICENSE"
   },
   "entrypoints": [
     "static/js/runtime-main.d217457e.js",
-    "static/js/2.110f0bf6.chunk.js",
+    "static/js/2.bc519930.chunk.js",
     "static/css/main.adb6f559.chunk.css",
-    "static/js/main.c99169d7.chunk.js"
+    "static/js/main.6ba3fa79.chunk.js"
   ]
 }
