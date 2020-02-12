@@ -38,3 +38,14 @@ input[type="text"] {
 	-webkit-appearance: none;
 	border-radius: 0;
 }
+
+.refresh-data {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	padding: 15px 20px;
+	background-color: rgb(255, 221, 72);
+	border-radius: 2px;
+	cursor: pointer;
+	font-size: 14px;
+}

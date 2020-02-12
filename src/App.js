@@ -9,6 +9,7 @@ let socket;
 const App = () => {
 	const [ socketState, setSocketState ] = useState([]);
 	const [ partyState, setPartyState ] = useState([]);
+	// const ENDPOINT = 'localhost:5000';
 	const ENDPOINT = 'https://cattery-server.herokuapp.com/';
 	//cors
 
@@ -18,6 +19,8 @@ const App = () => {
 			setSocketState(server_data);
 			console.log(server_data);
 		});
+
+		refreshData();
 		return () => {
 			socket.emit('disconnect');
 		};
@@ -29,6 +32,10 @@ const App = () => {
 		},
 		[ socketState ]
 	);
+
+	let refreshData = () => {
+		socket.emit('refresh_data');
+	};
 
 	//make update state component. From here emit new state to socket/server.
 	let updateCatteryState = (state) => {
@@ -42,6 +49,9 @@ const App = () => {
 	return (
 		<div className="App">
 			<Cattery updateCatteryState={updateCatteryState} parties={partyState} />
+			<div onClick={refreshData} className="refresh-data">
+				Refresh Parties
+			</div>
 		</div>
 	);
 };
