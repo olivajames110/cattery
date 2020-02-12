@@ -1,80 +1,99 @@
 import React, { useState, useEffect } from 'react';
 import { usersIcon } from '../../utils/icons/icons';
-import { sortArrayByKey } from '../../utils/helpers/helpers';
+import { sortArrayByKey, addArrayByKey } from '../../utils/helpers/helpers';
 
-const SpotsAvailable = ({ parties, currentOccupancy, currentNumOfUpcomingReservations, currentNumOverdue }) => {
-	const [ numOfOverlap, setNumOfOverlap ] = useState(0);
+const SpotsAvailable = ({
+	parties,
+	currentOccupancy,
+	currentNumOfUpcomingReservations,
+	currentNumOverdue,
+	handleSendToServer
+}) => {
+	const [ numOfNonOverlap, setNumOfNonOverlap ] = useState(0);
 	const [ numOfSpotsAvailable, setNumOfSpotsAvailable ] = useState(0);
-	// const [numOfCurrentOccupancy, setNumOfCurrentOccupancy] = useState(0);
-	const upcomingTag = (
-		<div className="upcoming-reservations">Includes {currentNumOfUpcomingReservations} Upcoming</div>
-	);
-	//Currently: if overlapping===true ==> overlapOffset goes up or down  || if overlapping===false ==> overlapOffset 0
-	//-----Want: if overlapping===false ==> overlapOffset goes up or down  || if overlapping===true ==> overlapOffset 0
-	let checkifOverlap = () => {
-		let currentOccupancyList = sortArrayByKey(parties, 'isUpcomingReservation', false);
-		let reservationList = sortArrayByKey(parties, 'isUpcomingReservation', true);
-		let overLappingParties__false = sortArrayByKey(parties, 'isOverlap', false);
-		let overLapOffset = 0;
 
-		if (parties.length >= 1 && reservationList.length >= 1 && overLappingParties__false >= 1) {
-			//   let firstPartyEndTime = parties[0].times.timeStamp + 3600;
-			//   let upcomingEndTime = reservationList[0].times.timeStamp;
-			let sumOfOverLappingParties__false;
-			let sumOfUpcomingReservations;
-			//check if parties in currentOccupancyList is overlapping -- sets party to true if overlapping
-			for (let i = 0; i < reservationList.length; i++) {
-				console.log(`currentOccupancyList: ${currentOccupancyList}`);
-				let reservationTime = reservationList[i].times.timeStamp;
+	let checkifOverlap = () => {
+		let upcomingReservationList = sortArrayByKey(parties, 'isUpcomingReservation', true);
+		let overlapAdjustment = 0;
+		// console.log('LOOOOOOP STARTED');
+
+		if (parties.length >= 1 && upcomingReservationList.length >= 1) {
+			let row1 = sortArrayByKey(parties, 'rowNum', 1);
+			let currentOccupancyList = sortArrayByKey(row1, 'isUpcomingReservation', false);
+
+			//Set any parties that are overlapping to TRUE
+			for (let i = 0; i < upcomingReservationList.length; i++) {
+				let reservationTime = upcomingReservationList[i].times.timeStamp;
 				currentOccupancyList.forEach((party) => {
-					//   console.dir(party);
-					//   console.dir(reservationList);
-					if (party.times.timeStamp + 3600 >= reservationTime) {
+					let partyEndTime = party.times.timeStamp + 3600;
+					if (partyEndTime >= reservationTime) {
 						party.isOverlap = true;
+					} else {
+						party.isOverlap = false;
 					}
 				});
 			}
 
-			let updatedOverLappingParties__false = sortArrayByKey(parties, 'isOverlap', false);
-			//sum of nonOverlaps -- returns Number
-			sumOfOverLappingParties__false = updatedOverLappingParties__false.reduce(function(prev, cur) {
-				return prev + cur.numberInParty;
-			}, 0);
+			let nonOverlappingParties__sum;
+			let upcomingReservations__sum;
 
-			//sum of upcoming reservations -- returns Number
-			sumOfUpcomingReservations = reservationList.reduce(function(prev, cur) {
-				return prev + cur.numberInParty;
-			}, 0);
+			let nonOverlappingParties__updatedArray = sortArrayByKey(row1, 'isOverlap', false);
+			console.log(`nonOverlap length: ${nonOverlappingParties__updatedArray.length}`);
+			console.log(`upcomingReservationList length: ${upcomingReservationList.length}`);
 
-			if (sumOfOverLappingParties__false > sumOfUpcomingReservations) {
-				overLapOffset = sumOfOverLappingParties__false;
+			if (nonOverlappingParties__updatedArray.length > 1 && upcomingReservationList.length >= 1) {
+				if (nonOverlappingParties__updatedArray.length > 1) {
+					nonOverlappingParties__sum = addArrayByKey(nonOverlappingParties__updatedArray, 'numberInParty');
+				} else {
+					nonOverlappingParties__sum = nonOverlappingParties__updatedArray[0].numberInParty;
+				}
+
+				if (upcomingReservationList.length > 1) {
+					upcomingReservations__sum = addArrayByKey(upcomingReservationList, 'numberInParty');
+				} else {
+					upcomingReservations__sum = upcomingReservationList[0].numberInParty;
+				}
+
+				if (nonOverlappingParties__sum < upcomingReservations__sum) {
+					overlapAdjustment = nonOverlappingParties__sum;
+				} else {
+					overlapAdjustment = upcomingReservations__sum;
+				}
 			} else {
-				overLapOffset = sumOfUpcomingReservations;
+				overlapAdjustment = 0;
 			}
-		} else {
-			overLapOffset = 0;
 		}
 
-		setNumOfOverlap(overLapOffset);
+		console.log(`OVERLAP ADJUSTMENT:  ${overlapAdjustment}`);
+		setNumOfNonOverlap(overlapAdjustment);
 	};
 
 	useEffect(
 		() => {
-			let num = 15 - (currentOccupancy + currentNumOfUpcomingReservations - currentNumOverdue - numOfOverlap);
-
 			checkifOverlap();
-			// calcNumOfCurrentOccupancy();
+			let num = 15 - (currentOccupancy + currentNumOfUpcomingReservations - currentNumOverdue - numOfNonOverlap);
 			setNumOfSpotsAvailable(num);
 		},
-		[ currentOccupancy, currentNumOfUpcomingReservations, currentNumOverdue, numOfOverlap, parties ]
+		[ parties ]
 	);
+
+	// useEffect(
+	// 	() => {
+	// 		handleSendToServer();
+	// 	},
+	// 	[ numOfSpotsAvailable ]
+	// );
 
 	return (
 		<div id="current-spots remaining" className="container">
 			<span className="icon">{usersIcon}</span>
 			<span className="primary-value  number-in-cattery">
 				<span>{numOfSpotsAvailable}</span>
-				{currentNumOfUpcomingReservations === 0 ? '' : upcomingTag}
+				{currentNumOfUpcomingReservations === 0 ? (
+					''
+				) : (
+					<div className="upcoming-reservations">Includes {currentNumOfUpcomingReservations} Upcoming</div>
+				)}
 			</span>
 			<span className="open-spots">Spots Available</span>
 		</div>

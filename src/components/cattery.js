@@ -287,20 +287,6 @@ class Cattery extends Component {
 
 	handleUpdateStateNums = (parties) => {};
 
-	//Test mode
-	handleTestMode = () => {
-		if (this.state.countDownSpeed === 110) {
-			this.setState({
-				countDownSpeed : 60000
-			});
-		}
-		if (this.state.countDownSpeed === 60000) {
-			this.setState({
-				countDownSpeed : 110
-			});
-		}
-	};
-
 	handleSendToServer = () => {
 		let updatedParties = this.state.parties;
 		this.props.updateCatteryState([ ...updatedParties ]);
@@ -326,12 +312,11 @@ class Cattery extends Component {
 				<Header
 					parties={this.state.parties}
 					currentTime={this.state.times.currentTime}
-					countDownSpeed={this.state.countDownSpeed}
-					handleTestMode={this.handleTestMode}
 					currentOccupancy={this.state.currentOccupancy}
 					currentNumOfUpcomingReservations={this.state.currentNumOfUpcomingReservations}
 					currentNumOverdue={this.state.currentNumOverdue}
 					totalGuests={this.state.totalGuests}
+					handleSendToServer={this.handleSendToServer}
 				/>
 				<div className="cattery-container">
 					{this.state.modalIsOpen ? modal : <AddPartyButton handleModalToggle={this.handleModalToggle} />}

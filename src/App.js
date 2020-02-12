@@ -37,6 +37,10 @@ const App = () => {
 		socket.emit('refresh_data');
 	};
 
+	let clearData = () => {
+		socket.emit('client_send', []);
+	};
+
 	//make update state component. From here emit new state to socket/server.
 	let updateCatteryState = (state) => {
 		setPartyState(state);
@@ -49,8 +53,8 @@ const App = () => {
 	return (
 		<div className="App">
 			<Cattery updateCatteryState={updateCatteryState} parties={partyState} />
-			<div onClick={refreshData} className="refresh-data">
-				Refresh Parties
+			<div onClick={clearData} className="refresh-data">
+				Clear
 			</div>
 		</div>
 	);
