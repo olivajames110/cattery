@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b8f64ee3868d31b12b4d0440bcf8c0e3",
+    "revision": "4e789ebe763371358356c5386203e87d",
     "url": "/cattery/index.html"
   },
   {
-    "revision": "6cd65e5eae92add4c073",
-    "url": "/cattery/static/css/main.adb6f559.chunk.css"
+    "revision": "800c18e324ef3ce74a09",
+    "url": "/cattery/static/css/main.f1fc5860.chunk.css"
   },
   {
     "revision": "620c6bc3a22c1088e705",
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/cattery/static/js/2.bc519930.chunk.js.LICENSE"
   },
   {
-    "revision": "6cd65e5eae92add4c073",
-    "url": "/cattery/static/js/main.96a7c022.chunk.js"
+    "revision": "800c18e324ef3ce74a09",
+    "url": "/cattery/static/js/main.1710fa48.chunk.js"
   },
   {
     "revision": "a32ab032feebd8f67f8f",
