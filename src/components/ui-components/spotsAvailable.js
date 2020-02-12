@@ -41,7 +41,7 @@ const SpotsAvailable = ({
 			console.log(`nonOverlap length: ${nonOverlappingParties__updatedArray.length}`);
 			console.log(`upcomingReservationList length: ${upcomingReservationList.length}`);
 
-			if (nonOverlappingParties__updatedArray.length > 1 && upcomingReservationList.length >= 1) {
+			if (nonOverlappingParties__updatedArray.length >= 1 && upcomingReservationList.length >= 1) {
 				if (nonOverlappingParties__updatedArray.length > 1) {
 					nonOverlappingParties__sum = addArrayByKey(nonOverlappingParties__updatedArray, 'numberInParty');
 				} else {
