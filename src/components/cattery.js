@@ -338,6 +338,7 @@ class Cattery extends Component {
 							countDownSpeed={this.state.countDownSpeed}
 							currentOccupancy={this.state.currentOccupancy}
 							currentNumOfReservations={this.state.currentNumOfReservations}
+							currentTime={this.state.times.currentTime}
 							handleRemoveParty={this.handleRemoveParty}
 							handleCheckReservation={this.handleCheckReservation}
 							handleUpdateTimes={this.handleUpdateTimes}

@@ -180,7 +180,7 @@ class AddParty extends Component {
 								this.setState({
 									numberInParty : 1
 								})}
-							for="radio-1"
+								htmlFor="radio-1"
 							className="btn-radio"
 						>
 							<input type="radio" id="radio-1" name="radio-grp" />
@@ -205,7 +205,7 @@ class AddParty extends Component {
 								this.setState({
 									numberInParty : 2
 								})}
-							for="radio-2"
+								htmlFor="radio-2"
 							className="btn-radio"
 						>
 							<input type="radio" id="radio-2" name="radio-grp" />
@@ -230,7 +230,7 @@ class AddParty extends Component {
 								this.setState({
 									numberInParty : 3
 								})}
-							for="radio-3"
+							htmlFor="radio-3"
 							className="btn-radio"
 						>
 							<input type="radio" id="radio-3" name="radio-grp" />
@@ -255,7 +255,7 @@ class AddParty extends Component {
 								this.setState({
 									numberInParty : 4
 								})}
-							for="radio-4"
+							htmlFor="radio-4"
 							className="btn-radio"
 						>
 							<input type="radio" id="radio-4" name="radio-grp" />
@@ -280,7 +280,7 @@ class AddParty extends Component {
 								this.setState({
 									numberInParty : 5
 								})}
-							for="radio-5"
+							htmlFor="radio-5"
 							className="btn-radio"
 						>
 							<input type="radio" id="radio-5" name="radio-grp" />
@@ -299,7 +299,7 @@ class AddParty extends Component {
 						</label>{' '}
 					</div>
 					<select onChange={this.onInputChange} id="numberInParty" valuename="number-of-people">
-						<option value="" disabled selected>
+						<option value="" disabled defaultValue>
 							6 +
 						</option>{' '}
 						<option value="6"> 6 </option> <option value="7"> 7 </option> <option value="8"> 8 </option>{' '}
